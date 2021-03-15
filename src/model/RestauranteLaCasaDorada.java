@@ -146,4 +146,62 @@ public class RestauranteLaCasaDorada {
 
 	}
 	
+	
+	public void addTypeOfProduct(String name, User creator) {
+		TypeOfProduct top= new  TypeOfProduct(name, creator);
+		typesOfProducts.add(top);
+	}
+	
+	public boolean deleteTypeOfProduct(String topName) {
+		boolean deleted=false;
+		TypeOfProduct top=searchTypeOfProduct(topName);
+		if(top!=null) {
+			if(!searchProductTypeOfProduct(top)){
+				int i=typesOfProducts.indexOf(top);
+				typesOfProducts.remove(i);
+				deleted=true;
+			}
+		}
+		return deleted;
+	}
+	
+	public boolean updateTypeOfProduct(String topName, boolean enabled) {
+		Ingredient ing=searchIngredient(topName);
+		boolean updated=false;
+		if(ing!=null) {
+			ing.setEnabled(enabled);
+			updated=true;
+		}
+		return updated;
+	}
+	
+	
+	//search the type of product in the list of types
+		public TypeOfProduct searchTypeOfProduct(String topName) {
+			boolean found=false;
+			TypeOfProduct top=null;
+			for(int i=0; i<typesOfProducts.size() && !found;i++ ) {
+				if(typesOfProducts.get(i).getName().equals(topName)) {
+					top=typesOfProducts.get(i);
+					found=true;						
+				}
+			}
+			return top;
+		}
+		
+		//search the type of product in the list of products
+		public boolean searchProductTypeOfProduct(TypeOfProduct top) {
+			boolean found=false;
+			for(int i=0; i<products.size() && !found;i++) {
+				if(products.get(i).getType()==top) {
+					found=true;
+				}
+				
+			}
+			return found;
+
+		}
+	
+	
+	
 }

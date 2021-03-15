@@ -7,12 +7,12 @@ public class TypeOfProduct {
 	private User creator;
 	private User modifier;
 	
-	public TypeOfProduct(String name, boolean enabled, User creator, User modifier) {
+	public TypeOfProduct(String name, User creator) {
 		super();
 		this.name = name;
-		this.enabled = enabled;
+		this.enabled = true;
 		this.creator = creator;
-		this.modifier = modifier;
+		this.modifier = creator;
 	}
 	public String getName() {
 		return name;
