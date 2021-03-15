@@ -13,13 +13,12 @@ public class Product {
 	private TypeOfProduct type;
 	private ArrayList<Ingredient> listOfIngredients;
 	
-	public Product(String name, boolean enabled, User creator, User modifier, TypeOfProduct type,
+	public Product(String name, User creator, TypeOfProduct type,
 			ArrayList<Ingredient> listOfIngredients) {
-		super();
 		this.name = name;
-		this.enabled = enabled;
+		this.enabled = true;
 		this.creator = creator;
-		this.modifier = modifier;
+		this.modifier = creator;
 		this.type = type;
 		this.listOfIngredients = listOfIngredients;
 		sizes= new ArrayList<String>();
