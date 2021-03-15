@@ -11,10 +11,10 @@ public class Product {
 	private User creator;
 	private User modifier;
 	private TypeOfProduct type;
-	private Ingredient listOfIngredients;
+	private ArrayList<Ingredient> listOfIngredients;
 	
 	public Product(String name, boolean enabled, User creator, User modifier, TypeOfProduct type,
-			Ingredient listOfIngredients) {
+			ArrayList<Ingredient> listOfIngredients) {
 		super();
 		this.name = name;
 		this.enabled = enabled;
@@ -68,11 +68,23 @@ public class Product {
 	public void setType(TypeOfProduct type) {
 		this.type = type;
 	}
-	public Ingredient getListOfIngredients() {
+	public ArrayList<Ingredient> getListOfIngredients() {
 		return listOfIngredients;
 	}
-	public void setListOfIngredients(Ingredient listOfIngredients) {
+	public void setListOfIngredients(ArrayList<Ingredient> listOfIngredients) {
 		this.listOfIngredients = listOfIngredients;
+	}
+	
+	
+	public boolean findIngredient(Ingredient ing) {
+		boolean found=false;
+		for(int i=0; i<listOfIngredients.size() && !found;i++ ) {
+			if(listOfIngredients.get(i)==ing) {
+				found=true;						
+			}
+		}
+				
+		return found;
 	}
 	
 	

@@ -95,4 +95,55 @@ public class RestauranteLaCasaDorada {
 	
 	
 	
+	public void addIngredient(String name, User creator) {
+		Ingredient ingredient= new Ingredient(name, creator);
+		ingredients.add(ingredient);
+	}
+	
+	public boolean deleteIngredient(String ingredientName) {
+		boolean deleted=false;
+		Ingredient ing=searchIngredient(ingredientName);
+		if(ing!=null) {
+			if(!searchProductIngredient(ing)){
+				int i=ingredients.indexOf(ing);
+				ingredients.remove(i);
+				deleted=true;
+			}
+		}
+		return deleted;
+	}
+	
+	public boolean updateIngredient(String ingredientName, boolean enabled) {
+		Ingredient ing=searchIngredient(ingredientName);
+		boolean updated=false;
+		if(ing!=null) {
+			ing.setEnabled(enabled);
+			updated=true;
+		}
+		return updated;
+	}
+	
+	//search the ingredient in the list of ingredients
+	public Ingredient searchIngredient(String ingredientName) {
+		boolean found=false;
+		Ingredient ing=null;
+		for(int i=0; i<ingredients.size() && !found;i++ ) {
+			if(ingredients.get(i).getName().equals(ingredientName)) {
+				ing=ingredients.get(i);
+				found=true;						
+			}
+		}
+		return ing;
+	}
+	
+	//search the ingredient in the list of products
+	public boolean searchProductIngredient(Ingredient ing) {
+		boolean found=false;
+		for(int i=0; i<products.size() && !found;i++) {
+			found=products.get(i).findIngredient(ing);	
+		}
+		return found;
+
+	}
+	
 }
