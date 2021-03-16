@@ -38,4 +38,8 @@ public class Ingredient {
 		this.modifier = modifier;
 	}
 	
+	public String toString() {
+		return name;
+	}
+	
 }

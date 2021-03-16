@@ -27,14 +27,14 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="1. Gestionar un ingrediente" />
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="2. Gestionar un tipo de producto" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" text="3. Gestionar un producto" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" text="4. Gestionar un empleado " GridPane.rowIndex="3" />
-            <Button mnemonicParsing="false" text="5. Gestionar un cliente" GridPane.columnIndex="1" />
-            <Button mnemonicParsing="false" text="6. Gestionar un usuario" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="7. Gestionar un pedido" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" text="Cerrar sesión" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#manageAnIngredient" text="1. Gestionar un ingrediente" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#manageATypeOfProduct" text="2. Gestionar un tipo de producto" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#manageAProduct" text="3. Gestionar un producto" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" onAction="#manageAnEmployee" text="4. Gestionar un empleado " GridPane.rowIndex="3" />
+            <Button mnemonicParsing="false" onAction="#manageAClient" text="5. Gestionar un cliente" GridPane.columnIndex="1" />
+            <Button mnemonicParsing="false" onAction="#manageAUser" text="6. Gestionar un usuario" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#manageAnOrder" text="7. Gestionar un pedido" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" onAction="#signOutOfSystem" text="Cerrar sesión" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </center>
@@ -49,7 +49,7 @@
                         <MenuItem mnemonicParsing="false" text="Exportar" />
                   </items>
                 </Menu>
-                  <Menu mnemonicParsing="false" text="Ayuda" />
+                  <Menu mnemonicParsing="false" onAction="#showAboutCreators" text="Ayuda" />
               </menus>
             </MenuBar>
             <Label alignment="CENTER" contentDisplay="CENTER" text="¡Bienvenido!">

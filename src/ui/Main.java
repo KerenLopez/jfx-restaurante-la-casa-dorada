@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.RestauranteLaCasaDorada;
-import model.RestauranteLaCasaDoradaGUI;
 
 public class Main extends Application {
 	
@@ -32,7 +31,7 @@ public class Main extends Application {
 		Scene scene= new Scene(root);
 		
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("Restaurante LaCasa Dorada");
+		primaryStage.setTitle("Restaurante La Casa Dorada");
 		primaryStage.show();
 		
 	

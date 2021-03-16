@@ -43,39 +43,39 @@
                         <Insets left="25.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="1">
+                  <TextField fx:id="txtTypeOfProductName" prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets right="20.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Button disable="true" mnemonicParsing="false" text="Actualizar" GridPane.rowIndex="2">
+                  <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateTypeOfProduct" text="Actualizar" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="40.0" />
                      </GridPane.margin>
                   </Button>
-                  <CheckBox disable="true" mnemonicParsing="false" text="Deshabilitar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <HBox maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <Button disable="true" mnemonicParsing="false" text="Eliminar">
+                        <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteTypeOfProduct" text="Eliminar">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" text="Agregar">
+                        <Button fx:id="btAdd" mnemonicParsing="false" onAction="#addTypeOfProduct" text="Agregar">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
                         </Button>
                      </children>
                   </HBox>
-                  <Button mnemonicParsing="false" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Button mnemonicParsing="false" onAction="#returnToMenu" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
             <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                <content>
                   <AnchorPane>
                      <children>
-                        <ListView prefHeight="351.0" prefWidth="307.0" />
+                        <ListView fx:id="lvOfTypeOfProducts" prefHeight="351.0" prefWidth="307.0" />
                      </children>
                   </AnchorPane>
                </content>
