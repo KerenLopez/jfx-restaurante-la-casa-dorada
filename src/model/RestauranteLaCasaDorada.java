@@ -250,7 +250,6 @@ public class RestauranteLaCasaDorada {
 		boolean deleted=false;
 		Product p=searchProduct(pName);
 		if(p!=null) {
-			//CONDICION PARA BUSCAR SI EL PRODUCTO ESTÁ EN UNA ORDEN ...if(!searchOrderProduct(p)){
 			int i=products.indexOf(p);
 			products.remove(i);
 			deleted=true;
@@ -293,6 +292,41 @@ public class RestauranteLaCasaDorada {
 			}
 		}
 		return p;
+	}
+	
+	//CODIGO AL AZAR O CON SIZE???
+	public boolean createOrder(String sBuyer, String sDeliv, String listProd) {
+		
+		Client buyer=searchClient(sBuyer);
+		Employee deliverer= searchEmployee(sDeliv);
+		
+		String[] parts= listProd.split(";");
+		ArrayList<Product> list= new ArrayList<Product>();
+		for(int i=0; i<parts.length;i++) {
+
+			list.add(searchProduct(parts[i]));
+		}
+		
+		Order order= new  Order(buyer,deliverer, list);
+		orders.add(order);
+		order.setCode(orders.size());
+
+		return true;
+
+	}
+	
+	public Client searchClient(String name) {
+		//boolean found=false;
+		Client c=null;
+		
+		return c;
+	}
+	
+	public Employee searchEmployee(String name) {
+		//boolean found=false;
+		Employee e=null;
+		
+		return e;
 	}
 
 	

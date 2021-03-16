@@ -12,14 +12,13 @@ public class Order {
 	private Client buyer;
 	private Employee deliverer;
 	private ArrayList<Product> listOfProducts;
-	public Order(int code, Date dateAndTime, State stateOfOrder, Client buyer, Employee deliverer) {
-		super();
-		this.code = code;
-		this.dateAndTime = dateAndTime;
-		this.stateOfOrder = stateOfOrder;
+	
+	public Order(Client buyer, Employee deliverer, ArrayList<Product> listOfProducts) {
+		this.dateAndTime = new Date();
+		this.stateOfOrder = State.SOLICITADO;
 		this.buyer = buyer;
 		this.deliverer = deliverer;
-		listOfProducts = new ArrayList<Product>();
+		this.listOfProducts = listOfProducts;
 	}
 	
 	
