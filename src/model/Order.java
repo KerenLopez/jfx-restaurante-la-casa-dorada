@@ -6,14 +6,14 @@ import java.util.Date;
 public class Order {
 	private int code;
 	private Date dateAndTime;
-	//observations?
+	private String observations;
 	private State stateOfOrder;
 	
 	private Client buyer;
 	private Employee deliverer;
 	private ArrayList<Product> listOfProducts;
 	
-	public Order(Client buyer, Employee deliverer, ArrayList<Product> listOfProducts) {
+	public Order(Client buyer, Employee deliverer, ArrayList<Product> listOfProducts, String observations) {
 		this.dateAndTime = new Date();
 		this.stateOfOrder = State.SOLICITADO;
 		this.buyer = buyer;
@@ -58,6 +58,19 @@ public class Order {
 	public void setListOfProducts(ArrayList<Product> listOfProducts) {
 		this.listOfProducts = listOfProducts;
 	}
+
+
+	public String getObservations() {
+		return observations;
+	}
+
+
+	public void setObservations(String observations) {
+		this.observations = observations;
+	}
 	
+	public void updateState(String state) {
+		stateOfOrder=State.valueOf(state);
+	}
 	
 }

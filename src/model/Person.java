@@ -9,11 +9,11 @@ public abstract class Person {
 	private User creator;
 	private User modifier;
 	
-	public Person(String name, String lastName, String id, boolean enabled) {
+	public Person(String name, String lastName, String id) {
 		this.name = name;
 		this.lastName = lastName;
 		this.id = id;
-		this.enabled = enabled;
+		this.enabled = true;
 	}
 
 	public String getName() {

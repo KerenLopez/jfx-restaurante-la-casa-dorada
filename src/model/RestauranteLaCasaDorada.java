@@ -295,7 +295,7 @@ public class RestauranteLaCasaDorada {
 	}
 	
 	//CODIGO AL AZAR O CON SIZE???
-	public boolean createOrder(String sBuyer, String sDeliv, String listProd) {
+	public void createOrder(String sBuyer, String sDeliv, String listProd, String obs) {
 		
 		Client buyer=searchClient(sBuyer);
 		Employee deliverer= searchEmployee(sDeliv);
@@ -307,14 +307,19 @@ public class RestauranteLaCasaDorada {
 			list.add(searchProduct(parts[i]));
 		}
 		
-		Order order= new  Order(buyer,deliverer, list);
+		Order order= new  Order(buyer,deliverer, list, obs);
 		orders.add(order);
 		order.setCode(orders.size());
 
-		return true;
 
 	}
 	
+	public void updateOrderState(int code, String state) {
+		Order order = orders.get(code-1);
+		order.updateState(state);
+	}
+	
+
 	public Client searchClient(String name) {
 		//boolean found=false;
 		Client c=null;
@@ -329,6 +334,39 @@ public class RestauranteLaCasaDorada {
 		return e;
 	}
 
+	public boolean createUser(String name, String lastName, String id,  String userName, String password){
+		boolean created=false;
+		User user=searchUser(userName);
+		if(user==null) {
+			//SE DEBERIA BUSCAR SI COMO EMPLEADO NO EXISTE
+			user=new User(name, lastName, id, userName, password);
+			users.add(user);
+			employees.add(user);
+			created=true;
+		}
+		
+		return created;
+	}
+	
+	public boolean deleteUser(String userName) {
+		boolean deleted=false;
+		User user=searchUser(userName);
+		if(user!=null) {
+			int i=users.indexOf(user);
+			users.remove(i);
+			deleted=true;
+
+		}
+		
+		return deleted;
+	}
+	
+	public boolean updateUser() {
+		boolean updated=false;
+		
+		return updated;
+	}
+	
 	
 	public User searchUser(String userName) {
 		boolean found=false;
