@@ -4,8 +4,8 @@ public class User extends Employee {
 	private String userName;
 	private String password;
 	
-	public User(String name, String lastName, String id, boolean enabled, String userName, String password) {
-		super(name, lastName, id, enabled);
+	public User(String name, String lastName, String id, String userName, String password) {
+		super(name, lastName, id);
 		this.userName = userName;
 		this.password = password;
 	}
