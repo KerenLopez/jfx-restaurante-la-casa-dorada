@@ -10,18 +10,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import model.Ingredient;
 import model.Product;
 import model.RestauranteLaCasaDorada;
 import model.TypeOfProduct;
+import model.User;
+import model.UserAccount;
 
 public class RestauranteLaCasaDoradaGUI {
 	
@@ -41,21 +46,27 @@ public class RestauranteLaCasaDoradaGUI {
 
 	@FXML
 	private ComboBox<TypeOfProduct> cmbxTypeOfProduct;
+	
+	@FXML
+    private TableView<Ingredient> tvOfIngredients;
+
+	@FXML
+    private TableColumn<Ingredient, Integer> colIdIngredient;
+
+    @FXML
+    private TableColumn<Ingredient, String> colNameIngredient;
+
+    @FXML
+    private TableColumn<Ingredient, Boolean> colStatusIngredient;
+
+    @FXML
+    private TableColumn<Ingredient, User> colCreatorIngredient;
+
+    @FXML
+    private TableColumn<Ingredient, User> colModifierIngredient;
 
 	@FXML
 	private CheckBox ckbxDisable;
-
-	@FXML
-	private ListView<Ingredient> lvOfIngredients;
-
-	@FXML
-	private ListView<TypeOfProduct> lvOfTypeOfProducts;
-	
-	@FXML
-	private ListView<Product> lvProducts;
-
-	@FXML
-	private ListView<Ingredient> lvAddedIngredients;
 
 	@FXML
     private Label lbManageProduct;
@@ -227,8 +238,12 @@ public class RestauranteLaCasaDoradaGUI {
     private void initializeListViewOfIngredients() {
     	ObservableList<Ingredient> observableList;
     	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.getIngredients());
-    	lvOfIngredients.setItems(observableList);
-    	lvOfIngredients.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	tvOfIngredients.setItems(observableList);
+    	colIdIngredient.setCellValueFactory(new PropertyValueFactory<Ingredient, Integer>("Id"));
+    	colNameIngredient.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("Name"));
+    	colStatusIngredient.setCellValueFactory(new PropertyValueFactory<Ingredient, Boolean>("Enabled"));
+    	colCreatorIngredient.setCellValueFactory(new PropertyValueFactory<Ingredient, User>("Creator"));
+    	colModifierIngredient.setCellValueFactory(new PropertyValueFactory<Ingredient, User>("Modifier"));
 	}
 
     @FXML
