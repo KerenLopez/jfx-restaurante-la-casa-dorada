@@ -76,6 +76,24 @@ public class RestauranteLaCasaDoradaGUI {
 
     @FXML
     private TableColumn<Ingredient, String> colModifierIngredient;
+    
+    @FXML
+    private TableView<TypeOfProduct> tvOfTypeOfProducts;
+
+    @FXML
+    private TableColumn<TypeOfProduct, Integer> colIdTypeOfProduct;
+
+    @FXML
+    private TableColumn<TypeOfProduct, String> colNameTypeOfProduct;
+
+    @FXML
+    private TableColumn<TypeOfProduct, String> colStatusTypeOfProduct;
+
+    @FXML
+    private TableColumn<TypeOfProduct, String> colCreatorTypeOfProduct;
+
+    @FXML
+    private TableColumn<TypeOfProduct, String> colModifierTypeOfProduct;
 
 	@FXML
 	private CheckBox ckbxDisable;
@@ -224,35 +242,60 @@ public class RestauranteLaCasaDoradaGUI {
     	}
     }
     
-    private void initializeListViewOfTypesOfProducts() {
+    private void initializeTableViewOfTypesOfProducts() {
     	ObservableList<TypeOfProduct> observableList;
     	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.getTypesOfProducts());
-    	lvOfTypeOfProducts.setItems(observableList);
-    	lvOfTypeOfProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	tvOfTypeOfProducts.setItems(observableList);
+    	colIdTypeOfProduct.setCellValueFactory(new PropertyValueFactory<TypeOfProduct, Integer>("Id"));
+    	colNameTypeOfProduct.setCellValueFactory(new PropertyValueFactory<TypeOfProduct, String>("Name"));
+    	colStatusTypeOfProduct.setCellValueFactory(new PropertyValueFactory<TypeOfProduct, String>("Status"));
+    	colCreatorTypeOfProduct.setCellValueFactory(new PropertyValueFactory<TypeOfProduct, String>("CreatorName"));
+    	colModifierTypeOfProduct.setCellValueFactory(new PropertyValueFactory<TypeOfProduct, String>("ModifierName"));
+    	tvOfTypeOfProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
 
     @FXML
     public void manageATypeOfProduct(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("add-type-of-product.fxml"));
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-type-of-product.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
 		mainPanel.getChildren().clear();
 		mainPanel.setCenter(menuPane);
 		mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-		initializeListViewOfTypesOfProducts(); 
-		if (lvOfTypeOfProducts.getSelectionModel().getSelectedItem() != null) {
+		initializeTableViewOfTypesOfProducts(); 
+		if (tvOfTypeOfProducts.getSelectionModel().getSelectedItem() != null) {
     		btDelete.setDisable(false);
     		btUpdate.setDisable(false);
     		ckbxDisable.setDisable(false);
     		btAdd.setDisable(true);
-    		txtIngredientName.setEditable(false);
+    		TypeOfProduct selectedTypeOfProduct = tvOfTypeOfProducts.getSelectionModel().getSelectedItem();
+    		lbObjectId.setText(""+selectedTypeOfProduct.getId());
+    		txtTypeOfProductName.setText(selectedTypeOfProduct.getName());
+    		if(selectedTypeOfProduct.getEnabled()==false) {
+    			ckbxDisable.setSelected(true);
+    		}
     	}
     }
     
     @FXML
     public void addTypeOfProduct(ActionEvent event) {
     	if (!txtTypeOfProductName.getText().equals("")) {
-
+    		String newTP = txtTypeOfProductName.getText();
+    		String userID = lbUserId.getText();
+    		boolean added = restauranteLaCasaDorada.addTypeOfProduct(newTP, userID);
+    		if(added==false) {
+    			Alert alert1 = new Alert(AlertType.ERROR);
+    			alert1.setTitle("Error de validacion");
+    			alert1.setHeaderText(null);
+    			alert1.setContentText("Ya existe un tipo de ingrediente agregado con dicho nombre, intentelo nuevamente");
+    			alert1.showAndWait();
+    		}else {
+    			Alert alert2 = new Alert(AlertType.INFORMATION);
+        		alert2.setTitle("Informacion");
+        		alert2.setHeaderText(null);
+        		alert2.setContentText("El tipo de ingrediente ha sido creado exitosamente");
+        		alert2.showAndWait();
+    		}
     	}else {
     		showValidationErrorAlert();
     	}
@@ -260,17 +303,53 @@ public class RestauranteLaCasaDoradaGUI {
 
     @FXML
     public void deleteTypeOfProduct(ActionEvent event) {
-    	if (lvOfTypeOfProducts.getSelectionModel().getSelectedItem() != null) {
-
-
-    	}
+    	Alert alert1 = new Alert(AlertType.CONFIRMATION);
+    	alert1.setTitle("Confirmacion de proceso");
+    	alert1.setHeaderText(null);
+    	alert1.setContentText("¿Esta seguro de que quiere eliminar este tipo de ingrediente?");
+    	Optional<ButtonType> result = alert1.showAndWait();
+    	if (result.get() == ButtonType.YES){
+    		int TpId = Integer.parseInt(lbObjectId.getText());
+        	boolean deleted = restauranteLaCasaDorada.deleteTypeOfProduct(TpId);
+        	Alert alert2 = new Alert(AlertType.INFORMATION);
+    		alert2.setTitle("Informacion");
+    		alert2.setHeaderText(null);
+        	if(deleted==true) {
+        		alert2.setContentText("El tipo de ingrediente ha sido eliminado exitosamente");
+        		alert2.showAndWait();
+        	}else {
+        		alert2.setContentText("El tipo de ingrediente no pudo ser eliminado debido a que esta siendo implementado por un producto");
+        		alert2.showAndWait();
+        	}
+    	} 
     }
 
     @FXML
     public void updateTypeOfProduct(ActionEvent event) {
-    	if (lvOfTypeOfProducts.getSelectionModel().getSelectedItem() != null) {
-
-
+    	if (!txtTypeOfProductName.getText().equals("")) {
+    		String newName = txtTypeOfProductName.getText();
+    		String userID = lbUserId.getText();
+    		int TpId = Integer.parseInt(lbObjectId.getText());
+    		boolean enabled = true;
+    		if(ckbxDisable.isSelected()) {
+    			enabled = false;
+    		}
+    		boolean updated = restauranteLaCasaDorada.updateIngredient(newName, TpId, enabled, userID);
+    		if(updated==false) {
+    			Alert alert1 = new Alert(AlertType.ERROR);
+    			alert1.setTitle("Error de validacion");
+    			alert1.setHeaderText(null);
+    			alert1.setContentText("Ya existe un tipo de ingrediente agregado con dicho nombre, intentelo nuevamente");
+    			alert1.showAndWait();
+    		}else {
+    			Alert alert2 = new Alert(AlertType.INFORMATION);
+        		alert2.setTitle("Informacion");
+        		alert2.setHeaderText(null);
+        		alert2.setContentText("El tipo de ingrediente ha sido actualizado exitosamente");
+        		alert2.showAndWait();
+    		}
+    	}else {
+    		showValidationErrorAlert();
     	}
     }
 
@@ -284,7 +363,7 @@ public class RestauranteLaCasaDoradaGUI {
 
     }
     
-    private void initializeListViewOfIngredients() {
+    private void initializeTableViewOfIngredients() {
     	ObservableList<Ingredient> observableList;
     	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.getIngredients());
     	tvOfIngredients.setItems(observableList);
@@ -304,7 +383,7 @@ public class RestauranteLaCasaDoradaGUI {
 		mainPanel.getChildren().clear();
 		mainPanel.setCenter(menuPane);
 		mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-		initializeListViewOfIngredients();
+		initializeTableViewOfIngredients();
 		if (tvOfIngredients.getSelectionModel().getSelectedItem() != null) {
     		btDelete.setDisable(false);
     		btUpdate.setDisable(false);
@@ -416,20 +495,6 @@ public class RestauranteLaCasaDoradaGUI {
 		alert.setContentText("Recuerde diligenciar cada uno de los campos");
 		alert.showAndWait();
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     @FXML
     public void signOutOfSystem(ActionEvent event) {

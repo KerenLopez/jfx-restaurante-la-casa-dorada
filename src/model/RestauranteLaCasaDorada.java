@@ -152,7 +152,7 @@ public class RestauranteLaCasaDorada {
 		boolean found=false;
 		Ingredient ing=null;
 		for(int i=0; i<ingredients.size() && !found;i++ ) {
-			if(ingredients.get(i).getName().equals(ingredientId)) {
+			if(ingredients.get(i).getName().equalsIgnoreCase(ingredientId)) {
 				ing=ingredients.get(i);
 				found=true;						
 			}
@@ -169,10 +169,9 @@ public class RestauranteLaCasaDorada {
 		return found;
 	}
 
-
-	public boolean addTypeOfProduct(String name, String un) {
-		TypeOfProduct top=searchTypeOfProduct(name);
-		User creator=searchUser(un);
+	public boolean addTypeOfProduct(String name, String userId) {
+		TypeOfProduct top=searchTypeOfProductByName(name);
+		User creator=searchUser(userId);
 
 		boolean added=false;
 		if(top==null) {
@@ -180,16 +179,14 @@ public class RestauranteLaCasaDorada {
 			typesOfProducts.add(top);
 			added=true;
 		}
-
 		return added;
-
 	}
-
-	public boolean deleteTypeOfProduct(String topName) {
+	
+	public boolean deleteTypeOfProduct(int TpId) {
 		boolean deleted=false;
-		TypeOfProduct top=searchTypeOfProduct(topName);
+		TypeOfProduct top=searchTypeOfProductById(TpId);
 		if(top!=null) {
-			if(!searchProductTypeOfProduct(top)){
+			if(!searchProductTypeOfProduct(TpId)){
 				int i=typesOfProducts.indexOf(top);
 				typesOfProducts.remove(i);
 				deleted=true;
@@ -198,24 +195,39 @@ public class RestauranteLaCasaDorada {
 		return deleted;
 	}
 
-	public boolean updateTypeOfProduct(String topName, boolean enabled, String un) {
-		Ingredient ing=searchIngredient(topName);
+	public boolean updateTypeOfProduct(String newName, int TpId, boolean enabled, String userName) {
+		TypeOfProduct Tp1=searchTypeOfProductByName(newName);
+		TypeOfProduct Tp2=searchTypeOfProductById(TpId);
 		boolean updated=false;
-		if(ing!=null) {
-			ing.setEnabled(enabled);
-			ing.setModifier(searchUser(un));
+		if(Tp1!=null && Tp2==null) {
+			Tp1.setName(newName);
+			Tp1.setEnabled(enabled);
+			Tp1.setModifier(searchUser(userName));
 			updated=true;
 		}
 		return updated;
 	}
 
 
-	//search the type of product in the list of types
-	public TypeOfProduct searchTypeOfProduct(String topName) {
+	//search a type of product in the list of types by its name.
+	public TypeOfProduct searchTypeOfProductByName(String topName) {
 		boolean found=false;
 		TypeOfProduct top=null;
 		for(int i=0; i<typesOfProducts.size() && !found;i++ ) {
-			if(typesOfProducts.get(i).getName().equals(topName)) {
+			if(typesOfProducts.get(i).getName().equalsIgnoreCase(topName)) {
+				top=typesOfProducts.get(i);
+				found=true;						
+			}
+		}
+		return top;
+	}
+	
+	//search a type of product in the list of types by its id.
+	public TypeOfProduct searchTypeOfProductById(int TpId) {
+		boolean found=false;
+		TypeOfProduct top=null;
+		for(int i=0; i<typesOfProducts.size() && !found;i++ ) {
+			if(typesOfProducts.get(i).getId()==TpId) {
 				top=typesOfProducts.get(i);
 				found=true;						
 			}
@@ -223,17 +235,15 @@ public class RestauranteLaCasaDorada {
 		return top;
 	}
 
-	//search the type of product in the list of products
-	public boolean searchProductTypeOfProduct(TypeOfProduct top) {
+	//search a type of product in the list of products.
+	public boolean searchProductTypeOfProduct(int TpId) {
 		boolean found=false;
 		for(int i=0; i<products.size() && !found;i++) {
-			if(products.get(i).getType()==top) {
+			if(products.get(i).getType().getId()==TpId) {
 				found=true;
 			}
-
 		}
 		return found;
-
 	}
 
 	
