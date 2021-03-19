@@ -50,7 +50,7 @@ public class Ingredient {
 	}
 	
 	public String getCreatorName() {
-		String name = creator.getName();
+		String name = creator.getUserName();
 		return name;
 	}
 	
@@ -63,7 +63,7 @@ public class Ingredient {
 	}
 	
 	public String getModifierName() {
-		String name = modifier.getName();
+		String name = modifier.getUserName();
 		return name;
 	}
 	

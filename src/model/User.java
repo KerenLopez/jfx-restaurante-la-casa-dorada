@@ -71,6 +71,33 @@ public class User {
 		this.enabled = enabled;
 	}
 	
+	public String getEmployeeName() {
+		return employee.getName();
+	}
+	
+	public String getEmployeeLastName() {
+		return employee.getLastName();
+	}
+	
+	public String getStatus() {
+		String status = "";
+		if(enabled) {
+			status = "Habilitado";
+		}else {
+			status = "Deshabilitado";
+		}
+		return status;
+	}
+	
+	public String getCreatorName() {
+		String name = creator.getUserName();
+		return name;
+	}
+	
+	public String getModifierName() {
+		String name = modifier.getUserName();
+		return name;
+	}
 	
 	
 }

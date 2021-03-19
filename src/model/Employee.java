@@ -16,4 +16,8 @@ public class Employee extends Person{
 		this.numberOrders = numberOrders;
 	}
 	
+	
+	public String idAndName() {
+		return super.getId()+"|"+super.getName()+" "+super.getLastName();
+	}
 }

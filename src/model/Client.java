@@ -37,4 +37,6 @@ public class Client extends Person {
 		this.obstervations = obstervations;
 	}
 	
+	
+	
 }

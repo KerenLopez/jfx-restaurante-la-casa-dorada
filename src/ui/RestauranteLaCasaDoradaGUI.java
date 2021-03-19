@@ -18,11 +18,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import model.Employee;
 import model.Ingredient;
 import model.Product;
 import model.RestauranteLaCasaDorada;
@@ -92,6 +94,43 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     private Button btSaveIngredients;
+    
+    @FXML
+	private TextField txtUserName;
+
+	@FXML
+	private PasswordField passwordField;
+
+	@FXML
+	private ComboBox<String> cbEmployee;
+
+	
+	@FXML
+	private TableView<User> tvListUsers;
+
+	@FXML
+	private TableColumn<User, String> colNameUser;
+
+	@FXML
+	private TableColumn<User, String> colLastNameUser;
+
+	@FXML
+	private TableColumn<User, String> colIdUser;
+
+	@FXML
+	private TableColumn<User, String> colEnabledUser;
+
+	@FXML
+	private TableColumn<User, String> colUserName;
+
+	@FXML
+	private TableColumn<User, String> colPassword;
+
+	@FXML
+	private TableColumn<User, String> colCreatorUser;
+
+	@FXML
+	private TableColumn<User, String> colModifierUser;
 	
 	
 	public RestauranteLaCasaDoradaGUI(RestauranteLaCasaDorada rlcd) {
@@ -401,5 +440,178 @@ public class RestauranteLaCasaDoradaGUI {
     public void returnToMenu(ActionEvent event) throws IOException {
     	showMenu(); 
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    @FXML
+    public void manageUser(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-user.fxml"));
+    	fxmlLoader.setController(this);
+    	Parent menuPane = fxmlLoader.load();
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(menuPane);
+    	mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+    	initializeTableViewUsers();
+    	initializeComboBoxEmployees();
+    	
+    	if (tvListUsers.getSelectionModel().getSelectedItem() != null) {
+    		btDelete.setDisable(false);
+    		btUpdate.setDisable(false);
+    		ckbxDisable.setDisable(false);
+    		btAdd.setDisable(true);
+    		User selectedUser = tvListUsers.getSelectionModel().getSelectedItem();
+    		lbObjectId.setText(""+selectedUser.getId());
+    		txtUserName.setText(selectedUser.getUserName());
+    		passwordField.setText(selectedUser.getPassword());
+    		if(!selectedUser.isEnabled()) {
+    			ckbxDisable.setSelected(true);
+    		}
+    	}
+    }
+
+    private void initializeTableViewUsers(){
+    	ObservableList<User> observableList;
+    	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.getUsers());
+    	tvListUsers.setItems(observableList);
+    	
+    	colNameUser.setCellValueFactory(new PropertyValueFactory<User, String>("employeeName"));
+    	colLastNameUser.setCellValueFactory(new PropertyValueFactory<User, String>("employeeLastName"));
+    	colIdUser.setCellValueFactory(new PropertyValueFactory<User, String>("id"));
+    	colEnabledUser.setCellValueFactory(new PropertyValueFactory<User, String>("status"));
+    	colUserName.setCellValueFactory(new PropertyValueFactory<User, String>("userName"));
+    	colPassword.setCellValueFactory(new PropertyValueFactory<User, String>("password"));
+    	colCreatorUser.setCellValueFactory(new PropertyValueFactory<User, String>("creatorName"));
+    	colModifierUser.setCellValueFactory(new PropertyValueFactory<User, String>("modifierName"));
+    	
+
+    	tvOfIngredients.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+    }
+    
+    public void initializeComboBoxEmployees() {
+    	ObservableList<String> options = 
+    			FXCollections.observableArrayList(restauranteLaCasaDorada.employeesToString());
+    	cbEmployee.setValue("Escoja un empleado");
+    	cbEmployee.setItems(options);
+    }
+
+
+    	
+
+    @FXML
+    void createUser(ActionEvent event) {
+
+    }
+
+    @FXML
+    void deleteUser(ActionEvent event) {
+
+    }
+
+
+
+    @FXML
+    void updateUser(ActionEvent event) {
+
+    }
+
+    
+    
 
 }
