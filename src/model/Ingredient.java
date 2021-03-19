@@ -1,6 +1,7 @@
 package model;
 
 public class Ingredient {
+	private int id;
 	private String name;
 	private boolean enabled;
 	
@@ -40,6 +41,12 @@ public class Ingredient {
 	
 	public String toString() {
 		return name;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }
