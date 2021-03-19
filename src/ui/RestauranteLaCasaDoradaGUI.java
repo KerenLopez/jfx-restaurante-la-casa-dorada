@@ -377,6 +377,20 @@ public class RestauranteLaCasaDoradaGUI {
 		alert.setContentText("Recuerde diligenciar cada uno de los campos");
 		alert.showAndWait();
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     @FXML
     public void signOutOfSystem(ActionEvent event) {
