@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class Product {
+	private int id;
 	private String name;
 	private boolean enabled;
 	private ArrayList<String> sizes;
@@ -84,6 +85,12 @@ public class Product {
 		}
 				
 		return found;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

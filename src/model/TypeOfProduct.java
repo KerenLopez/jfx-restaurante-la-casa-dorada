@@ -1,6 +1,7 @@
 package model;
 
 public class TypeOfProduct {
+	private int id;
 	private String name;
 	private boolean enabled;
 	
@@ -8,7 +9,7 @@ public class TypeOfProduct {
 	private User modifier;
 	
 	public TypeOfProduct(String name, User creator) {
-		super();
+		
 		this.name = name;
 		this.enabled = true;
 		this.creator = creator;
@@ -37,6 +38,12 @@ public class TypeOfProduct {
 	}
 	public void setModifier(User modifier) {
 		this.modifier = modifier;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	
