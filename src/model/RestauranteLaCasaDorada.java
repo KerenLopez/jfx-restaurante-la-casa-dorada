@@ -316,38 +316,38 @@ public class RestauranteLaCasaDorada {
 		order.updateState(state);
 	}
 	
-
-	public Client searchClient(String name) {
-		//boolean found=false;
-		Client c=null;
-		
-		return c;
-	}
 	
-	public Employee searchEmployee(String name) {
-		//boolean found=false;
-		Employee e=null;
-		
-		return e;
-	}
+	
 
-	public boolean createUser(String name, String lastName, String id,  String userName, String password){
+	public boolean createUser(String emplId, String userId, String userName, String password, String unCreatorId){
 		boolean created=false;
-		User user=searchUser(userName);
-		if(user==null) {
-			//SE DEBERIA BUSCAR SI COMO EMPLEADO NO EXISTE
-			user=new User(name, lastName, id, userName, password);
+		User creator;
+		Employee employee= searchEmployee(emplId);
+		
+		if(!searchEmployeeInUsers(employee) && !searchUserName(userName) && !searchUserId(userId)) {
+
+			
+			User user=new User(employee, userId, userName, password);
+			if(users.isEmpty()) {
+				creator=user;
+			}
+			else {
+				creator=searchUser(unCreatorId);
+			}
+			user.setCreator(creator);
+
 			users.add(user);
-			employees.add(user);
 			created=true;
+
 		}
 		
+
 		return created;
 	}
 	
-	public boolean deleteUser(String userName) {
+	public boolean deleteUser(String userId) {
 		boolean deleted=false;
-		User user=searchUser(userName);
+		User user=searchUser(userId);
 		if(user!=null) {
 			int i=users.indexOf(user);
 			users.remove(i);
@@ -358,26 +358,95 @@ public class RestauranteLaCasaDorada {
 		return deleted;
 	}
 	
-	public boolean updateUser() {
+	public boolean updateUser(String userId, String newUserId, String emplId, String userName, String password, boolean enabled,String unModifierId) {
 		boolean updated=false;
 		
+		Employee employee= searchEmployee(emplId);
+
+		if(!searchEmployeeInUsers(employee) && !searchUserName(userName) && !searchUserId(newUserId)) {
+			User user=searchUser(userId);
+			User modifier=searchUser(unModifierId);
+			
+			user.setUserName(userName);
+			user.setPassword(password);
+			user.setModifier(modifier);
+			user.setEmployee(employee);
+			user.setEnabled(enabled);
+			user.setId(newUserId);
+			updated=true;
+		}
+
+
 		return updated;
 	}
 	
 	
-	public User searchUser(String userName) {
+	public User searchUser(String userId) {
 		boolean found=false;
 		User u=null;
 		for(int i=0; i<users.size() && !found;i++ ) {
-			if(users.get(i).getUserName().equals(userName)) {
+			if(users.get(i).getId().equals(userId)) {
 				u=users.get(i);
 				found=true;						
 			}
 		}
 		return u;
 	}
+	
 
+	//search employee in the list of users
+	public boolean searchEmployeeInUsers(Employee empl) {
 
+		boolean found=false;
+		for(int i=0; i<users.size() && !found;i++) {
+			if(users.get(i).getEmployee()==empl) {
+				found=true;
+			}
 
+		}
+		return found;
+	}
+	
+	
+	
+	//search the user name in the list of users
+	public boolean searchUserName(String userName) {
+		boolean found=false;
+		for(int i=0; i<users.size() && !found;i++) {
+			if(users.get(i).getUserName().equals(userName)) {
+
+				found=true;
+			}
+
+		}
+		return found;
+	}
+
+	//search the user id in the list of users
+	public boolean searchUserId(String userId) {
+		boolean found=false;
+		for(int i=0; i<users.size() && !found;i++) {
+			if(users.get(i).getId().equals(userId)) {
+
+				found=true;
+			}
+
+		}
+		return found;
+	}
+
+	public Client searchClient(String name) {
+		//boolean found=false;
+		Client c=null;
+		
+		return c;
+	}
+	
+	public Employee searchEmployee(String id) {
+		//boolean found=false;
+		Employee e=null;
+		
+		return e;
+	}
 
 }
