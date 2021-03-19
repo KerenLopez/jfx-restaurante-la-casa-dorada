@@ -19,29 +19,57 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="1019.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <HBox prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Gestionar un ingrediente" textAlignment="CENTER">
-               <padding>
-                  <Insets left="70.0" top="20.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
-            <Label text="Lista de ingredientes agregados">
-               <padding>
-                  <Insets left="280.0" top="20.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
-         </children>
+      <VBox BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" top="10.0" />
          </BorderPane.margin>
-      </HBox>
+         <children>
+            <HBox prefHeight="15.0" prefWidth="200.0">
+               <children>
+                  <Label text="Usuario:  ">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="800.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lbUserName" alignment="BOTTOM_RIGHT" contentDisplay="RIGHT">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lbUserId" visible="false" />
+               </children>
+               <VBox.margin>
+                  <Insets top="6.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="50.0" prefWidth="200.0">
+               <children>
+                  <Label text="Gestionar un ingrediente" textAlignment="CENTER">
+                     <padding>
+                        <Insets left="70.0" top="20.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="Lista de ingredientes agregados">
+                     <padding>
+                        <Insets left="280.0" top="20.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </top>
    <left>
       <GridPane alignment="CENTER" prefHeight="468.0" prefWidth="1028.0" BorderPane.alignment="CENTER">
@@ -107,6 +135,7 @@
                            </children>
                         </HBox>
                         <Button mnemonicParsing="false" onAction="#returnToMenu" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label fx:id="lbObjectId" disable="true" visible="false" GridPane.rowIndex="5" />
                      </children>
                      <VBox.margin>
                         <Insets top="60.0" />
@@ -120,7 +149,7 @@
                      <children>
                         <TableView fx:id="tvOfIngredients" prefHeight="448.0" prefWidth="673.0">
                           <columns>
-                            <TableColumn fx:id="colIdIngredient" maxWidth="1000.0" prefWidth="79.35198974609375" text="ID" />
+                            <TableColumn fx:id="colIdIngredient" maxWidth="1000.0" prefWidth="79.35198974609375" text="ID" visible="false" />
                             <TableColumn fx:id="colNameIngredient" prefWidth="158.481689453125" text="Nombre" />
                               <TableColumn fx:id="colStatusIngredient" prefWidth="162.639892578125" text="Estado" />
                               <TableColumn fx:id="colCreatorIngredient" prefWidth="167.0" text="Creado por" />

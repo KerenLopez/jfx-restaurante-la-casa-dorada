@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class RestauranteLaCasaDorada {
+	
 	private ArrayList<Order> orders;
 	private ArrayList<Product> products;
 	private ArrayList<Ingredient> ingredients;
@@ -93,9 +94,9 @@ public class RestauranteLaCasaDorada {
 		this.users = users;
 	}
 
-	public boolean addIngredient(String name, String un) {
-		Ingredient ingredient=searchIngredient(name);
-		User creator=searchUser(un);
+	public boolean addIngredient(String name, String userId) {
+		Ingredient ingredient=searchIngredientByName(name);
+		User creator=searchUser(userId);
 
 		boolean added=false;
 		if(ingredient==null) {
@@ -107,11 +108,11 @@ public class RestauranteLaCasaDorada {
 		return added;
 	}
 
-	public boolean deleteIngredient(String ingredientName) {
+	public boolean deleteIngredient(int ingredientId) {
 		boolean deleted=false;
-		Ingredient ing=searchIngredient(ingredientName);
+		Ingredient ing=searchIngredientById(ingredientId);
 		if(ing!=null) {
-			if(!searchProductIngredient(ing)){
+			if(!searchProductIngredient(ingredientId)){
 				int i=ingredients.indexOf(ing);
 				ingredients.remove(i);
 				deleted=true;
@@ -120,23 +121,38 @@ public class RestauranteLaCasaDorada {
 		return deleted;
 	}
 
-	public boolean updateIngredient(String ingredientName, boolean enabled, String un) {
-		Ingredient ing=searchIngredient(ingredientName);
+	public boolean updateIngredient(String newName, int ingredientId, boolean enabled, String userId) {
+		Ingredient ing1 = searchIngredientById(ingredientId);
+		Ingredient ing2 = searchIngredientByName(newName);
 		boolean updated=false;
-		if(ing!=null) {
-			ing.setEnabled(enabled);
-			ing.setModifier(searchUser(un));
+		if(ing1!=null && ing2==null) {
+			ing1.setName(newName);
+			ing1.setEnabled(enabled);
+			ing1.setModifier(searchUser(userId));
 			updated=true;
 		}
 		return updated;
 	}
 
-	//search the ingredient in the list of ingredients
-	public Ingredient searchIngredient(String ingredientName) {
+	//search an ingredient in the list of ingredients by its id
+	public Ingredient searchIngredientById(int ingredientId) {
 		boolean found=false;
 		Ingredient ing=null;
 		for(int i=0; i<ingredients.size() && !found;i++ ) {
-			if(ingredients.get(i).getName().equals(ingredientName)) {
+			if(ingredients.get(i).getId()==ingredientId) {
+				ing=ingredients.get(i);
+				found=true;						
+			}
+		}
+		return ing;
+	}
+	
+	//search an ingredient in the list of ingredients by its name
+	public Ingredient searchIngredientByName(String ingredientId) {
+		boolean found=false;
+		Ingredient ing=null;
+		for(int i=0; i<ingredients.size() && !found;i++ ) {
+			if(ingredients.get(i).getName().equals(ingredientId)) {
 				ing=ingredients.get(i);
 				found=true;						
 			}
@@ -144,14 +160,13 @@ public class RestauranteLaCasaDorada {
 		return ing;
 	}
 
-	//search the ingredient in the list of products
-	public boolean searchProductIngredient(Ingredient ing) {
+	//search an ingredient in the list of products
+	public boolean searchProductIngredient(int id) {
 		boolean found=false;
 		for(int i=0; i<products.size() && !found;i++) {
-			found=products.get(i).findIngredient(ing);	
+			found=products.get(i).findIngredient(id);	
 		}
 		return found;
-
 	}
 
 
