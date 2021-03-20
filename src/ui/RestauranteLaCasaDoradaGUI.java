@@ -797,7 +797,6 @@ public class RestauranteLaCasaDoradaGUI {
             	cbEmployee.setValue("Escoja un empleado");
             	
             	initializeTableViewUsers();
-            	initializeComboBoxEmployees();
             	
             	if (lbUserId.getText().equals("id")){
             		loadLogIn(null);
@@ -833,7 +832,6 @@ public class RestauranteLaCasaDoradaGUI {
         	alert2.showAndWait();
         	
         	initializeTableViewUsers();
-        	initializeComboBoxEmployees();
         	
         	lbObjectId.setText("");
         	txtUserName.clear();
@@ -862,7 +860,6 @@ public class RestauranteLaCasaDoradaGUI {
         		alert1.showAndWait();
         		
         		initializeTableViewUsers();
-            	initializeComboBoxEmployees();
             	
             	lbObjectId.setText("");
             	txtUserName.clear();

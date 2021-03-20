@@ -480,7 +480,10 @@ public class RestauranteLaCasaDorada {
 	public ArrayList<String>  employeesToString() {
 		ArrayList<String> emplString= new ArrayList<String>();
 		for(int i=0; i<employees.size(); i++) {
-			emplString.add(employees.get(i).idAndName());
+			if(employees.get(i).isEnabled()) {
+				emplString.add(employees.get(i).idAndName());
+
+			}
 		}
 		return emplString;
 	}
