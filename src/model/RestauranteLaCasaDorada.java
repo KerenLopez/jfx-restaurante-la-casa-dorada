@@ -370,17 +370,12 @@ public class RestauranteLaCasaDorada {
 		return created;
 	}
 	
-	public boolean deleteUser(String userId) {
-		boolean deleted=false;
+	public void deleteUser(String userId) {
 		User user=searchUser(userId);
-		if(user!=null) {
-			int i=users.indexOf(user);
-			users.remove(i);
-			deleted=true;
+		int i=users.indexOf(user);
+		users.remove(i);
 
-		}
-		
-		return deleted;
+
 	}
 	
 	public boolean updateUser(String userId, String newUserId, String emplId, String userName, String password, boolean enabled,String unModifierId) {

@@ -115,6 +115,10 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
 	private TextField txtUserName;
+    
+    @FXML
+    private TextField txtIdUser;
+
 
 	@FXML
 	private PasswordField passwordField;
@@ -624,9 +628,9 @@ public class RestauranteLaCasaDoradaGUI {
     		lbObjectId.setText(""+selectedUser.getId());
     		txtUserName.setText(selectedUser.getUserName());
     		passwordField.setText(selectedUser.getPassword());
-    		if(!selectedUser.isEnabled()) {
-    			ckbxDisable.setSelected(true);
-    		}
+    		
+    		ckbxDisable.setSelected(!selectedUser.isEnabled());
+    		
     	}
     }
 
@@ -661,19 +665,85 @@ public class RestauranteLaCasaDoradaGUI {
 
     @FXML
     void createUser(ActionEvent event) {
-
+    	if (!cbEmployee.getSelectionModel().getSelectedItem().equals("Escoja un empleado") && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty() && !txtIdUser.getText().isEmpty()) {
+    		String[] emplIdAndName=cbEmployee.getSelectionModel().getSelectedItem().split("\\|");
+    		
+    		boolean added = restauranteLaCasaDorada.createUser(emplIdAndName[0],txtIdUser.getText(),txtUserName.getText().toLowerCase(),passwordField.getText(), lbUserId.getText());
+    		if(added) {
+    			Alert alert1 = new Alert(AlertType.INFORMATION);
+        		alert1.setTitle("Informacion");
+        		alert1.setHeaderText(null);
+        		alert1.setContentText("El usuario ha sido creado exitosamente!");
+        		alert1.showAndWait();
+        		
+        		txtUserName.clear();
+            	passwordField.clear();
+            	txtIdUser.clear();
+            	cbEmployee.setValue("Escoja un empleado");
+        		
+    		}else {
+    			
+        		Alert alert2 = new Alert(AlertType.ERROR);
+    			alert2.setTitle("Error de validacion");
+    			alert2.setHeaderText(null);
+    			alert2.setContentText("No se pudo crear el usuario, intentelo nuevamente");
+    			alert2.showAndWait();
+    		}
+    	}else {
+    		showValidationErrorAlert();
+    	}
     }
 
     @FXML
     void deleteUser(ActionEvent event) {
+    	Alert alert1 = new Alert(AlertType.CONFIRMATION);
+    	alert1.setTitle("Confirmacion de proceso");
+    	alert1.setHeaderText(null);
+    	alert1.setContentText("¿Esta seguro de que quiere eliminar el usuario escogido?");
+    	Optional<ButtonType> result = alert1.showAndWait();
+    	if (result.get() == ButtonType.YES){
+        	restauranteLaCasaDorada.deleteUser(lbObjectId.getText());
+        	Alert alert2 = new Alert(AlertType.INFORMATION);
+        	alert2.setTitle("Informacion");
+        	alert2.setHeaderText(null);
 
+        	alert2.setContentText("El usuario ha sido eliminado exitosamente");
+        	alert2.showAndWait();
+
+    	} 
+    	
     }
 
 
 
     @FXML
     void updateUser(ActionEvent event) {
+    	
+    	if (!cbEmployee.getSelectionModel().getSelectedItem().equals("Escoja un empleado") && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty() && !txtIdUser.getText().isEmpty()) {
+    		String[] emplIdAndName=cbEmployee.getSelectionModel().getSelectedItem().split("\\|");
 
+    		boolean updated = restauranteLaCasaDorada.updateUser(lbObjectId.getText(),txtIdUser.getText(),emplIdAndName[0] ,txtUserName.getText().toLowerCase(),passwordField.getText(), !ckbxDisable.isSelected(), lbUserId.getText());
+    		if(updated) {
+    			Alert alert1 = new Alert(AlertType.INFORMATION);
+        		alert1.setTitle("Informacion");
+        		alert1.setHeaderText(null);
+        		alert1.setContentText("El usuario ha sido actualizado exitosamente!");
+        		alert1.showAndWait();
+        		
+        		txtUserName.clear();
+            	passwordField.clear();
+            	txtIdUser.clear();
+            	cbEmployee.setValue("Escoja un empleado");
+    		}else {
+    			Alert alert2 = new Alert(AlertType.ERROR);
+    			alert2.setTitle("Error de validacion");
+    			alert2.setHeaderText(null);
+    			alert2.setContentText("No se pudo actualizar el usuario, intentelo nuevamente");
+    			alert2.showAndWait();
+    		}
+    	}else {
+    		showValidationErrorAlert();
+    	}
     }
 
     
