@@ -253,68 +253,87 @@ public class RestauranteLaCasaDorada {
 		}
 		return found;
 	}
-
 	
-	public boolean addProduct(String name, String t,
-			String listOfIngredients, String un) {
-		Product p=searchProduct(name);
-		User creator=searchUser(un);
-		TypeOfProduct type=searchTypeOfProduct(t);
+	public boolean addProduct(String name, int type, String userId) {
+		Product p=searchProductByName(name);
+		User creator=searchUser(userId);
+		TypeOfProduct tp=searchTypeOfProductById(type);
 		boolean added=false;
 		if(p==null) {
-			String[] parts= listOfIngredients.split(";");
-			ArrayList<Ingredient> list= new ArrayList<Ingredient>();
-			for(int i=0; i<parts.length;i++) {
-
-				list.add(searchIngredient(parts[i]));
-			}
-			p= new Product(name, creator, type, list, idProduct);
+			p= new Product(name, creator, tp, idProduct);
 			products.add(p);
 			idProduct++;
 			added=true;
 		}
-
 		return added;
-
 	}
-
-	public boolean deleteProduct(String pName) {
-		boolean deleted=false;
-		Product p=searchProduct(pName);
-		if(p!=null) {
-			int i=products.indexOf(p);
-			products.remove(i);
-			deleted=true;
-
+	
+	public boolean addIngredientToAProduct(Product p, Ingredient ing) {
+		ArrayList<Ingredient> list = p.getListOfIngredients();
+		boolean find = searchProductIngredient(ing.getId());
+		boolean added = false;
+		if(find==false) {
+			list.add(ing);
+			added = true;
 		}
-		return deleted;
+		return added;
+	}
+	
+	public void deleteAnIngredientOfAProduct(Product p, Ingredient ing) {
+		ArrayList<Ingredient> list = p.getListOfIngredients();
+		list.remove(list.indexOf(ing));
+	}
+	
+	public boolean addSizeOfAProduct(Product p, String name, double price) {
+		ArrayList<Size> list = p.getSizes();
+		boolean find = p.findSize(name);
+		boolean added = false;
+		if(find==false) {
+			Size size = new Size(name, price, idSize);
+			list.add(size);
+			idSize++;
+			added = true;
+		}
+		return added;
+	}
+	
+	public void deleteSizeOfAProduct(Product p, Size s) {
+		ArrayList<Size> list = p.getSizes();
+		list.remove(list.indexOf(s));
+	}
+	
+	public boolean updateSizeOfAProduct(Product p, Size selectedSize, String newName, double newPrice) {
+		boolean find = p.findSize(newName);
+		boolean updated = false;
+		if(find==false) {
+			selectedSize.setName(newName);
+			selectedSize.setPrice(newPrice);
+			updated = true;
+		}
+		return updated;
 	}
 
-	public boolean updateProduct(String pName, boolean enabled, String t,
-			String listOfIngredients, String un) {
-		Product p=searchProduct(pName);
+	public void deleteProduct(Product product) {
+		int i=products.indexOf(product);
+		products.remove(i);
+	}
+
+	public boolean updateProduct(Product p, String newName, boolean enabled, int TpId, String userId) {
 		boolean updated=false;
-		if(p!=null) {
+		Product product = searchProductByName(newName);
+		if(product==null) {
+			p.setName(newName);
 			p.setEnabled(enabled);
-			p.setType(searchTypeOfProduct(t));
-
-			String[] parts= listOfIngredients.split(";");
-			ArrayList<Ingredient> list= new ArrayList<Ingredient>();
-			for(int i=0; i<parts.length;i++) {
-
-				list.add(searchIngredient(parts[i]));
-			}
-
-			p.setListOfIngredients(list);
-			p.setModifier(searchUser(un));
+			p.setType(searchTypeOfProductById(TpId));
+			p.setModifier(searchUser(userId));
 			updated=true;
 		}
 		return updated;
 	}
 
 
-	//search the product in the list of products
-	public Product searchProduct(String pName) {
+	//search a product in the list of products by its name
+	public Product searchProductByName(String pName) {
 		boolean found=false;
 		Product p=null;
 		for(int i=0; i<products.size() && !found;i++ ) {
@@ -326,7 +345,7 @@ public class RestauranteLaCasaDorada {
 		return p;
 	}
 	
-	public void createOrder(String sBuyer, String sDeliv, String listProd, String obs) {
+	/*public void createOrder(String sBuyer, String sDeliv, String listProd, String obs) {
 		
 		Client buyer=searchClient(sBuyer);
 		Employee deliverer= searchEmployee(sDeliv);
@@ -349,7 +368,7 @@ public class RestauranteLaCasaDorada {
 		Order order = orders.get(code-1);
 		order.updateState(state);
 	}
-	
+	*/
 	
 	
 

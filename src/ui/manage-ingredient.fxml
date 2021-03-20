@@ -147,7 +147,7 @@
               <content>
                 <AnchorPane>
                      <children>
-                        <TableView fx:id="tvOfIngredients" prefHeight="448.0" prefWidth="673.0">
+                        <TableView fx:id="tvOfIngredients" onMouseClicked="#clickOnTableViewOfIngredients" prefHeight="448.0" prefWidth="673.0">
                           <columns>
                             <TableColumn fx:id="colIdIngredient" maxWidth="1000.0" prefWidth="79.35198974609375" text="ID" visible="false" />
                             <TableColumn fx:id="colNameIngredient" prefWidth="158.481689453125" text="Nombre" />

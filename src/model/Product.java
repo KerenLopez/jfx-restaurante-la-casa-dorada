@@ -14,14 +14,14 @@ public class Product {
 	private TypeOfProduct type;
 	private ArrayList<Ingredient> listOfIngredients;
 	
-	public Product(String name, User creator, TypeOfProduct type, ArrayList<Ingredient> listOfIngredients, int id) {
+	public Product(String name, User creator, TypeOfProduct type, int id) {
 		this.name = name;
 		this.enabled = true;
 		this.creator = creator;
 		this.modifier = creator;
 		this.type = type;
-		this.listOfIngredients = listOfIngredients;
 		this.id = id;
+		listOfIngredients = new ArrayList<Ingredient>();
 		sizes= new ArrayList<Size>();
 		prices= new ArrayList<Double>();
 	}
@@ -117,8 +117,17 @@ public class Product {
 			if(listOfIngredients.get(i).getId()==ingId) {
 				found=true;						
 			}
-		}
-				
+		}		
+		return found;
+	}
+	
+	public boolean findSize(String name) {
+		boolean found=false;
+		for(int i=0; i<sizes.size() && !found;i++ ) {
+			if(sizes.get(i).getName().equalsIgnoreCase(name)) {
+				found=true;						
+			}
+		}		
 		return found;
 	}
 	
