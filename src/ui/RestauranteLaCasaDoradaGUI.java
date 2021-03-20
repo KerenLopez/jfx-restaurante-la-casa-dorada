@@ -283,10 +283,7 @@ public class RestauranteLaCasaDoradaGUI {
     @FXML
     public void clickOnTableViewOfProducts(MouseEvent event) {
     	if (event.isPrimaryButtonDown() && event.getClickCount()==2 && tvOfProducts.getSelectionModel().getSelectedItem() != null) {
-    		btDelete.setDisable(false);
-    		btUpdate.setDisable(false);
-    		ckbxDisable.setDisable(false);
-    		btAdd.setDisable(true);
+    		enableButtons();
     		Product selectedProduct = tvOfProducts.getSelectionModel().getSelectedItem();
     		lbObjectId.setText(""+selectedProduct.getId());
     		txtProductName.setText(selectedProduct.getName());
@@ -418,6 +415,8 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.setContentText("El tamaño ha sido agregado exitosamente a la lista de tamaños del producto");
         		alert2.showAndWait();
     		}
+    		txtSizeName.clear();
+    		txtSizePrice.clear();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -463,6 +462,8 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.setContentText("El tamaño ha sido actualizado exitosamente de la lista de tamaños del producto");
         		alert2.showAndWait();
     		}
+    		txtSizeName.clear();
+    		txtSizePrice.clear();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -488,6 +489,7 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.setContentText("El producto ha sido creado exitosamente");
         		alert2.showAndWait();
     		}
+    		txtProductName.clear();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -536,6 +538,7 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.setContentText("El producto ha sido actualizado exitosamente");
         		alert2.showAndWait();
     		}
+    		txtProductName.clear();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -555,10 +558,7 @@ public class RestauranteLaCasaDoradaGUI {
     @FXML
     public void clickOnTableViewOfTypeOfProducts(MouseEvent event) {
     	if (event.isPrimaryButtonDown() && event.getClickCount()==2 && tvOfSizes.getSelectionModel().getSelectedItems()!=null) {
-    		btDelete.setDisable(false);
-    		btUpdate.setDisable(false);
-    		ckbxDisable.setDisable(false);
-    		btAdd.setDisable(true);
+    		enableButtons();
     		TypeOfProduct selectedTypeOfProduct = tvOfTypeOfProducts.getSelectionModel().getSelectedItem();
     		lbObjectId.setText(""+selectedTypeOfProduct.getId());
     		txtTypeOfProductName.setText(selectedTypeOfProduct.getName());
@@ -598,6 +598,7 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.setContentText("El tipo de ingrediente ha sido creado exitosamente");
         		alert2.showAndWait();
     		}
+    		txtTypeOfProductName.clear();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -650,6 +651,7 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.setContentText("El tipo de ingrediente ha sido actualizado exitosamente");
         		alert2.showAndWait();
     		}
+    		txtTypeOfProductName.clear();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -671,10 +673,7 @@ public class RestauranteLaCasaDoradaGUI {
     @FXML
     public void clickOnTableViewOfIngredients(MouseEvent event) {
     	if (event.isPrimaryButtonDown() && event.getClickCount()==2 && tvOfIngredients.getSelectionModel().getSelectedItem() != null) {
-    		btDelete.setDisable(false);
-    		btUpdate.setDisable(false);
-    		ckbxDisable.setDisable(false);
-    		btAdd.setDisable(true);
+    		enableButtons();
     		Ingredient selectedIng = tvOfIngredients.getSelectionModel().getSelectedItem();
     		lbObjectId.setText(""+selectedIng.getId());
     		txtIngredientName.setText(selectedIng.getName());
@@ -713,7 +712,9 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.setHeaderText(null);
         		alert2.setContentText("El ingrediente ha sido creado exitosamente");
         		alert2.showAndWait();
+        		initializeTableViewOfIngredients();
     		}
+    		txtIngredientName.clear();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -766,6 +767,7 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.setContentText("El ingrediente ha sido actualizado exitosamente");
         		alert2.showAndWait();
     		}
+    		txtIngredientName.clear();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -897,7 +899,9 @@ public class RestauranteLaCasaDoradaGUI {
     	mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
     	initializeTableViewUsers();
     	initializeComboBoxEmployees();
-    	
+    	if(restauranteLaCasaDorada.getUsers().isEmpty()) {
+    		btReturnToMenu.setDisable(true);
+    	}
     }
     
     
@@ -1107,7 +1111,9 @@ public class RestauranteLaCasaDoradaGUI {
 
     	mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
     	initializeTableViewEmployees();
-    	
+    	if(restauranteLaCasaDorada.getEmployees().isEmpty()) {
+    		btReturnToMenu.setDisable(true);
+    	}
 
     	
     }

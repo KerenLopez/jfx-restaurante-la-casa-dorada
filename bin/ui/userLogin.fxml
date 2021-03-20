@@ -11,13 +11,13 @@
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="1019.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label text="Iniciar sesión">
+      <Label text="Iniciar sesión" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Label>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label text="Nombre de usuario: ">
+            <Label text="Nombre de usuario: " textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
@@ -26,7 +26,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label text="Contraseña: ">
+            <Label text="Contraseña: " textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
@@ -35,7 +35,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#logIn" text="Ingresar">
+            <Button mnemonicParsing="false" onAction="#logIn" text="Ingresar" textFill="WHITE">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>

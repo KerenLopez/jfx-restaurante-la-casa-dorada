@@ -28,12 +28,12 @@
          <children>
             <HBox alignment="TOP_RIGHT">
                <children>
-                  <Label text="Usuario: ">
+                  <Label text="Usuario: " textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbUserName" text="-" />
+                  <Label fx:id="lbUserName" text="-" textFill="WHITE" />
                   <Label fx:id="lbUserId" text="id" visible="false">
                      <HBox.margin>
                         <Insets right="20.0" />
@@ -43,17 +43,17 @@
             </HBox>
             <HBox prefHeight="50.0" prefWidth="200.0">
                <children>
-                  <Label text="Gestionar un usuario" textAlignment="CENTER">
+                  <Label text="Gestionar un usuario" textAlignment="CENTER" textFill="WHITE">
                      <padding>
-                        <Insets left="60.0" top="20.0" />
+                        <Insets left="90.0" top="20.0" />
                      </padding>
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <Label text="Lista de usuarios">
+                  <Label text="Lista de usuarios" textFill="WHITE">
                      <padding>
-                        <Insets left="400.0" top="20.0" />
+                        <Insets left="350.0" top="20.0" />
                      </padding>
                      <font>
                         <Font name="System Bold" size="16.0" />
@@ -76,7 +76,7 @@
          <children>
             <VBox>
                <children>
-                  <Label prefHeight="40.0" prefWidth="302.0" text="*Para actualizar o eliminar un usuario determinado, seleccionelo de la lista" textAlignment="CENTER" wrapText="true">
+                  <Label prefHeight="40.0" prefWidth="302.0" text="*Para actualizar o eliminar un usuario determinado, seleccionelo de la lista" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <VBox.margin>
                         <Insets bottom="50.0" left="10.0" top="20.0" />
                      </VBox.margin>
@@ -96,7 +96,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Empleado: " textAlignment="CENTER" wrapText="true" GridPane.rowIndex="1">
+                        <Label text="Empleado: " textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="30.0" right="5.0" />
                            </GridPane.margin>
@@ -109,7 +109,7 @@
                               <Insets left="40.0" />
                            </GridPane.margin>
                         </Button>
-                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <HBox maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <children>
                               <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteUser" text="Eliminar" />
@@ -121,7 +121,7 @@
                            </children>
                         </HBox>
                         <Button fx:id="btReturnToMenu" mnemonicParsing="false" onAction="#returnToMenu" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Label prefHeight="34.0" prefWidth="142.0" text="Nombre de usuario: " wrapText="true" GridPane.rowIndex="2">
+                        <Label prefHeight="34.0" prefWidth="142.0" text="Nombre de usuario: " textFill="WHITE" wrapText="true" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="30.0" />
                            </GridPane.margin>
@@ -134,7 +134,7 @@
                               <Insets right="20.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Label text="Contraseña: " textAlignment="CENTER" wrapText="true" GridPane.rowIndex="3">
+                        <Label text="Contraseña: " textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="3">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>

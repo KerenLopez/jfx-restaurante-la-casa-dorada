@@ -26,7 +26,7 @@
          <children>
             <HBox prefHeight="15.0" prefWidth="200.0">
                <children>
-                  <Label text="Usuario:  ">
+                  <Label text="Usuario:  " textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -50,7 +50,7 @@
             </HBox>
             <HBox prefHeight="50.0" prefWidth="200.0">
                <children>
-                  <Label text="Gestionar un ingrediente" textAlignment="CENTER">
+                  <Label text="Gestionar un ingrediente" textAlignment="CENTER" textFill="WHITE">
                      <padding>
                         <Insets left="80.0" top="20.0" />
                      </padding>
@@ -58,7 +58,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <Label text="Lista de ingredientes agregados">
+                  <Label text="Lista de ingredientes agregados" textFill="WHITE">
                      <padding>
                         <Insets left="280.0" top="20.0" />
                      </padding>
@@ -83,7 +83,7 @@
          <children>
             <VBox>
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="54.0" prefWidth="275.0" text="*Para actualizar o eliminar un determinado ingrediente seleccionelo de la lista." textAlignment="CENTER" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="54.0" prefWidth="275.0" text="*Para actualizar o eliminar un determinado ingrediente seleccionelo de la lista." textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <padding>
                         <Insets left="50.0" />
                      </padding>
@@ -105,7 +105,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Nombre del ingrediente:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
+                        <Label text="Nombre del ingrediente:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="30.0" right="5.0" />
                            </GridPane.margin>
@@ -123,7 +123,7 @@
                               <Insets left="60.0" />
                            </GridPane.margin>
                         </Button>
-                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <HBox maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
                               <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteIngredient" text="Eliminar" />
