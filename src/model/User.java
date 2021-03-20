@@ -9,11 +9,11 @@ public class User {
 	private User modifier;
 	private boolean enabled;
 	
-	public User(Employee employee, String id,String userName, String password) {
+	public User(Employee employee,String userName, String password) {
 		this.employee=employee;
 		this.userName = userName;
 		this.password = password;
-		this.id=id;
+		this.id=employee.getId();
 		this.enabled=true;
 		
 	}
@@ -74,4 +74,31 @@ public class User {
 		this.enabled = enabled;
 	}
 	
+	public String getEmployeeName() {
+		return employee.getName();
+	}
+	
+	public String getEmployeeLastName() {
+		return employee.getLastName();
+	}
+	
+	public String getStatus() {
+		String status = "";
+		if(enabled) {
+			status = "Habilitado";
+		}else {
+			status = "Deshabilitado";
+		}
+		return status;
+	}
+	
+	public String getCreatorName() {
+		String name = creator.getUserName();
+		return name;
+	}
+	
+	public String getModifierName() {
+		String name = modifier.getUserName();
+		return name;
+	}
 }

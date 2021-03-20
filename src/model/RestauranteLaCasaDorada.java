@@ -353,20 +353,20 @@ public class RestauranteLaCasaDorada {
 	
 	
 
-	public boolean createUser(String emplId, String userId, String userName, String password, String unCreatorId){
+	public boolean createUser(String emplId, String userName, String password, String creatorId){
 		boolean created=false;
 		User creator;
 		Employee employee= searchEmployee(emplId);
 		
-		if(!searchEmployeeInUsers(employee) && !searchUserName(userName) && !searchUserId(userId)) {
+		if(!searchEmployeeInUsers(employee) && !searchUserName(userName)) {
 
 			
-			User user=new User(employee, userId, userName, password);
+			User user=new User(employee, userName, password);
 			if(users.isEmpty()) {
 				creator=user;
 			}
 			else {
-				creator=searchUser(unCreatorId);
+				creator=searchUser(creatorId);
 			}
 			user.setCreator(creator);
 
@@ -379,34 +379,33 @@ public class RestauranteLaCasaDorada {
 		return created;
 	}
 	
-	public boolean deleteUser(String userId) {
-		boolean deleted=false;
+	public void deleteUser(String userId) {
 		User user=searchUser(userId);
-		if(user!=null) {
-			int i=users.indexOf(user);
-			users.remove(i);
-			deleted=true;
+		int i=users.indexOf(user);
+		users.remove(i);
 
-		}
-		
-		return deleted;
+
 	}
 	
-	public boolean updateUser(String userId, String newUserId, String emplId, String userName, String password, boolean enabled,String unModifierId) {
+	public boolean updateUser(String userId,String emplId, String userName, String password, boolean enabled,String modifierId) {
 		boolean updated=false;
 		
 		Employee employee= searchEmployee(emplId);
+		User user=searchUser(userId);
+		boolean findUserEmpl=false;
+		if(user.getEmployee()!=employee) {
+			findUserEmpl=searchEmployeeInUsers(employee);
+		}
 
-		if(!searchEmployeeInUsers(employee) && !searchUserName(userName) && !searchUserId(newUserId)) {
-			User user=searchUser(userId);
-			User modifier=searchUser(unModifierId);
+		if(!findUserEmpl && !searchUserName(userName)) {
+			User modifier=searchUser(modifierId);
 			
 			user.setUserName(userName);
 			user.setPassword(password);
 			user.setModifier(modifier);
 			user.setEmployee(employee);
 			user.setEnabled(enabled);
-			user.setId(newUserId);
+			user.setId(emplId);
 			updated=true;
 		}
 
@@ -476,11 +475,108 @@ public class RestauranteLaCasaDorada {
 		return c;
 	}
 	
-	public Employee searchEmployee(String id) {
-		//boolean found=false;
-		Employee e=null;
+	
+	
+	public ArrayList<String>  employeesToString() {
+		ArrayList<String> emplString= new ArrayList<String>();
+		for(int i=0; i<employees.size(); i++) {
+			emplString.add(employees.get(i).idAndName());
+		}
+		return emplString;
+	}
+	
+	public String logInUser(String userName, String password) {
+		boolean logIn=false;
+		String id="";
+		for(int i=0; i<users.size() && !logIn; i++) {
+			
+			if(users.get(i).getUserName().equalsIgnoreCase(userName)){
+				logIn=true;
+				
+				if(users.get(i).getPassword().equals(password)) {
+					id=users.get(i).getId();
+				}
+			}
+
+		}
+		return id;
+	}
+
+
+	public boolean createEmployee(String id, String name, String lastName, String creatorId) {
+
+		boolean created=false;
+
+		Employee employee= searchEmployee(id);
+		User creator;
+
+
+		if(employee==null) {
+			
+			if(creatorId.equals("id")) {
+				creator=null;
+			}
+			else {
+				creator=searchUser(creatorId);
+			}
+			employee= new Employee(name,lastName,id, creator);
+			employees.add(employee);
+			created=true;
+			
+		}
 		
-		return e;
+
+
+		return created;
+	}
+	
+	public void deleteEmployee(String emplId) {
+		Employee employee=searchEmployee(emplId);
+		int i=employees.indexOf(employee);
+		employees.remove(i);
+
+
+	}
+	
+	public boolean updateEmployee(String oldEmplId,String newEmplId, String name, String lastName, boolean enabled,String modifierId) {
+		boolean updated=false;
+		
+		Employee employee= searchEmployee(oldEmplId);
+		Employee employee2= searchEmployee(newEmplId);
+		
+		boolean findEmpl=false;
+		if(employee!=employee2 && employee2!=null) {
+			findEmpl=true;
+		}
+
+		if(!findEmpl) {
+			User modifier=searchUser(modifierId);
+			
+			employee.setName(name);
+			employee.setLastName(lastName);
+			employee.setModifier(modifier);
+			employee.setEnabled(enabled);
+			employee.setId(newEmplId);
+			updated=true;
+		}
+
+
+		return updated;
+	}
+
+	public Employee searchEmployee(String emplId) {
+		boolean found=false;
+		
+		Employee empl=null;
+		for(int i=0; i<employees.size() && !found;i++ ) {
+			if(employees.get(i).getId().equals(emplId)) {
+				empl=employees.get(i);
+				found=true;						
+			}
+		}
+		return empl;
+		
+		
 	}
 
 }

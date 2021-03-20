@@ -4,5 +4,8 @@ public enum State {
 	SOLICITADO,
 	EN_PROCESO,
 	ENVIADO,
-	ENTREGADO;
+	ENTREGADO,
+	CANCELADO;
 }
+
+

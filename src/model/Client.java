@@ -6,8 +6,8 @@ public class Client extends Person {
 	private String obstervations;
 	
 	public Client(String name, String lastName, String id, String address, String phone,
-			String obstervations) {
-		super(name, lastName, id);
+			String obstervations, User creator) {
+		super(name, lastName, id, creator);
 		this.address = address;
 		this.phone = phone;
 		this.obstervations = obstervations;
@@ -36,5 +36,7 @@ public class Client extends Person {
 	public void setObstervations(String obstervations) {
 		this.obstervations = obstervations;
 	}
+	
+	
 	
 }
