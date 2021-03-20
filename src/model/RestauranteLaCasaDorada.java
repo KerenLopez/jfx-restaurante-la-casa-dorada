@@ -530,11 +530,16 @@ public class RestauranteLaCasaDorada {
 		return created;
 	}
 	
-	public void deleteEmployee(String emplId) {
+	public boolean deleteEmployee(String emplId) {
+		boolean deleted=false;
 		Employee employee=searchEmployee(emplId);
-		int i=employees.indexOf(employee);
-		employees.remove(i);
-
+		if(!searchEmployeeInUsers(employee)) {
+			int i=employees.indexOf(employee);
+			employees.remove(i);
+			deleted=true;
+		}
+		
+		return deleted;
 
 	}
 	
@@ -545,8 +550,10 @@ public class RestauranteLaCasaDorada {
 		Employee employee2= searchEmployee(newEmplId);
 		
 		boolean findEmpl=false;
-		if(employee!=employee2 && employee2!=null) {
-			findEmpl=true;
+		if(employee!=employee2) {
+			if(employee2!=null) {
+				findEmpl=true;
+			}
 		}
 
 		if(!findEmpl) {

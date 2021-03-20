@@ -28,7 +28,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbUserName" text="nombre de usuario" />
+                  <Label fx:id="lbUserName" text="-" />
                   <Label fx:id="lbUserId" text="id" visible="false">
                      <HBox.margin>
                         <Insets left="20.0" />
@@ -122,7 +122,7 @@
                               </Button>
                            </children>
                         </HBox>
-                        <Button mnemonicParsing="false" onAction="#returnToMenu" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Button fx:id="btReturnToMenu" mnemonicParsing="false" onAction="#returnToMenu" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <Label text="Apellidos: " textAlignment="CENTER" wrapText="true" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="30.0" />
@@ -155,7 +155,7 @@
               <content>
                 <AnchorPane>
                      <children>
-                        <TableView fx:id="tvListEmployees" prefHeight="458.0" prefWidth="585.0">
+                        <TableView fx:id="tvListEmployees" onMouseClicked="#clickOnTableViewEmployees" prefHeight="458.0" prefWidth="585.0">
                           <columns>
                             <TableColumn fx:id="colNameEmployee" prefWidth="75.0" text="Nombres" />
                             <TableColumn fx:id="colLastNameEmployee" prefWidth="75.0" text="Apellidos" />

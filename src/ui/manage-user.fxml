@@ -33,7 +33,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbUserName" text="nombre usuario" />
+                  <Label fx:id="lbUserName" text="-" />
                   <Label fx:id="lbUserId" text="id" visible="false">
                      <HBox.margin>
                         <Insets right="20.0" />
@@ -89,11 +89,10 @@
                     <rowConstraints>
                       <RowConstraints />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="41.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="29.0" minHeight="20.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
@@ -105,13 +104,13 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateUser" text="Actualizar" GridPane.rowIndex="6">
+                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateUser" text="Actualizar" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets left="40.0" />
                            </GridPane.margin>
                         </Button>
-                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <HBox maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <HBox maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <children>
                               <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteUser" text="Eliminar" />
                               <Button fx:id="btAdd" mnemonicParsing="false" onAction="#createUser" text="Agregar">
@@ -121,8 +120,8 @@
                               </Button>
                            </children>
                         </HBox>
-                        <Button mnemonicParsing="false" onAction="#returnToMenu" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <Label prefHeight="34.0" prefWidth="142.0" text="Nombre de usuario: " wrapText="true" GridPane.rowIndex="3">
+                        <Button fx:id="btReturnToMenu" mnemonicParsing="false" onAction="#returnToMenu" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label prefHeight="34.0" prefWidth="142.0" text="Nombre de usuario: " wrapText="true" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="30.0" />
                            </GridPane.margin>
@@ -130,12 +129,12 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtUserName" prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <TextField fx:id="txtUserName" prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets right="20.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Label text="Contraseña: " textAlignment="CENTER" wrapText="true" GridPane.rowIndex="4">
+                        <Label text="Contraseña: " textAlignment="CENTER" wrapText="true" GridPane.rowIndex="3">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -143,26 +142,13 @@
                               <Insets left="30.0" />
                            </GridPane.margin>
                         </Label>
-                        <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets right="20.0" />
                            </GridPane.margin>
                         </PasswordField>
                         <ComboBox fx:id="cbEmployee" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="lbObjectId" text="objectId" visible="false" GridPane.rowIndex="7" />
-                        <Label alignment="CENTER" prefHeight="34.0" prefWidth="142.0" text="Número de identificación: " wrapText="true" GridPane.rowIndex="2">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="30.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <TextField fx:id="txtId" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets right="20.0" />
-                           </GridPane.margin>
-                        </TextField>
+                        <Label fx:id="lbObjectId" text="objectId" visible="false" GridPane.rowIndex="6" />
                      </children>
                   </GridPane>
                </children>
@@ -171,7 +157,7 @@
               <content>
                 <AnchorPane>
                      <children>
-                        <TableView fx:id="tvListUsers" prefHeight="458.0" prefWidth="659.0">
+                        <TableView fx:id="tvListUsers" onMouseClicked="#clickOnTableViewUsers" prefHeight="458.0" prefWidth="659.0">
                           <columns>
                             <TableColumn fx:id="colNameUser" prefWidth="75.0" text="Nombres" />
                             <TableColumn fx:id="colLastNameUser" prefWidth="75.0" text="Apellidos" />
