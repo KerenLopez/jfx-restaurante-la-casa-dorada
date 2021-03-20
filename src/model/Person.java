@@ -9,11 +9,12 @@ public abstract class Person {
 	private User creator;
 	private User modifier;
 	
-	public Person(String name, String lastName, String id) {
+	public Person(String name, String lastName, String id, User creator) {
 		this.name = name;
 		this.lastName = lastName;
 		this.id = id;
 		this.enabled = true;
+		this.creator=creator;
 	}
 
 	public String getName() {
@@ -64,7 +65,25 @@ public abstract class Person {
 		this.modifier = modifier;
 	}
 	
+	public String getStatus() {
+		String status = "";
+		if(enabled) {
+			status = "Habilitado";
+		}else {
+			status = "Deshabilitado";
+		}
+		return status;
+	}
 	
+	public String getCreatorName() {
+		String name = creator.getUserName();
+		return name;
+	}
+	
+	public String getModifierName() {
+		String name = modifier.getUserName();
+		return name;
+	}
 	
 	
 	

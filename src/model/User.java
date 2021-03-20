@@ -9,11 +9,11 @@ public class User {
 	private User modifier;
 	private boolean enabled;
 	
-	public User(Employee employee, String id,String userName, String password) {
+	public User(Employee employee,String userName, String password) {
 		this.employee=employee;
 		this.userName = userName;
 		this.password = password;
-		this.id=id;
+		this.id=employee.getId();
 		this.enabled=true;
 		
 	}

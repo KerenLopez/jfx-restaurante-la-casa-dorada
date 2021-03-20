@@ -3,8 +3,8 @@ package model;
 public class Employee extends Person{
 	private int numberOrders;
 	
-	public Employee(String name, String lastName, String id) {
-		super(name, lastName, id);
+	public Employee(String name, String lastName, String id, User creator) {
+		super(name, lastName, id, creator);
 		setNumberOrders(0);
 	}
 
