@@ -1098,13 +1098,17 @@ public class RestauranteLaCasaDoradaGUI {
     public void manageAnEmployee(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-employee.fxml"));
     	fxmlLoader.setController(this);
-    	Parent menuPane = fxmlLoader.load();
+
+    	Parent emplPane = fxmlLoader.load();
+
     	mainPanel.getChildren().clear();
-    	mainPanel.setCenter(menuPane);
+
+    	mainPanel.setCenter(emplPane);
+
     	mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
     	initializeTableViewEmployees();
     	
-    	
+
     	
     }
     
