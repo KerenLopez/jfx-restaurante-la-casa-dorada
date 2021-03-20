@@ -11,7 +11,10 @@ public class RestauranteLaCasaDorada {
 	private ArrayList<Employee> employees;
 	private ArrayList<Client> clients;
 	private ArrayList<User> users;
-
+	private int idIngredient;
+	private int idProduct;
+	private int idTypeOfProduct;
+	private int idSize;
 
 	public RestauranteLaCasaDorada() {
 		orders= new ArrayList<Order>();
@@ -21,7 +24,10 @@ public class RestauranteLaCasaDorada {
 		employees= new ArrayList<Employee>() ;
 		clients= new ArrayList<Client>(); 	
 		users= new ArrayList<User>() ;
-
+		idIngredient = 1;
+		idProduct = 1;
+		idTypeOfProduct = 1;
+		idSize = 1;
 	}
 
 
@@ -100,8 +106,9 @@ public class RestauranteLaCasaDorada {
 
 		boolean added=false;
 		if(ingredient==null) {
-			ingredient= new Ingredient(name, creator);
+			ingredient= new Ingredient(name, creator, idIngredient);
 			ingredients.add(ingredient);
+			idIngredient++;
 			added=true;
 		}
 
@@ -175,8 +182,9 @@ public class RestauranteLaCasaDorada {
 
 		boolean added=false;
 		if(top==null) {
-			top= new  TypeOfProduct(name, creator);
+			top= new  TypeOfProduct(name, creator, idTypeOfProduct);
 			typesOfProducts.add(top);
+			idTypeOfProduct++;
 			added=true;
 		}
 		return added;
@@ -260,8 +268,9 @@ public class RestauranteLaCasaDorada {
 
 				list.add(searchIngredient(parts[i]));
 			}
-			p= new Product(name, creator, type, list);
+			p= new Product(name, creator, type, list, idProduct);
 			products.add(p);
+			idProduct++;
 			added=true;
 		}
 

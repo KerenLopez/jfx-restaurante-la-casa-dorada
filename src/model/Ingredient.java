@@ -8,11 +8,12 @@ public class Ingredient {
 	private User creator;
 	private User modifier;
 	
-	public Ingredient(String name, User creator) {
+	public Ingredient(String name, User creator, int id) {
 		this.name = name;
 		this.enabled = true;
 		this.creator = creator;
 		this.modifier = creator;
+		this.id = id; 
 	}
 	
 	public String getName() {
@@ -50,7 +51,7 @@ public class Ingredient {
 	}
 	
 	public String getCreatorName() {
-		String name = creator.getName();
+		String name = creator.getUserName();
 		return name;
 	}
 	
@@ -63,7 +64,7 @@ public class Ingredient {
 	}
 	
 	public String getModifierName() {
-		String name = modifier.getName();
+		String name = modifier.getUserName();
 		return name;
 	}
 	

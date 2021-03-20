@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -12,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
@@ -23,9 +25,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import model.Ingredient;
 import model.Product;
 import model.RestauranteLaCasaDorada;
+import model.Size;
 import model.TypeOfProduct;
 import model.User;
 
@@ -35,6 +39,15 @@ public class RestauranteLaCasaDoradaGUI {
 	
 	@FXML
 	private BorderPane mainPanel;
+	
+	@FXML
+	private VBox createProductForm;
+	
+	@FXML
+    private VBox sizeForm;
+	
+	@FXML
+    private VBox IngredientForm;
 
 	@FXML
 	private TextField txtIngredientName;
@@ -44,6 +57,12 @@ public class RestauranteLaCasaDoradaGUI {
 	
 	@FXML
 	private TextField txtProductName;
+	
+	@FXML
+    private TextField txtSizeName;
+
+    @FXML
+    private TextField txtSizePrice;
 	
 	@FXML
 	private Label lbUserName;
@@ -59,9 +78,6 @@ public class RestauranteLaCasaDoradaGUI {
 	
 	@FXML
     private TableView<Ingredient> tvOfIngredients;
-
-	@FXML
-    private TableColumn<Ingredient, Integer> colIdIngredient;
 
     @FXML
     private TableColumn<Ingredient, String> colNameIngredient;
@@ -79,9 +95,6 @@ public class RestauranteLaCasaDoradaGUI {
     private TableView<TypeOfProduct> tvOfTypeOfProducts;
 
     @FXML
-    private TableColumn<TypeOfProduct, Integer> colIdTypeOfProduct;
-
-    @FXML
     private TableColumn<TypeOfProduct, String> colNameTypeOfProduct;
 
     @FXML
@@ -92,6 +105,45 @@ public class RestauranteLaCasaDoradaGUI {
 
     @FXML
     private TableColumn<TypeOfProduct, String> colModifierTypeOfProduct;
+    
+    @FXML
+    private TableView<Product> tvOfProducts;
+
+    @FXML
+    private TableColumn<Product, String> colNameProduct;
+
+    @FXML
+    private TableColumn<Product, String> colStatusProduct;
+
+    @FXML
+    private TableColumn<Product, String> colCreatorProduct;
+
+    @FXML
+    private TableColumn<Product, String> colModifierProduct;
+
+    @FXML
+    private TableView<Ingredient> tvOfAddedIngredients;
+
+    @FXML
+    private TableColumn<Ingredient, String> colNameIngredient1;
+
+    @FXML
+    private TableColumn<Ingredient, String> colStatusIngredient1;
+
+    @FXML
+    private TableColumn<Ingredient, String> colCreatorIngredient1;
+
+    @FXML
+    private TableColumn<Ingredient, String> colModifierIngredient1;
+
+    @FXML
+    private TableView<Size> tvOfSizes;
+
+    @FXML
+    private TableColumn<Size, String> colNameSize;
+
+    @FXML
+    private TableColumn<Size, Double> colSizePrice;
 
 	@FXML
 	private CheckBox ckbxDisable;
@@ -130,52 +182,100 @@ public class RestauranteLaCasaDoradaGUI {
 
     }
 	
-	private void initializeListViewOfProducts() {
+	private void initializeTableViewOfProducts() {
     	ObservableList<Product> observableList;
     	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.getProducts());
-    	lvProducts.setItems(observableList);
-    	lvProducts.setVisible(true);
-    	lvProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	tvOfProducts.setItems(observableList);
+    	colNameProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Name"));
+    	colStatusProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Status"));
+    	colCreatorProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("CreatorName"));
+    	colModifierProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("ModifierName"));
+    	tvOfProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	tvOfProducts.setVisible(true);
 	}
 
     @FXML
     public void manageAProduct(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("add-product.fxml"));
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-product.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
 		mainPanel.getChildren().clear();
 		mainPanel.setCenter(menuPane);
 		mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-		initializeListViewOfProducts();
+		createProductForm.setVisible(true);
+		initializeTableViewOfProducts();
 		ObservableList<TypeOfProduct> typesOfProductsList = FXCollections.observableArrayList(restauranteLaCasaDorada.getTypesOfProducts());
     	cmbxTypeOfProduct.setItems(typesOfProductsList);
-		if (lvProducts.getSelectionModel().getSelectedItem() != null) {
+    }
+
+    @FXML
+    public void clickOnTableViewOfProducts(MouseEvent event) {
+    	if (event.isPrimaryButtonDown() && event.getClickCount()==2 && tvOfProducts.getSelectionModel().getSelectedItem() != null) {
     		btDelete.setDisable(false);
     		btUpdate.setDisable(false);
     		ckbxDisable.setDisable(false);
     		btAdd.setDisable(true);
-    		txtIngredientName.setEditable(false);
+    		Product selectedProduct = tvOfProducts.getSelectionModel().getSelectedItem();
+    		lbObjectId.setText(""+selectedProduct.getId());
+    		txtProductName.setText(selectedProduct.getName());
+    		cmbxTypeOfProduct.setValue(selectedProduct.getType());
+    		if(selectedProduct.getEnabled()==false) {
+    			ckbxDisable.setSelected(true);
+    		}
     	}
     }
-    
-    private void initializeListViewOfAddedIngredients() {
+   
+    private void initializeTableViewOfAddedIngredients() {
     	ObservableList<Ingredient> observableList;
     	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.getIngredients());
-    	lvAddedIngredients.setItems(observableList);
-    	lvAddedIngredients.setVisible(true);
-    	lvAddedIngredients.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    	tvOfAddedIngredients.setItems(observableList);
+    	colNameIngredient1.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("Name"));
+    	colStatusIngredient1.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("Status"));
+    	colCreatorIngredient1.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("CreatorName"));
+    	colModifierIngredient1.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("ModifierName"));
+    	tvOfAddedIngredients.setVisible(true);
+    	tvOfAddedIngredients.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
+    
+    @FXML
+    public void clickOnTableViewOfAddedIngredients(MouseEvent event) {
+    	if (event.isPrimaryButtonDown() && event.getClickCount()==2 && tvOfAddedIngredients.getSelectionModel().getSelectedItems()!=null) {
+    		btDelete.setDisable(true);
+    		btAdd.setDisable(true);
+    		Ingredient selectedIngredient= tvOfAddedIngredients.getSelectionModel().getSelectedItem();
+    		txtIngredientName.setText(selectedIngredient.getName());
+    	}
+    }
 
     @FXML
     public void chooseIngredients(ActionEvent event) {
-    	initializeListViewOfAddedIngredients();
+    	tvOfProducts.setVisible(false);
+    	initializeTableViewOfAddedIngredients();
     	btSaveIngredients.setDisable(true);
     }
     
     @FXML
     public void saveIngredients(ActionEvent event) {
-    	ObservableList<Ingredient> selectedItems =  lvAddedIngredients.getSelectionModel().getSelectedItems();
+    	
     	initializeListViewOfProducts();
+    	tvOfAddedIngredients.setVisible(false);
+    }
+    
+    private void initializeTableViewOfSizes() {
+    	ObservableList<Size> observableList;
+    	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.getIngredients());
+    	tvOfAddedIngredients.setItems(observableList);
+    	colNameIngredient1.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("Name"));
+    	colStatusIngredient1.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("Status"));
+    	colCreatorIngredient1.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("CreatorName"));
+    	colModifierIngredient1.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("ModifierName"));
+    	tvOfAddedIngredients.setVisible(true);
+    	tvOfAddedIngredients.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+	}
+    
+    @FXML
+    public void clickOnTableViewOfSizes(MouseEvent event) {
+
     }
     
     @FXML
@@ -207,7 +307,6 @@ public class RestauranteLaCasaDoradaGUI {
     	ObservableList<TypeOfProduct> observableList;
     	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.getTypesOfProducts());
     	tvOfTypeOfProducts.setItems(observableList);
-    	colIdTypeOfProduct.setCellValueFactory(new PropertyValueFactory<TypeOfProduct, Integer>("Id"));
     	colNameTypeOfProduct.setCellValueFactory(new PropertyValueFactory<TypeOfProduct, String>("Name"));
     	colStatusTypeOfProduct.setCellValueFactory(new PropertyValueFactory<TypeOfProduct, String>("Status"));
     	colCreatorTypeOfProduct.setCellValueFactory(new PropertyValueFactory<TypeOfProduct, String>("CreatorName"));
@@ -328,7 +427,6 @@ public class RestauranteLaCasaDoradaGUI {
     	ObservableList<Ingredient> observableList;
     	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.getIngredients());
     	tvOfIngredients.setItems(observableList);
-    	colIdIngredient.setCellValueFactory(new PropertyValueFactory<Ingredient, Integer>("Id"));
     	colNameIngredient.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("Name"));
     	colStatusIngredient.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("Status"));
     	colCreatorIngredient.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("CreatorName"));

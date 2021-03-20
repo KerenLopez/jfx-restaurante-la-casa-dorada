@@ -7,23 +7,23 @@ public class Product {
 	private int id;
 	private String name;
 	private boolean enabled;
-	private ArrayList<String> sizes;
+	private ArrayList<Size> sizes;
 	private ArrayList<Double> prices;
 	private User creator;
 	private User modifier;
 	private TypeOfProduct type;
 	private ArrayList<Ingredient> listOfIngredients;
 	
-	public Product(String name, User creator, TypeOfProduct type, ArrayList<Ingredient> listOfIngredients) {
+	public Product(String name, User creator, TypeOfProduct type, ArrayList<Ingredient> listOfIngredients, int id) {
 		this.name = name;
 		this.enabled = true;
 		this.creator = creator;
 		this.modifier = creator;
 		this.type = type;
 		this.listOfIngredients = listOfIngredients;
-		sizes= new ArrayList<String>();
+		this.id = id;
+		sizes= new ArrayList<Size>();
 		prices= new ArrayList<Double>();
-		
 	}
 	
 	public String getName() {
@@ -34,7 +34,18 @@ public class Product {
 		this.name = name;
 	}
 	
-	public boolean isEnabled() {
+	public String getStatus() {
+		String status = "";
+		if(enabled==true) {
+			status = "Habilitado";
+		}else {
+			status = "Deshabilitado";
+		}
+		return status;
+	}
+	
+	
+	public boolean getEnabled() {
 		return enabled;
 	}
 	
@@ -42,11 +53,11 @@ public class Product {
 		this.enabled = enabled;
 	}
 	
-	public ArrayList<String> getSizes() {
+	public ArrayList<Size> getSizes() {
 		return sizes;
 	}
 	
-	public void setSizes(ArrayList<String> sizes) {
+	public void setSizes(ArrayList<Size> sizes) {
 		this.sizes = sizes;
 	}
 	
@@ -66,12 +77,22 @@ public class Product {
 		this.creator = creator;
 	}
 	
+	public String getCreatorName() {
+		String name = creator.getUserName();
+		return name;
+	}
+	
 	public User getModifier() {
 		return modifier;
 	}
 	
 	public void setModifier(User modifier) {
 		this.modifier = modifier;
+	}
+	
+	public String getModifierName() {
+		String name = modifier.getUserName();
+		return name;
 	}
 	
 	public TypeOfProduct getType() {

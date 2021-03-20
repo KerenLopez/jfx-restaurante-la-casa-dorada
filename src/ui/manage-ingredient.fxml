@@ -52,7 +52,7 @@
                <children>
                   <Label text="Gestionar un ingrediente" textAlignment="CENTER">
                      <padding>
-                        <Insets left="70.0" top="20.0" />
+                        <Insets left="80.0" top="20.0" />
                      </padding>
                      <font>
                         <Font name="System Bold" size="16.0" />
@@ -83,7 +83,7 @@
          <children>
             <VBox>
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="275.0" text="*Para actualizar o elminar un determinado ingrediente seleccionelo de la lista." textAlignment="CENTER" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="54.0" prefWidth="275.0" text="*Para actualizar o eliminar un determinado ingrediente seleccionelo de la lista." textAlignment="CENTER" wrapText="true">
                      <padding>
                         <Insets left="50.0" />
                      </padding>
