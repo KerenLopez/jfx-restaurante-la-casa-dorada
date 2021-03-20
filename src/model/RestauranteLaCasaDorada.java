@@ -476,5 +476,22 @@ public class RestauranteLaCasaDorada {
 		}
 		return emplString;
 	}
+	
+	public String logInUser(String userName, String password) {
+		boolean logIn=false;
+		String id="";
+		for(int i=0; i<users.size() && !logIn; i++) {
+			
+			if(users.get(i).getUserName().equalsIgnoreCase(userName)){
+				logIn=true;
+				
+				if(users.get(i).getPassword().equals(password)) {
+					id=users.get(i).getId();
+				}
+			}
+
+		}
+		return id;
+	}
 
 }

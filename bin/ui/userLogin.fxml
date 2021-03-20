@@ -35,14 +35,6 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#loadRegister" text="Registrarse">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
             <Button mnemonicParsing="false" onAction="#logIn" text="Ingresar">
                <HBox.margin>
                   <Insets left="10.0" />

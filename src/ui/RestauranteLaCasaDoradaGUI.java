@@ -1,5 +1,6 @@
 package ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -12,10 +13,13 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
@@ -730,10 +734,7 @@ public class RestauranteLaCasaDoradaGUI {
         		alert1.setContentText("El usuario ha sido actualizado exitosamente!");
         		alert1.showAndWait();
         		
-        		txtUserName.clear();
-            	passwordField.clear();
-            	txtIdUser.clear();
-            	cbEmployee.setValue("Escoja un empleado");
+        		
     		}else {
     			Alert alert2 = new Alert(AlertType.ERROR);
     			alert2.setTitle("Error de validacion");
@@ -745,6 +746,52 @@ public class RestauranteLaCasaDoradaGUI {
     		showValidationErrorAlert();
     	}
     }
+    
+    
+    @FXML
+    public void loadLogIn(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("userLogin.fxml"));
+
+		fxmlLoader.setController(this);
+    	Parent login= fxmlLoader.load();
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(login);
+		mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+
+    }
+    
+    @FXML
+    public void logIn(ActionEvent event) throws IOException {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setHeaderText(null);
+
+		if(txtUserName.getText().isEmpty() && passwordField.getText().isEmpty()) {
+    		showValidationErrorAlert();
+
+		}
+		else {
+			String id=restauranteLaCasaDorada.logInUser(txtUserName.getText(), passwordField.getText());
+			if(!id.isEmpty()){
+
+				showMenu();
+				lbUserName.setText(txtUserName.getText());
+
+				lbUserId.setText(id);
+
+			}
+			else {
+				alert.setTitle("No se pudo iniciar sesión");
+				alert.setContentText("El usuario o la contraseña son incorrectos. Intente nuevamente");
+
+				alert.showAndWait();
+			}
+		}
+		
+		txtUserName.clear();
+    	passwordField.clear();
+		
+    }
+    
 
     
     

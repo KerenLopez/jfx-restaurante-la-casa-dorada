@@ -74,7 +74,7 @@
          <children>
             <VBox>
                <children>
-                  <Label text="*Para actualizar o elminar un empleado determinado, seleccionelo de la lista" textAlignment="CENTER" wrapText="true">
+                  <Label text="*Para actualizar o eliminar un empleado determinado, seleccionelo de la lista" textAlignment="CENTER" wrapText="true">
                      <VBox.margin>
                         <Insets bottom="50.0" left="10.0" top="30.0" />
                      </VBox.margin>
