@@ -33,6 +33,7 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Restaurante La Casa Dorada");
 		primaryStage.show();
+		
 		if (restauranteLaCasaDorada.getEmployees().isEmpty()){
 			restauranteLaCasaDoradagui.manageAnEmployee(null);
 
