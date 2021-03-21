@@ -183,6 +183,16 @@ public class RestauranteLaCasaDorada {
 		}
 		return found;
 	}
+	
+	public ArrayList<TypeOfProduct> returnEnabledTypesOfProducts(){
+		ArrayList<TypeOfProduct> list = new ArrayList<TypeOfProduct>();
+		for(int k=0; k<typesOfProducts.size();k++) {
+			if(typesOfProducts.get(k).isEnabled()) {
+				list.add(typesOfProducts.get(k));
+			}
+		}
+		return list;
+	}
 
 	public boolean addTypeOfProduct(String name, String userId) {
 		TypeOfProduct top=searchTypeOfProductByName(name);
@@ -267,6 +277,16 @@ public class RestauranteLaCasaDorada {
 			}
 		}
 		return found;
+	}
+	
+	public ArrayList<Ingredient> returnEnabledIngredients(){
+		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+		for(int k=0; k<ingredients.size();k++) {
+			if(ingredients.get(k).isEnabled()) {
+				list.add(ingredients.get(k));
+			}
+		}
+		return list;
 	}
 	
 	public boolean addProduct(String name, int type, String userId) {

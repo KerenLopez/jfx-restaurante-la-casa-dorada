@@ -122,21 +122,6 @@ public class RestauranteLaCasaDoradaGUI {
     private TableColumn<Product, String> colModifierProduct;
 
     @FXML
-    private TableView<Ingredient> tvOfAddedIngredients;
-
-    @FXML
-    private TableColumn<Ingredient, String> colNameIngredient1;
-
-    @FXML
-    private TableColumn<Ingredient, String> colStatusIngredient1;
-
-    @FXML
-    private TableColumn<Ingredient, String> colCreatorIngredient1;
-
-    @FXML
-    private TableColumn<Ingredient, String> colModifierIngredient1;
-
-    @FXML
     private TableView<Size> tvOfSizes;
 
     @FXML
@@ -165,6 +150,21 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     private Button btSizes;
+    
+    @FXML
+    private Button btUpdateSize;
+
+    @FXML
+    private Button btDeleteSize;
+
+    @FXML
+    private Button btAddSize;
+    
+    @FXML
+    private Button btDeleteIngredient;
+
+    @FXML
+    private Button btAddIngredient;
     
     @FXML
 	private TextField txtUserName;
@@ -233,6 +233,18 @@ public class RestauranteLaCasaDoradaGUI {
 	private TableColumn<Employee, String> colModifierEmployee;
 	
 	@FXML
+    private TableView<Ingredient> tvOfAddedIngredients;
+
+    @FXML
+    private TableColumn<Ingredient, String> colNameAddedIngredients;
+    
+    @FXML
+    private TableView<Ingredient> tvOfIngredientsInAProduct;
+
+    @FXML
+    private TableColumn<Ingredient, String> colNameIngredientsOfAProduct;
+	
+	@FXML
 	private Button btReturnToMenu;
 	
 	@FXML
@@ -283,8 +295,9 @@ public class RestauranteLaCasaDoradaGUI {
 		mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 		createProductForm.setVisible(true);
 		initializeTableViewOfProducts();
-		ObservableList<TypeOfProduct> typesOfProductsList = FXCollections.observableArrayList(restauranteLaCasaDorada.getTypesOfProducts());
+		ObservableList<TypeOfProduct> typesOfProductsList = FXCollections.observableArrayList(restauranteLaCasaDorada.returnEnabledTypesOfProducts());
     	cmbxTypeOfProduct.setItems(typesOfProductsList);
+    	cmbxTypeOfProduct.setPromptText("Elija uno");
     }
 
     @FXML
@@ -303,22 +316,38 @@ public class RestauranteLaCasaDoradaGUI {
    
 	private void initializeTableViewOfAddedIngredients() {
     	ObservableList<Ingredient> observableList;
-    	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.getIngredients());
+    	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.returnEnabledIngredients());
     	tvOfAddedIngredients.setItems(observableList);
-    	colNameIngredient1.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("Name"));
-    	colStatusIngredient1.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("Status"));
-    	colCreatorIngredient1.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("CreatorName"));
-    	colModifierIngredient1.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("ModifierName"));
+    	colNameAddedIngredients.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("Name"));
     	tvOfAddedIngredients.setVisible(true);
     	tvOfAddedIngredients.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+	}
+	
+	private void initializeTableViewOfIngredientsInAProduct() {
+    	ObservableList<Ingredient> observableList;
+    	observableList = FXCollections.observableArrayList(tvOfProducts.getSelectionModel().getSelectedItem().getListOfIngredients());
+    	tvOfIngredientsInAProduct.setItems(observableList);
+    	colNameIngredientsOfAProduct.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("Name"));
+    	tvOfIngredientsInAProduct.setVisible(true);
+    	tvOfIngredientsInAProduct.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
     
     @FXML
     public void clickOnTableViewOfAddedIngredients(MouseEvent event) {
-    	if (event.isPrimaryButtonDown() && event.getClickCount()==2 && tvOfAddedIngredients.getSelectionModel().getSelectedItems()!=null) {
-    		btDelete.setDisable(true);
-    		btAdd.setDisable(true);
+    	if (tvOfAddedIngredients.getSelectionModel().getSelectedItems()!=null) {
+    		btAddIngredient.setDisable(false);
+    		btDeleteIngredient.setDisable(true);
     		Ingredient selectedIngredient= tvOfAddedIngredients.getSelectionModel().getSelectedItem();
+    		txtIngredientName.setText(selectedIngredient.getName());
+    	}
+    }
+    
+    @FXML
+    public void clickOnTableViewOfIngredientsInAProduct(MouseEvent event) {
+    	if (tvOfIngredientsInAProduct.getSelectionModel().getSelectedItems()!=null) {
+    		btDeleteIngredient.setDisable(false);
+    		btAddIngredient.setDisable(true);
+    		Ingredient selectedIngredient= tvOfIngredientsInAProduct.getSelectionModel().getSelectedItem();
     		txtIngredientName.setText(selectedIngredient.getName());
     	}
     }
@@ -327,8 +356,10 @@ public class RestauranteLaCasaDoradaGUI {
     public void chooseIngredients(ActionEvent event) {
     	tvOfProducts.setVisible(false);
     	createProductForm.setVisible(false);
+    	lbManageProduct.setText(" ");
     	ingredientForm.setVisible(true);
     	initializeTableViewOfAddedIngredients();
+    	initializeTableViewOfIngredientsInAProduct();
     }
     
     @FXML
@@ -350,14 +381,15 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.setContentText("El ingrediente ha sido agregado exitosamente a la lista de ingredientes del producto");
         		alert2.showAndWait();
     		}
-    		initializeTableViewOfAddedIngredients();
+    		txtIngredientName.clear();
+        	initializeTableViewOfIngredientsInAProduct();
     	}
     }
     
     @FXML
     public void deleteAnIngredientOfAProduct(ActionEvent event) {
     	Product p =  tvOfProducts.getSelectionModel().getSelectedItem();
-    	Ingredient selectedIngredient= tvOfAddedIngredients.getSelectionModel().getSelectedItem();
+    	Ingredient selectedIngredient= tvOfIngredientsInAProduct.getSelectionModel().getSelectedItem();
     	Alert alert1 = new Alert(AlertType.CONFIRMATION);
     	alert1.setTitle("Confirmacion de proceso");
     	alert1.setHeaderText(null);
@@ -371,7 +403,8 @@ public class RestauranteLaCasaDoradaGUI {
     		alert2.setContentText("El ingrediente ha sido eliminado exitosamente de la lista de ingredientes del producto");
     		alert2.showAndWait();
     	}
-    	initializeTableViewOfAddedIngredients();
+    	txtIngredientName.clear();
+    	initializeTableViewOfIngredientsInAProduct();
     }
     
     private void initializeTableViewOfSizes() {
@@ -387,9 +420,9 @@ public class RestauranteLaCasaDoradaGUI {
     @FXML
     public void clickOnTableViewOfSizes(MouseEvent event) {
     	if (tvOfSizes.getSelectionModel().getSelectedItems()!=null) {
-    		btDelete.setDisable(true);
-    		btAdd.setDisable(false);
-    		btUpdate.setDisable(true);
+    		btDeleteSize.setDisable(false);
+    		btAddSize.setDisable(true);
+    		btUpdateSize.setDisable(false);
     		Size selectedSize= tvOfSizes.getSelectionModel().getSelectedItem();
     		txtSizeName.setText(selectedSize.getName());
     		txtSizePrice.setText(""+selectedSize.getPrice());
@@ -400,6 +433,7 @@ public class RestauranteLaCasaDoradaGUI {
     public void manageSizes(ActionEvent event) {
     	createProductForm.setVisible(false);
     	sizeForm.setVisible(true);
+    	lbManageProduct.setText("Lista de tamaños agregados");
     	tvOfProducts.setVisible(false);
     	initializeTableViewOfSizes();
     }
@@ -448,6 +482,8 @@ public class RestauranteLaCasaDoradaGUI {
     		alert2.setHeaderText(null);
     		alert2.setContentText("El tamaño ha sido eliminado exitosamente de la lista de tamaños del producto");
     		alert2.showAndWait();
+    		txtSizeName.clear();
+    		txtSizePrice.clear();
     		initializeTableViewOfSizes();
     	}
     }
@@ -475,6 +511,7 @@ public class RestauranteLaCasaDoradaGUI {
     		}
     		txtSizeName.clear();
     		txtSizePrice.clear();
+    		tvOfSizes.getItems().clear();
     		initializeTableViewOfSizes();
     	}else {
     		showValidationErrorAlert();
@@ -523,6 +560,7 @@ public class RestauranteLaCasaDoradaGUI {
     		alert.setHeaderText(null);
         	alert.setContentText("El producto ha sido eliminado exitosamente");
         	alert.showAndWait();
+        	txtProductName.clear();
         	initializeTableViewOfProducts(); 
     	} 
     }
@@ -612,6 +650,7 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.showAndWait();
     		}
     		txtTypeOfProductName.clear();
+    		tvOfTypeOfProducts.getItems().clear();
     		initializeTableViewOfTypesOfProducts();
     	}else {
     		showValidationErrorAlert();
@@ -640,6 +679,7 @@ public class RestauranteLaCasaDoradaGUI {
         	}
         	txtTypeOfProductName.clear();
     		ckbxDisable.setSelected(false);
+    		tvOfTypeOfProducts.getItems().clear();
         	initializeTableViewOfTypesOfProducts();
     	} 
     }
@@ -670,6 +710,7 @@ public class RestauranteLaCasaDoradaGUI {
     		}
     		txtTypeOfProductName.clear();
     		ckbxDisable.setSelected(false);
+    		tvOfTypeOfProducts.getItems().clear();
     		initializeTableViewOfTypesOfProducts();
     	}else {
     		showValidationErrorAlert();
@@ -731,6 +772,7 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.showAndWait();
     		}
     		txtIngredientName.clear();
+    		tvOfIngredients.getItems().clear();
     		initializeTableViewOfIngredients();
     	}else {
     		showValidationErrorAlert();
@@ -759,6 +801,7 @@ public class RestauranteLaCasaDoradaGUI {
         	}
         	txtIngredientName.clear();
     		ckbxDisable.setSelected(false);
+    		tvOfIngredients.getItems().clear();
         	initializeTableViewOfIngredients();
     	} 
     }
@@ -789,6 +832,7 @@ public class RestauranteLaCasaDoradaGUI {
     		}
     		txtIngredientName.clear();
     		ckbxDisable.setSelected(false);
+    		tvOfIngredients.getItems().clear();
     		initializeTableViewOfIngredients();
     	}else {
     		showValidationErrorAlert();
@@ -820,6 +864,11 @@ public class RestauranteLaCasaDoradaGUI {
     @FXML
     public void signOutOfSystem(ActionEvent event) {
 
+    }
+    
+    @FXML
+    void returnToManageAProduct(ActionEvent event) throws IOException {
+    	manageAProduct(null);
     }
     
     @FXML

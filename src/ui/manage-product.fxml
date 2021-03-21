@@ -97,12 +97,9 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <TableView fx:id="tvOfAddedIngredients" blendMode="DARKEN" layoutX="-4.0" layoutY="-1.0" onMouseClicked="#clickOnTableViewOfAddedIngredients" prefHeight="469.0" prefWidth="697.0" visible="false">
+                        <TableView fx:id="tvOfAddedIngredients" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfAddedIngredients" prefHeight="463.0" prefWidth="343.0" visible="false">
                            <columns>
-                              <TableColumn fx:id="colNameIngredient1" prefWidth="158.481689453125" text="Nombre" />
-                              <TableColumn fx:id="colStatusIngredient1" prefWidth="162.639892578125" text="Estado" />
-                              <TableColumn fx:id="colCreatorIngredient1" prefWidth="167.0" text="Creado por" />
-                              <TableColumn fx:id="colModifierIngredient1" prefWidth="167.0" text="Modificado por" />
+                              <TableColumn fx:id="colNameAddedIngredients" prefWidth="158.481689453125" text="Lista de ingredientes existentes" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -113,6 +110,14 @@
                             <TableColumn fx:id="colNameSize" prefWidth="158.481689453125" text="Nombre" />
                               <TableColumn fx:id="colSizePrice" prefWidth="162.639892578125" text="Precio" />
                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <TableView fx:id="tvOfIngredientsInAProduct" blendMode="DARKEN" layoutX="343.0" onMouseClicked="#clickOnTableViewOfIngredientsInAProduct" prefHeight="463.0" prefWidth="339.0" visible="false">
+                           <columns>
+                              <TableColumn fx:id="colNameIngredientsOfAProduct" prefWidth="158.481689453125" text="Lista de ingredientes del producto" />
+                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
@@ -279,7 +284,7 @@
                               <Insets right="20.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateSizeOfAProduct" text="Actualizar" GridPane.rowIndex="2">
+                        <Button fx:id="btUpdateSize" disable="true" mnemonicParsing="false" onAction="#updateSizeOfAProduct" text="Actualizar" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="60.0" />
                            </GridPane.margin>
@@ -294,11 +299,11 @@
                         </Label>
                         <HBox maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
-                              <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteSizeOfAProduct" text="Eliminar">
+                              <Button fx:id="btDeleteSize" disable="true" mnemonicParsing="false" onAction="#deleteSizeOfAProduct" text="Eliminar">
                                  <HBox.margin>
                                     <Insets left="10.0" />
                                  </HBox.margin></Button>
-                              <Button fx:id="btAdd" mnemonicParsing="false" onAction="#addSizeOfAProduct" text="Añadir">
+                              <Button fx:id="btAddSize" mnemonicParsing="false" onAction="#addSizeOfAProduct" text="Añadir">
                                  <HBox.margin>
                                     <Insets left="15.0" />
                                  </HBox.margin>
@@ -312,7 +317,7 @@
                         </TextField>
                      </children>
                   </GridPane>
-                  <Button mnemonicParsing="false" onAction="#returnToMenu" text="Atrás">
+                  <Button mnemonicParsing="false" onAction="#returnToManageAProduct" text="Atrás">
                      <VBox.margin>
                         <Insets left="150.0" />
                      </VBox.margin>
@@ -346,7 +351,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtIngredientName" disable="true" editable="false" prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="1">
+                        <TextField fx:id="txtIngredientName" editable="false" prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets right="20.0" />
                            </GridPane.margin>
@@ -355,15 +360,15 @@
                   </GridPane>
                   <HBox alignment="CENTER" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteAnIngredientOfAProduct" text="Eliminar" />
-                        <Button fx:id="btAdd" disable="true" mnemonicParsing="false" onAction="#addIngredientToAProduct" text="Añadir">
+                        <Button fx:id="btDeleteIngredient" disable="true" mnemonicParsing="false" onAction="#deleteAnIngredientOfAProduct" text="Eliminar" />
+                        <Button fx:id="btAddIngredient" disable="true" mnemonicParsing="false" onAction="#addIngredientToAProduct" text="Añadir">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
                         </Button>
                      </children>
                   </HBox>
-                  <Button mnemonicParsing="false" onAction="#returnToMenu" text="Atrás">
+                  <Button mnemonicParsing="false" onAction="#returnToManageAProduct" text="Atrás">
                      <VBox.margin>
                         <Insets left="150.0" top="20.0" />
                      </VBox.margin>
