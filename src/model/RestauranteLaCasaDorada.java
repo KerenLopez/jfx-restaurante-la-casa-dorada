@@ -602,7 +602,9 @@ public class RestauranteLaCasaDorada {
 			employee.setModifier(modifier);
 			employee.setEnabled(enabled);
 			employee.setId(newEmplId);
-			u.setId(newEmplId);
+			if(u!=null) {
+				u.setId(newEmplId);
+			}
 			updated=true;
 		}
 

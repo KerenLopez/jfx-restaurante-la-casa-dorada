@@ -22,9 +22,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import model.Client;
 import model.Employee;
 import model.Ingredient;
 import model.Product;
@@ -240,6 +242,45 @@ public class RestauranteLaCasaDoradaGUI {
 
 	@FXML
 	private Label lbUserIdMenu;
+	
+	@FXML
+	private TextField txtAddress;
+
+	@FXML
+	private TextField txtPhone;
+
+	@FXML
+	private TextArea txtObservations;
+
+	@FXML
+	private TableView<Client> tvListClients;
+
+	@FXML
+	private TableColumn<Client, String> colNameClient;
+
+	@FXML
+	private TableColumn<Client, String> colLastNameClient;
+
+	@FXML
+	private TableColumn<Client, String> colIdClient;
+
+	@FXML
+	private TableColumn<Client, String> colAddressClient;
+
+	@FXML
+	private TableColumn<Client, String> colPhoneClient;
+
+	@FXML
+	private TableColumn<Client, String> colObsClient;
+
+	@FXML
+	private TableColumn<Client, String> colEnabledClient;
+
+	@FXML
+	private TableColumn<Client, String> colCreatorClient;
+
+	@FXML
+	private TableColumn<Client, String> colModifierClient;
 
 
 	
@@ -256,11 +297,7 @@ public class RestauranteLaCasaDoradaGUI {
 		mainPanel.setStyle("-fx-background-image: url(/ui/fondo1.jpg)");
 	}
 	
-	@FXML
-    public void manageAClient(ActionEvent event) {
-
-    }
-	
+		
 	private void initializeTableViewOfProducts() {
     	ObservableList<Product> observableList;
     	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.getProducts());
@@ -818,7 +855,8 @@ public class RestauranteLaCasaDoradaGUI {
     }
 
     @FXML
-    public void signOutOfSystem(ActionEvent event) {
+    public void signOutOfSystem(ActionEvent event) throws IOException {
+		loadLogIn(null);
 
     }
     
@@ -920,9 +958,9 @@ public class RestauranteLaCasaDoradaGUI {
     public void manageAUser(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-user.fxml"));
     	fxmlLoader.setController(this);
-    	Parent menuPane = fxmlLoader.load();
+    	Parent userPane = fxmlLoader.load();
     	mainPanel.getChildren().clear();
-    	mainPanel.setCenter(menuPane);
+    	mainPanel.setCenter(userPane);
     	mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
     	initializeTableViewUsers();
     	initializeComboBoxEmployees();
@@ -941,7 +979,7 @@ public class RestauranteLaCasaDoradaGUI {
     
     
     @FXML
-    void clickOnTableViewUsers(MouseEvent event) {
+    public void clickOnTableViewUsers(MouseEvent event) {
     	if (tvListUsers.getSelectionModel().getSelectedItem() != null) {
     		enableButtons();
     		User selectedUser = tvListUsers.getSelectionModel().getSelectedItem();
@@ -975,7 +1013,7 @@ public class RestauranteLaCasaDoradaGUI {
 
     }
     
-    public void initializeComboBoxEmployees() {
+    private void initializeComboBoxEmployees() {
     	ObservableList<String> options = 
     			FXCollections.observableArrayList(restauranteLaCasaDorada.employeesToString());
     	cbEmployee.setValue("Escoja un empleado");
@@ -986,7 +1024,7 @@ public class RestauranteLaCasaDoradaGUI {
     	
 
     @FXML
-    void createUser(ActionEvent event) throws IOException {
+    public void createUser(ActionEvent event) throws IOException {
     	if (!cbEmployee.getSelectionModel().getSelectedItem().equals("Escoja un empleado") && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty()) {
     		String[] emplIdAndName=cbEmployee.getSelectionModel().getSelectedItem().split("\\|");
     		
@@ -1022,7 +1060,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
 
     @FXML
-    void deleteUser(ActionEvent event) throws IOException {
+    public void deleteUser(ActionEvent event) throws IOException {
     	
     	Alert alert1 = new Alert(AlertType.CONFIRMATION);
     	alert1.setTitle("Confirmacion de proceso");
@@ -1071,7 +1109,7 @@ public class RestauranteLaCasaDoradaGUI {
 
 
     @FXML
-    void updateUser(ActionEvent event) {
+    public void updateUser(ActionEvent event) {
     	
     	if (!cbEmployee.getSelectionModel().getSelectedItem().equals("Escoja un empleado") && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty()) {
     		String[] emplIdAndName=cbEmployee.getSelectionModel().getSelectedItem().split("\\|");
@@ -1083,7 +1121,8 @@ public class RestauranteLaCasaDoradaGUI {
         		alert1.setHeaderText(null);
         		alert1.setContentText("El usuario ha sido actualizado exitosamente!");
         		alert1.showAndWait();
-        		
+        		tvListUsers.getItems().clear();
+
         		initializeTableViewUsers();
         		if(lbUserId.getText().equals(lbObjectId.getText())) {
             		lbUserName.setText(txtUserName.getText().toLowerCase());
@@ -1184,7 +1223,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    void clickOnTableViewEmployees(MouseEvent event) {
+    public void clickOnTableViewEmployees(MouseEvent event) {
     	if (tvListEmployees.getSelectionModel().getSelectedItem() != null) {
     		enableButtons();
     		Employee selectedEmployee = tvListEmployees.getSelectionModel().getSelectedItem();
@@ -1219,7 +1258,7 @@ public class RestauranteLaCasaDoradaGUI {
    
 
     @FXML
-    void createEmployee(ActionEvent event) throws IOException {
+    public void createEmployee(ActionEvent event) throws IOException {
     	if (!txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtId.getText().isEmpty()) {
     		
     		boolean added = restauranteLaCasaDorada.createEmployee(txtId.getText(),txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(), lbUserId.getText());
@@ -1255,7 +1294,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
 
     @FXML
-    void deleteEmployee(ActionEvent event) {
+    public void deleteEmployee(ActionEvent event) {
     	
     	Alert alert1 = new Alert(AlertType.CONFIRMATION);
     	alert1.setTitle("Confirmacion de proceso");
@@ -1297,7 +1336,7 @@ public class RestauranteLaCasaDoradaGUI {
    
 
     @FXML
-    void updateEmployee(ActionEvent event) {
+    public void updateEmployee(ActionEvent event) {
     	if (!txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtId.getText().isEmpty()) {
 
     		boolean updated = restauranteLaCasaDorada.updateEmployee(lbObjectId.getText(),txtId.getText() ,txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(), !ckbxDisable.isSelected(), lbUserId.getText());
@@ -1316,7 +1355,8 @@ public class RestauranteLaCasaDoradaGUI {
             	txtId.clear();
 
             	disableButtons();
-            	
+            	tvListEmployees.getItems().clear();
+
             	initializeTableViewEmployees();
 
 
@@ -1333,6 +1373,83 @@ public class RestauranteLaCasaDoradaGUI {
     		showValidationErrorAlert();
     	}
     }
+    
+    
+    @FXML
+    public void manageAClient(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-client.fxml"));
+    	fxmlLoader.setController(this);
+
+    	Parent clientPane = fxmlLoader.load();
+
+    	mainPanel.getChildren().clear();
+
+    	mainPanel.setCenter(clientPane);
+
+    	mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+    	initializeTableViewClients();
+
+    	lbUserName.setText(lbUserNameMenu.getText());
+
+    	lbUserId.setText(lbUserIdMenu.getText());  	
+
+    }
+    
+    private void initializeTableViewClients(){
+    	ObservableList<Client> observableList;
+    	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.getClients());
+    	tvListClients.setItems(observableList);
+    	
+    	colNameClient.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
+    	colLastNameClient.setCellValueFactory(new PropertyValueFactory<Client, String>("lastName"));
+    	colIdClient.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
+    	colAddressClient.setCellValueFactory(new PropertyValueFactory<Client, String>("address"));
+    	colPhoneClient.setCellValueFactory(new PropertyValueFactory<Client, String>("phone"));
+    	colObsClient.setCellValueFactory(new PropertyValueFactory<Client, String>("observations"));
+    	colEnabledClient.setCellValueFactory(new PropertyValueFactory<Client, String>("status"));
+    	colCreatorClient.setCellValueFactory(new PropertyValueFactory<Client, String>("creatorName"));
+    	colModifierClient.setCellValueFactory(new PropertyValueFactory<Client, String>("modifierName"));
+    	
+
+    	tvListEmployees.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+    }
+
+    
+    @FXML
+    public void clickOnTableViewClients(MouseEvent event) {
+    	if (tvListClients.getSelectionModel().getSelectedItem() != null) {
+    		enableButtons();
+    		Client selectedClient = tvListClients.getSelectionModel().getSelectedItem();
+    		lbObjectId.setText(selectedClient.getId());
+    		txtName.setText(selectedClient.getName());
+    		txtLastName.setText(selectedClient.getLastName());
+    		txtId.setText(selectedClient.getId());
+    		txtAddress.setText(selectedClient.getAddress());
+    		txtPhone.setText(selectedClient.getPhone());
+    		txtObservations.setText(selectedClient.getObservations());
+
+   		
+    		ckbxDisable.setSelected(!selectedClient.isEnabled());
+    	}
+    }
+
+    @FXML
+    public void createClient(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void deleteClient(ActionEvent event) {
+
+    }
+
+
+    @FXML
+    public void updateClient(ActionEvent event) {
+
+    }
+
 
     
     
