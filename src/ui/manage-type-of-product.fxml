@@ -146,7 +146,7 @@
               <content>
                 <AnchorPane>
                      <children>
-                        <TableView fx:id="tvOfTypeOfProducts" onMouseClicked="#clickOnTableViewOfTypeOfProducts" prefHeight="448.0" prefWidth="673.0">
+                        <TableView fx:id="tvOfTypeOfProducts" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfTypeOfProducts" prefHeight="448.0" prefWidth="673.0">
                           <columns>
                             <TableColumn fx:id="colNameTypeOfProduct" prefWidth="158.481689453125" text="Nombre" />
                               <TableColumn fx:id="colStatusTypeOfProduct" prefWidth="162.639892578125" text="Estado" />

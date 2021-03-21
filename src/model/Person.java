@@ -93,11 +93,6 @@ public abstract class Person {
 			name = modifier.getUserName();
 		}
 		return name;
-	}
-	
-	
-	
-	
-	
+	}	
 	
 }

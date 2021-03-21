@@ -84,9 +84,9 @@
          <children>
             <ScrollPane prefHeight="453.0" prefWidth="695.0" GridPane.columnIndex="1">
               <content>
-                <AnchorPane disable="true">
+                <AnchorPane>
                      <children>
-                        <TableView fx:id="tvOfProducts" disable="true" layoutX="-5.0" onMouseClicked="#clickOnTableViewOfProducts" prefHeight="458.0" prefWidth="688.0" visible="false">
+                        <TableView fx:id="tvOfProducts" blendMode="DARKEN" layoutX="-5.0" onMouseClicked="#clickOnTableViewOfProducts" prefHeight="458.0" prefWidth="688.0" visible="false">
                            <columns>
                               <TableColumn fx:id="colNameProduct" prefWidth="158.481689453125" text="Nombre" />
                               <TableColumn fx:id="colStatusProduct" prefWidth="162.639892578125" text="Estado" />
@@ -97,7 +97,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <TableView fx:id="tvOfAddedIngredients" disable="true" layoutX="-4.0" layoutY="-1.0" onMouseClicked="#clickOnTableViewOfAddedIngredients" prefHeight="469.0" prefWidth="697.0" visible="false">
+                        <TableView fx:id="tvOfAddedIngredients" blendMode="DARKEN" layoutX="-4.0" layoutY="-1.0" onMouseClicked="#clickOnTableViewOfAddedIngredients" prefHeight="469.0" prefWidth="697.0" visible="false">
                            <columns>
                               <TableColumn fx:id="colNameIngredient1" prefWidth="158.481689453125" text="Nombre" />
                               <TableColumn fx:id="colStatusIngredient1" prefWidth="162.639892578125" text="Estado" />
@@ -108,7 +108,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <TableView fx:id="tvOfSizes" disable="true" onMouseClicked="#clickOnTableViewOfSizes" prefHeight="448.0" prefWidth="673.0" visible="false">
+                        <TableView fx:id="tvOfSizes" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfSizes" prefHeight="448.0" prefWidth="673.0" visible="false">
                           <columns>
                             <TableColumn fx:id="colNameSize" prefWidth="158.481689453125" text="Nombre" />
                               <TableColumn fx:id="colSizePrice" prefWidth="162.639892578125" text="Precio" />

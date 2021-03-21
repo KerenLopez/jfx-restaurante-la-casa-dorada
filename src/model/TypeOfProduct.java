@@ -34,7 +34,7 @@ public class TypeOfProduct {
 		return status;
 	}
 	
-	public boolean getEnabled() {
+	public boolean isEnabled() {
 		return enabled;
 	}
 	
@@ -50,11 +50,6 @@ public class TypeOfProduct {
 		this.creator = creator;
 	}
 	
-	public String getCreatorName() {
-		String name = creator.getUserName();
-		return name;
-	}
-	
 	public User getModifier() {
 		return modifier;
 	}
@@ -63,16 +58,35 @@ public class TypeOfProduct {
 		this.modifier = modifier;
 	}
 	
-	public String getModifierName() {
-		String name = modifier.getUserName();
-		return name;
-	}
-	
 	public int getId() {
 		return id;
 	}
 	
 	public void setId(int id) {
 		this.id = id;
-	}	
+	}
+	
+	public String getCreatorName() {
+		String name;
+		if(creator==null) {
+			name="-";
+		}else {
+			name = creator.getUserName();
+		}
+		return name;
+	}
+	
+	public String getModifierName() {
+		String name;
+		if(modifier==null) {
+			name="-";
+		}else {
+			name = modifier.getUserName();
+		}
+		return name;
+	}
+	
+	public String toString() {
+		return name;
+	}
 }

@@ -282,15 +282,13 @@ public class RestauranteLaCasaDoradaGUI {
 
     @FXML
     public void clickOnTableViewOfProducts(MouseEvent event) {
-    	if (event.isPrimaryButtonDown() && event.getClickCount()==2 && tvOfProducts.getSelectionModel().getSelectedItem() != null) {
+    	if (tvOfProducts.getSelectionModel().getSelectedItem() != null) {
     		enableButtons();
     		Product selectedProduct = tvOfProducts.getSelectionModel().getSelectedItem();
     		lbObjectId.setText(""+selectedProduct.getId());
     		txtProductName.setText(selectedProduct.getName());
     		cmbxTypeOfProduct.setValue(selectedProduct.getType());
-    		if(selectedProduct.getEnabled()==false) {
-    			ckbxDisable.setSelected(true);
-    		}
+    		ckbxDisable.setSelected(!selectedProduct.isEnabled());
     		btIngredients.setDisable(false);
     		btSizes.setDisable(false);
     	}
@@ -321,6 +319,7 @@ public class RestauranteLaCasaDoradaGUI {
     @FXML
     public void chooseIngredients(ActionEvent event) {
     	tvOfProducts.setVisible(false);
+    	createProductForm.setVisible(false);
     	ingredientForm.setVisible(true);
     	initializeTableViewOfAddedIngredients();
     }
@@ -344,6 +343,7 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.setContentText("El ingrediente ha sido agregado exitosamente a la lista de ingredientes del producto");
         		alert2.showAndWait();
     		}
+    		initializeTableViewOfAddedIngredients();
     	}
     }
     
@@ -356,7 +356,7 @@ public class RestauranteLaCasaDoradaGUI {
     	alert1.setHeaderText(null);
     	alert1.setContentText("¿Esta seguro de que quiere eliminar este ingrediente del producto?");
     	Optional<ButtonType> result = alert1.showAndWait();
-    	if (result.get() == ButtonType.YES && selectedIngredient!=null){
+    	if (result.get() == ButtonType.OK && selectedIngredient!=null){
     		restauranteLaCasaDorada.deleteAnIngredientOfAProduct(p, selectedIngredient);
     		Alert alert2 = new Alert(AlertType.INFORMATION);
     		alert2.setTitle("Informacion");
@@ -364,6 +364,7 @@ public class RestauranteLaCasaDoradaGUI {
     		alert2.setContentText("El ingrediente ha sido eliminado exitosamente de la lista de ingredientes del producto");
     		alert2.showAndWait();
     	}
+    	initializeTableViewOfAddedIngredients();
     }
     
     private void initializeTableViewOfSizes() {
@@ -378,7 +379,7 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     public void clickOnTableViewOfSizes(MouseEvent event) {
-    	if (event.isPrimaryButtonDown() && event.getClickCount()==2 && tvOfSizes.getSelectionModel().getSelectedItems()!=null) {
+    	if (tvOfSizes.getSelectionModel().getSelectedItems()!=null) {
     		btDelete.setDisable(true);
     		btAdd.setDisable(false);
     		btUpdate.setDisable(true);
@@ -390,6 +391,7 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     public void manageSizes(ActionEvent event) {
+    	createProductForm.setVisible(false);
     	sizeForm.setVisible(true);
     	tvOfProducts.setVisible(false);
     	initializeTableViewOfSizes();
@@ -417,6 +419,7 @@ public class RestauranteLaCasaDoradaGUI {
     		}
     		txtSizeName.clear();
     		txtSizePrice.clear();
+    		initializeTableViewOfSizes();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -431,13 +434,14 @@ public class RestauranteLaCasaDoradaGUI {
     	alert1.setHeaderText(null);
     	alert1.setContentText("¿Esta seguro de que quiere eliminar este tamaño del producto?");
     	Optional<ButtonType> result = alert1.showAndWait();
-    	if (result.get() == ButtonType.YES && selectedSize!=null){
+    	if (result.get() == ButtonType.OK && selectedSize!=null){
     		restauranteLaCasaDorada.deleteSizeOfAProduct(p, selectedSize);
     		Alert alert2 = new Alert(AlertType.INFORMATION);
     		alert2.setTitle("Informacion");
     		alert2.setHeaderText(null);
     		alert2.setContentText("El tamaño ha sido eliminado exitosamente de la lista de tamaños del producto");
     		alert2.showAndWait();
+    		initializeTableViewOfSizes();
     	}
     }
     
@@ -464,6 +468,7 @@ public class RestauranteLaCasaDoradaGUI {
     		}
     		txtSizeName.clear();
     		txtSizePrice.clear();
+    		initializeTableViewOfSizes();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -490,6 +495,7 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.showAndWait();
     		}
     		txtProductName.clear();
+    		initializeTableViewOfProducts(); 
     	}else {
     		showValidationErrorAlert();
     	}
@@ -503,13 +509,14 @@ public class RestauranteLaCasaDoradaGUI {
     	alert1.setHeaderText(null);
     	alert1.setContentText("¿Esta seguro de que quiere eliminar este producto?");
     	Optional<ButtonType> result = alert1.showAndWait();
-    	if (result.get() == ButtonType.YES && selectedProduct!=null){
+    	if (result.get() == ButtonType.OK && selectedProduct!=null){
         	restauranteLaCasaDorada.deleteProduct(selectedProduct);
         	Alert alert = new Alert(AlertType.INFORMATION);
     		alert.setTitle("Informacion");
     		alert.setHeaderText(null);
         	alert.setContentText("El producto ha sido eliminado exitosamente");
         	alert.showAndWait();
+        	initializeTableViewOfProducts(); 
     	} 
     }
 
@@ -539,6 +546,7 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.showAndWait();
     		}
     		txtProductName.clear();
+    		initializeTableViewOfProducts();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -557,14 +565,12 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     public void clickOnTableViewOfTypeOfProducts(MouseEvent event) {
-    	if (event.isPrimaryButtonDown() && event.getClickCount()==2 && tvOfSizes.getSelectionModel().getSelectedItems()!=null) {
+    	if (tvOfTypeOfProducts.getSelectionModel().getSelectedItems()!=null) {
     		enableButtons();
     		TypeOfProduct selectedTypeOfProduct = tvOfTypeOfProducts.getSelectionModel().getSelectedItem();
     		lbObjectId.setText(""+selectedTypeOfProduct.getId());
     		txtTypeOfProductName.setText(selectedTypeOfProduct.getName());
-    		if(selectedTypeOfProduct.getEnabled()==false) {
-    			ckbxDisable.setSelected(true);
-    		}
+    		ckbxDisable.setSelected(!selectedTypeOfProduct.isEnabled());
     	}
     }
 
@@ -599,6 +605,7 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.showAndWait();
     		}
     		txtTypeOfProductName.clear();
+    		initializeTableViewOfTypesOfProducts();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -611,7 +618,7 @@ public class RestauranteLaCasaDoradaGUI {
     	alert1.setHeaderText(null);
     	alert1.setContentText("¿Esta seguro de que quiere eliminar este tipo de ingrediente?");
     	Optional<ButtonType> result = alert1.showAndWait();
-    	if (result.get() == ButtonType.YES){
+    	if (result.get() == ButtonType.OK){
     		int TpId = Integer.parseInt(lbObjectId.getText());
         	boolean deleted = restauranteLaCasaDorada.deleteTypeOfProduct(TpId);
         	Alert alert2 = new Alert(AlertType.INFORMATION);
@@ -624,6 +631,9 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.setContentText("El tipo de ingrediente no pudo ser eliminado debido a que esta siendo implementado por un producto");
         		alert2.showAndWait();
         	}
+        	txtTypeOfProductName.clear();
+    		ckbxDisable.setSelected(false);
+        	initializeTableViewOfTypesOfProducts();
     	} 
     }
 
@@ -637,7 +647,7 @@ public class RestauranteLaCasaDoradaGUI {
     		if(ckbxDisable.isSelected()) {
     			enabled = false;
     		}
-    		boolean updated = restauranteLaCasaDorada.updateIngredient(newName, TpId, enabled, userID);
+    		boolean updated = restauranteLaCasaDorada.updateTypeOfProduct(newName, TpId, enabled, userID);
     		if(updated==false) {
     			Alert alert1 = new Alert(AlertType.ERROR);
     			alert1.setTitle("Error de validacion");
@@ -652,6 +662,8 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.showAndWait();
     		}
     		txtTypeOfProductName.clear();
+    		ckbxDisable.setSelected(false);
+    		initializeTableViewOfTypesOfProducts();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -672,14 +684,12 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     public void clickOnTableViewOfIngredients(MouseEvent event) {
-    	if (event.isPrimaryButtonDown() && event.getClickCount()==2 && tvOfIngredients.getSelectionModel().getSelectedItem() != null) {
+    	if (tvOfIngredients.getSelectionModel().getSelectedItem() != null) {
     		enableButtons();
     		Ingredient selectedIng = tvOfIngredients.getSelectionModel().getSelectedItem();
     		lbObjectId.setText(""+selectedIng.getId());
     		txtIngredientName.setText(selectedIng.getName());
-    		if(selectedIng.getEnabled()==false) {
-    			ckbxDisable.setSelected(true);
-    		}
+    		ckbxDisable.setSelected(!selectedIng.isEnabled());
     	}
     }
 
@@ -712,9 +722,9 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.setHeaderText(null);
         		alert2.setContentText("El ingrediente ha sido creado exitosamente");
         		alert2.showAndWait();
-        		initializeTableViewOfIngredients();
     		}
     		txtIngredientName.clear();
+    		initializeTableViewOfIngredients();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -727,7 +737,7 @@ public class RestauranteLaCasaDoradaGUI {
     	alert1.setHeaderText(null);
     	alert1.setContentText("¿Esta seguro de que quiere eliminar este ingrediente?");
     	Optional<ButtonType> result = alert1.showAndWait();
-    	if (result.get() == ButtonType.YES){
+    	if (result.get() == ButtonType.OK){
     		int ingId = Integer.parseInt(lbObjectId.getText());
         	boolean deleted = restauranteLaCasaDorada.deleteIngredient(ingId);
         	Alert alert2 = new Alert(AlertType.INFORMATION);
@@ -740,6 +750,9 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.setContentText("El ingrediente no pudo ser eliminado debido a que esta siendo implementado por un producto");
         		alert2.showAndWait();
         	}
+        	txtIngredientName.clear();
+    		ckbxDisable.setSelected(false);
+        	initializeTableViewOfIngredients();
     	} 
     }
 
@@ -768,6 +781,8 @@ public class RestauranteLaCasaDoradaGUI {
         		alert2.showAndWait();
     		}
     		txtIngredientName.clear();
+    		ckbxDisable.setSelected(false);
+    		initializeTableViewOfIngredients();
     	}else {
     		showValidationErrorAlert();
     	}

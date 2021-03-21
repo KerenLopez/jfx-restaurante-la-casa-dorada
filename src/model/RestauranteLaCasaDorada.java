@@ -127,15 +127,23 @@ public class RestauranteLaCasaDorada {
 		}
 		return deleted;
 	}
-
+	
 	public boolean updateIngredient(String newName, int ingredientId, boolean enabled, String userId) {
-		Ingredient ing1 = searchIngredientById(ingredientId);
-		Ingredient ing2 = searchIngredientByName(newName);
+		Ingredient ing = searchIngredientById(ingredientId);
+		Ingredient ing1 = searchIngredientByName(newName);
 		boolean updated=false;
-		if(ing1!=null && ing2==null) {
-			ing1.setName(newName);
-			ing1.setEnabled(enabled);
-			ing1.setModifier(searchUser(userId));
+		boolean findIngredient = false;
+		
+		if(ing!=ing1) {
+			if(ing1!=null) {
+				findIngredient = true;
+			}
+		}
+
+		if(!findIngredient) {
+			ing.setEnabled(enabled);
+			ing.setName(newName);
+			ing.setModifier(searchUser(userId));
 			updated=true;
 		}
 		return updated;
@@ -155,11 +163,11 @@ public class RestauranteLaCasaDorada {
 	}
 	
 	//search an ingredient in the list of ingredients by its name
-	public Ingredient searchIngredientByName(String ingredientId) {
+	public Ingredient searchIngredientByName(String ingredientName) {
 		boolean found=false;
 		Ingredient ing=null;
 		for(int i=0; i<ingredients.size() && !found;i++ ) {
-			if(ingredients.get(i).getName().equalsIgnoreCase(ingredientId)) {
+			if(ingredients.get(i).getName().equalsIgnoreCase(ingredientName)) {
 				ing=ingredients.get(i);
 				found=true;						
 			}
@@ -203,14 +211,21 @@ public class RestauranteLaCasaDorada {
 		return deleted;
 	}
 
-	public boolean updateTypeOfProduct(String newName, int TpId, boolean enabled, String userName) {
+	public boolean updateTypeOfProduct(String newName, int TpId, boolean enabled, String userId) {
+		TypeOfProduct Tp=searchTypeOfProductById(TpId);
 		TypeOfProduct Tp1=searchTypeOfProductByName(newName);
-		TypeOfProduct Tp2=searchTypeOfProductById(TpId);
 		boolean updated=false;
-		if(Tp1!=null && Tp2==null) {
-			Tp1.setName(newName);
-			Tp1.setEnabled(enabled);
-			Tp1.setModifier(searchUser(userName));
+		boolean findTp = false;
+		if(Tp!=Tp1) {
+			if(Tp1!=null) {
+				findTp=true;
+			}
+		}
+
+		if(!findTp) {
+			Tp.setEnabled(enabled);
+			Tp.setName(newName);
+			Tp.setModifier(searchUser(userId));
 			updated=true;
 		}
 		return updated;
