@@ -234,6 +234,13 @@ public class RestauranteLaCasaDoradaGUI {
 	
 	@FXML
 	private Button btReturnToMenu;
+	
+	@FXML
+	private Label lbUserNameMenu;
+
+	@FXML
+	private Label lbUserIdMenu;
+
 
 	
 	public RestauranteLaCasaDoradaGUI(RestauranteLaCasaDorada rlcd) {
@@ -803,7 +810,12 @@ public class RestauranteLaCasaDoradaGUI {
     @FXML
     public void returnToMenu(ActionEvent event) throws IOException {
     	lbObjectId.setText("");
+
+    	   	
     	showMenu(); 
+    	lbUserNameMenu.setText(lbUserName.getText());
+
+    	lbUserIdMenu.setText(lbUserId.getText());
     }
     
     
@@ -899,6 +911,13 @@ public class RestauranteLaCasaDoradaGUI {
     	mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
     	initializeTableViewUsers();
     	initializeComboBoxEmployees();
+    	if(!restauranteLaCasaDorada.getUsers().isEmpty()) {
+
+    		lbUserName.setText(lbUserNameMenu.getText());
+
+    		lbUserId.setText(lbUserIdMenu.getText());
+    	}
+    	
     	if(restauranteLaCasaDorada.getUsers().isEmpty()) {
     		btReturnToMenu.setDisable(true);
     	}
@@ -908,7 +927,7 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     void clickOnTableViewUsers(MouseEvent event) {
-    	if (event.isPrimaryButtonDown() && event.getClickCount()==2 && tvListUsers.getSelectionModel().getSelectedItem() != null) {
+    	if (tvListUsers.getSelectionModel().getSelectedItem() != null) {
     		enableButtons();
     		User selectedUser = tvListUsers.getSelectionModel().getSelectedItem();
     		lbObjectId.setText(selectedUser.getId());
@@ -988,20 +1007,37 @@ public class RestauranteLaCasaDoradaGUI {
     }
 
     @FXML
-    void deleteUser(ActionEvent event) {
+    void deleteUser(ActionEvent event) throws IOException {
+    	
     	Alert alert1 = new Alert(AlertType.CONFIRMATION);
     	alert1.setTitle("Confirmacion de proceso");
     	alert1.setHeaderText(null);
     	alert1.setContentText("¿Esta seguro de que quiere eliminar el usuario escogido?");
     	Optional<ButtonType> result = alert1.showAndWait();
-    	if (result.get() == ButtonType.YES){
+    	if (result.get() == ButtonType.OK){
         	restauranteLaCasaDorada.deleteUser(lbObjectId.getText());
+        	
         	Alert alert2 = new Alert(AlertType.INFORMATION);
         	alert2.setTitle("Informacion");
         	alert2.setHeaderText(null);
 
         	alert2.setContentText("El usuario ha sido eliminado exitosamente");
         	alert2.showAndWait();
+        	if(lbUserId.getText().equals(lbObjectId.getText())) {
+        		
+        		if (restauranteLaCasaDorada.getEmployees().isEmpty()){
+        			manageAnEmployee(null);
+
+        		}else if(restauranteLaCasaDorada.getUsers().isEmpty()){
+        			manageAUser(null);
+
+        		}
+        		else {
+        		
+        			loadLogIn(null);
+
+        		}
+        	}
         	
         	initializeTableViewUsers();
         	
@@ -1010,6 +1046,8 @@ public class RestauranteLaCasaDoradaGUI {
         	passwordField.clear();
         	cbEmployee.setValue("Escoja un empleado");
         	disableButtons();
+        	
+        	
 
     	} 
     	
@@ -1032,12 +1070,15 @@ public class RestauranteLaCasaDoradaGUI {
         		alert1.showAndWait();
         		
         		initializeTableViewUsers();
-            	
+        		if(lbUserId.getText().equals(lbObjectId.getText())) {
+            		lbUserName.setText(txtUserName.getText().toLowerCase());
+            	}
             	lbObjectId.setText("");
             	txtUserName.clear();
             	passwordField.clear();
             	cbEmployee.setValue("Escoja un empleado");
             	disableButtons();
+            	
         		
         		
     		}else {
@@ -1078,10 +1119,12 @@ public class RestauranteLaCasaDoradaGUI {
 			String id=restauranteLaCasaDorada.logInUser(txtUserName.getText(), passwordField.getText());
 			if(!id.isEmpty()){
 
+				
+				
 				showMenu();
-				lbUserName.setText(txtUserName.getText());
+				lbUserNameMenu.setText(txtUserName.getText());
 
-				lbUserId.setText(id);
+				lbUserIdMenu.setText(id);
 
 			}
 			else {
@@ -1111,6 +1154,13 @@ public class RestauranteLaCasaDoradaGUI {
 
     	mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
     	initializeTableViewEmployees();
+    	if(!restauranteLaCasaDorada.getEmployees().isEmpty()) {
+
+    		lbUserName.setText(lbUserNameMenu.getText());
+
+    		lbUserId.setText(lbUserIdMenu.getText());
+    	}
+    	
     	if(restauranteLaCasaDorada.getEmployees().isEmpty()) {
     		btReturnToMenu.setDisable(true);
     	}
@@ -1120,7 +1170,7 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     void clickOnTableViewEmployees(MouseEvent event) {
-    	if (event.isPrimaryButtonDown() && event.getClickCount()==2 && tvListEmployees.getSelectionModel().getSelectedItem() != null) {
+    	if (tvListEmployees.getSelectionModel().getSelectedItem() != null) {
     		enableButtons();
     		Employee selectedEmployee = tvListEmployees.getSelectionModel().getSelectedItem();
     		lbObjectId.setText(selectedEmployee.getId());
@@ -1191,16 +1241,19 @@ public class RestauranteLaCasaDoradaGUI {
 
     @FXML
     void deleteEmployee(ActionEvent event) {
+    	
     	Alert alert1 = new Alert(AlertType.CONFIRMATION);
     	alert1.setTitle("Confirmacion de proceso");
     	alert1.setHeaderText(null);
     	alert1.setContentText("¿Esta seguro de que quiere eliminar el usuario escogido?");
     	Optional<ButtonType> result = alert1.showAndWait();
-    	if (result.get() == ButtonType.YES){
-        	boolean deleted= restauranteLaCasaDorada.deleteEmployee(lbObjectId.getText());
+    	if (result.get() == ButtonType.OK){
+        	
+    		boolean deleted= restauranteLaCasaDorada.deleteEmployee(lbObjectId.getText());
         	Alert alert2 = new Alert(AlertType.INFORMATION);
         	alert2.setTitle("Informacion");
         	alert2.setHeaderText(null);
+        	
         	if(deleted) {
         		alert2.setContentText("El empleado ha sido eliminado exitosamente");
         		lbObjectId.setText("");
@@ -1232,21 +1285,25 @@ public class RestauranteLaCasaDoradaGUI {
     void updateEmployee(ActionEvent event) {
     	if (!txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtId.getText().isEmpty()) {
 
-    		boolean updated = restauranteLaCasaDorada.updateEmployee(lbObjectId.getText(),txtId.getText() ,txtName.getText().toLowerCase(),txtLastName.getText(), !ckbxDisable.isSelected(), lbUserId.getText());
+    		boolean updated = restauranteLaCasaDorada.updateEmployee(lbObjectId.getText(),txtId.getText() ,txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(), !ckbxDisable.isSelected(), lbUserId.getText());
     		if(updated) {
+            	
+
     			Alert alert1 = new Alert(AlertType.INFORMATION);
         		alert1.setTitle("Informacion");
         		alert1.setHeaderText(null);
         		alert1.setContentText("El empleado ha sido actualizado exitosamente!");
         		alert1.showAndWait();
-        		
+
         		lbObjectId.setText("");
         		txtName.clear();
         		txtLastName.clear();
             	txtId.clear();
+
             	disableButtons();
-        		
+            	
             	initializeTableViewEmployees();
+
 
         		
     		}else {
@@ -1256,6 +1313,7 @@ public class RestauranteLaCasaDoradaGUI {
     			alert2.setContentText("No se pudo actualizar el empleado, intentelo nuevamente");
     			alert2.showAndWait();
     		}
+
     	}else {
     		showValidationErrorAlert();
     	}
