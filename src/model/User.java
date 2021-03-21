@@ -93,17 +93,21 @@ public class User {
 	}
 	
 	public String getCreatorName() {
-		String name = creator.getUserName();
+		String name;
 		if(creator==null) {
 			name="-";
+		}else {
+			name = creator.getUserName();
 		}
 		return name;
 	}
 	
 	public String getModifierName() {
-		String name = modifier.getUserName();
+		String name;
 		if(modifier==null) {
 			name="-";
+		}else {
+			name = modifier.getUserName();
 		}
 		return name;
 	}

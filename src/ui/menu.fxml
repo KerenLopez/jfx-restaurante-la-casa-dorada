@@ -52,6 +52,8 @@
                   <Menu mnemonicParsing="false" onAction="#showAboutCreators" text="Ayuda" />
               </menus>
             </MenuBar>
+            <Label fx:id="lbUserNameMenu" text="username" visible="false" />
+            <Label fx:id="lbUserIdMenu" text="userid" visible="false" />
             <Label alignment="CENTER" contentDisplay="CENTER" text="¡Bienvenido!" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
@@ -60,7 +62,7 @@
                   <Insets />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets top="85.0" />
+                  <Insets top="75.0" />
                </VBox.margin>
             </Label>
             <Label text="Seleccione una opción para continuar: " textFill="WHITE">

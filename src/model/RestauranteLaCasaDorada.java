@@ -392,7 +392,7 @@ public class RestauranteLaCasaDorada {
 		User creator;
 		Employee employee= searchEmployee(emplId);
 		
-		if(!searchEmployeeInUsers(employee) && !searchUserName(userName)) {
+		if(searchEmployeeInUsers(employee)==null && !searchUserName(userName)) {
 
 			
 			User user=new User(employee, userName, password);
@@ -426,12 +426,12 @@ public class RestauranteLaCasaDorada {
 		
 		Employee employee= searchEmployee(emplId);
 		User user=searchUser(userId);
-		boolean findUserEmpl=false;
+		User u=null;
 		if(user.getEmployee()!=employee) {
-			findUserEmpl=searchEmployeeInUsers(employee);
+			u=searchEmployeeInUsers(employee);
 		}
 
-		if(!findUserEmpl && !searchUserName(userName)) {
+		if(u==null && !searchUserName(userName)) {
 			User modifier=searchUser(modifierId);
 			
 			user.setUserName(userName);
@@ -462,16 +462,17 @@ public class RestauranteLaCasaDorada {
 	
 
 	//search employee in the list of users
-	public boolean searchEmployeeInUsers(Employee empl) {
-
+	public User searchEmployeeInUsers(Employee empl) {
+		User u=null;
 		boolean found=false;
 		for(int i=0; i<users.size() && !found;i++) {
 			if(users.get(i).getEmployee()==empl) {
 				found=true;
+				u=users.get(i);
 			}
 
 		}
-		return found;
+		return u;
 	}
 	
 	
@@ -570,7 +571,7 @@ public class RestauranteLaCasaDorada {
 	public boolean deleteEmployee(String emplId) {
 		boolean deleted=false;
 		Employee employee=searchEmployee(emplId);
-		if(!searchEmployeeInUsers(employee)) {
+		if(searchEmployeeInUsers(employee)==null) {
 			int i=employees.indexOf(employee);
 			employees.remove(i);
 			deleted=true;
@@ -595,12 +596,13 @@ public class RestauranteLaCasaDorada {
 
 		if(!findEmpl) {
 			User modifier=searchUser(modifierId);
-			
+			User u= searchEmployeeInUsers(employee);
 			employee.setName(name);
 			employee.setLastName(lastName);
 			employee.setModifier(modifier);
 			employee.setEnabled(enabled);
 			employee.setId(newEmplId);
+			u.setId(newEmplId);
 			updated=true;
 		}
 
