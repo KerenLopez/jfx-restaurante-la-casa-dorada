@@ -111,14 +111,16 @@ public class Product {
 		return found;
 	}
 	
-	public boolean findSize(String name) {
-		boolean found=false;
+	public Size findSize(String name) {
+		boolean found = false;
+		Size size=null;
 		for(int i=0; i<sizes.size() && !found;i++ ) {
 			if(sizes.get(i).getName().equalsIgnoreCase(name)) {
-				found=true;						
+				size=sizes.get(i);
+				found=true;
 			}
 		}		
-		return found;
+		return size;
 	}
 	
 	public int getId() {

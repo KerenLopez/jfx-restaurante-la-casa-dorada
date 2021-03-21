@@ -36,6 +36,9 @@
             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#manageAnOrder" text="7. Gestionar un pedido" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Button mnemonicParsing="false" onAction="#signOutOfSystem" text="Cerrar sesión" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
+         <BorderPane.margin>
+            <Insets bottom="80.0" />
+         </BorderPane.margin>
       </GridPane>
    </center>
    <top>
@@ -62,7 +65,7 @@
                   <Insets />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets top="75.0" />
+                  <Insets top="120.0" />
                </VBox.margin>
             </Label>
             <Label text="Seleccione una opción para continuar: " textFill="WHITE">

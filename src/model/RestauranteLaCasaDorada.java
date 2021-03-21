@@ -321,9 +321,9 @@ public class RestauranteLaCasaDorada {
 	
 	public boolean addSizeOfAProduct(Product p, String name, double price) {
 		ArrayList<Size> list = p.getSizes();
-		boolean find = p.findSize(name);
+		Size find = p.findSize(name);
 		boolean added = false;
-		if(find==false) {
+		if(find==null) {
 			Size size = new Size(name, price, idSize);
 			list.add(size);
 			idSize++;
@@ -338,9 +338,16 @@ public class RestauranteLaCasaDorada {
 	}
 	
 	public boolean updateSizeOfAProduct(Product p, Size selectedSize, String newName, double newPrice) {
-		boolean find = p.findSize(newName);
+		Size s = p.findSize(newName);
 		boolean updated = false;
-		if(find==false) {
+		boolean findSize =false;
+		if(selectedSize!=s) {
+			if(s!=null) {
+				findSize=true;
+			}
+		}
+		
+		if(!findSize) {
 			selectedSize.setName(newName);
 			selectedSize.setPrice(newPrice);
 			updated = true;
@@ -355,8 +362,15 @@ public class RestauranteLaCasaDorada {
 
 	public boolean updateProduct(Product p, String newName, boolean enabled, int TpId, String userId) {
 		boolean updated=false;
+		boolean findProduct = false;
 		Product product = searchProductByName(newName);
-		if(product==null) {
+		
+		if(p!=product) {
+			if(product!=null) {
+				findProduct =true;
+			}
+		}
+		if(!findProduct) {
 			p.setName(newName);
 			p.setEnabled(enabled);
 			p.setType(searchTypeOfProductById(TpId));
