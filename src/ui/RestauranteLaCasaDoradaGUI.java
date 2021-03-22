@@ -241,7 +241,7 @@ public class RestauranteLaCasaDoradaGUI {
 	private PasswordField passwordField;
 
 	@FXML
-	private ComboBox<String> cbEmployee;
+	private ComboBox<Employee> cbEmployee;
 	
 	@FXML
 	private TableView<User> tvListUsers;
@@ -437,6 +437,10 @@ public class RestauranteLaCasaDoradaGUI {
 		createProductForm.setVisible(true);
 		initializeTableViewOfProducts();
 		showComboBoxOfTypesOfProducts();
+		
+		lbUserName.setText(lbUserNameMenu.getText());
+
+    	lbUserId.setText(lbUserIdMenu.getText());  
     }
 
     @FXML
@@ -780,6 +784,10 @@ public class RestauranteLaCasaDoradaGUI {
 		mainPanel.setCenter(menuPane);
 		mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 		initializeTableViewOfTypesOfProducts(); 
+		
+		lbUserName.setText(lbUserNameMenu.getText());
+
+    	lbUserId.setText(lbUserIdMenu.getText());  
     }
     
     @FXML
@@ -900,6 +908,10 @@ public class RestauranteLaCasaDoradaGUI {
 		mainPanel.setCenter(menuPane);
 		mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 		initializeTableViewOfIngredients();
+		
+		lbUserName.setText(lbUserNameMenu.getText());
+
+    	lbUserId.setText(lbUserIdMenu.getText());  
     }
     
     @FXML
@@ -1292,7 +1304,7 @@ public class RestauranteLaCasaDoradaGUI {
     		txtUserName.setText(selectedUser.getUserName());
     		passwordField.setText(selectedUser.getPassword());
     		txtId.setText(selectedUser.getId());
-    		cbEmployee.setValue(selectedUser.getEmployee().idAndName());
+    		cbEmployee.setValue(selectedUser.getEmployee());
 
     		
     		ckbxDisable.setSelected(!selectedUser.isEnabled());
@@ -1319,17 +1331,23 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     private void initializeComboBoxEmployees() {
+<<<<<<< HEAD
     	ObservableList<String> options = FXCollections.observableArrayList(restauranteLaCasaDorada.employeesToString());
     	cbEmployee.setValue("Elija un empleado");
+=======
+    	ObservableList<Employee> options = 
+    			FXCollections.observableArrayList(restauranteLaCasaDorada.enabledEmployees());
+    	cbEmployee.setPromptText("Elija un empleado");
+>>>>>>> 072d91e5a50430c90c67a10d8bf37a5286af9d84
     	cbEmployee.setItems(options);
     }
 
     @FXML
     public void createUser(ActionEvent event) throws IOException {
-    	if (!cbEmployee.getSelectionModel().getSelectedItem().equals("Escoja un empleado") && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty()) {
-    		String[] emplIdAndName=cbEmployee.getSelectionModel().getSelectedItem().split("\\|");
+    	if (cbEmployee.getSelectionModel().getSelectedItem()!=null && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty()) {
     		
-    		boolean added = restauranteLaCasaDorada.createUser(emplIdAndName[0],txtUserName.getText().toLowerCase(),passwordField.getText(), lbUserId.getText());
+    		
+    		boolean added = restauranteLaCasaDorada.createUser(cbEmployee.getSelectionModel().getSelectedItem(),txtUserName.getText().toLowerCase(),passwordField.getText(), lbUserId.getText());
     		if(added) {
     			Alert alert1 = new Alert(AlertType.INFORMATION);
         		alert1.setTitle("Informacion");
@@ -1339,7 +1357,7 @@ public class RestauranteLaCasaDoradaGUI {
         		
         		txtUserName.clear();
             	passwordField.clear();
-            	cbEmployee.setValue("Escoja un empleado");
+            	cbEmployee.setPromptText("Elija un empleado");
             	
             	initializeTableViewUsers();
             	
@@ -1398,7 +1416,7 @@ public class RestauranteLaCasaDoradaGUI {
         	lbObjectId.setText("");
         	txtUserName.clear();
         	passwordField.clear();
-        	cbEmployee.setValue("Escoja un empleado");
+        	cbEmployee.setPromptText("Elija un empleado");
         	disableButtons();
         	
         	
@@ -1413,9 +1431,8 @@ public class RestauranteLaCasaDoradaGUI {
     public void updateUser(ActionEvent event) {
     	
     	if (!cbEmployee.getSelectionModel().getSelectedItem().equals("Escoja un empleado") && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty()) {
-    		String[] emplIdAndName=cbEmployee.getSelectionModel().getSelectedItem().split("\\|");
-
-    		boolean updated = restauranteLaCasaDorada.updateUser(lbObjectId.getText(),emplIdAndName[0] ,txtUserName.getText().toLowerCase(),passwordField.getText(), !ckbxDisable.isSelected(), lbUserId.getText());
+    		
+    		boolean updated = restauranteLaCasaDorada.updateUser(lbObjectId.getText(),cbEmployee.getSelectionModel().getSelectedItem() ,txtUserName.getText().toLowerCase(),passwordField.getText(), !ckbxDisable.isSelected(), lbUserId.getText());
     		if(updated) {
     			Alert alert1 = new Alert(AlertType.INFORMATION);
         		alert1.setTitle("Informacion");
@@ -1431,7 +1448,7 @@ public class RestauranteLaCasaDoradaGUI {
             	lbObjectId.setText("");
             	txtUserName.clear();
             	passwordField.clear();
-            	cbEmployee.setValue("Escoja un empleado");
+            	cbEmployee.setPromptText("Elija un empleado");
             	disableButtons();
             	
         		

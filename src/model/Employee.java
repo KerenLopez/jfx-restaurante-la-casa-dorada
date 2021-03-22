@@ -17,7 +17,8 @@ public class Employee extends Person{
 	}
 	
 	
-	public String idAndName() {
-		return super.getId()+"|"+super.getName()+" "+super.getLastName();
+	public String toString() {
+		return super.getName()+" "+super.getLastName()+"|"+super.getId();
 	}
+	
 }

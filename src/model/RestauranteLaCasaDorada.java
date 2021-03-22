@@ -437,15 +437,14 @@ public class RestauranteLaCasaDorada {
 	}
 	
 
-	public boolean createUser(String emplId, String userName, String password, String creatorId){
+	public boolean createUser(Employee empl, String userName, String password, String creatorId){
 		boolean created=false;
 		User creator;
-		Employee employee= searchEmployee(emplId);
 		
-		if(searchEmployeeInUsers(employee)==null && !searchUserName(userName)) {
+		if(searchEmployeeInUsers(empl)==null && !searchUserName(userName)) {
 
 			
-			User user=new User(employee, userName, password);
+			User user=new User(empl, userName, password);
 			if(users.isEmpty()) {
 				creator=user;
 			}
@@ -471,14 +470,13 @@ public class RestauranteLaCasaDorada {
 
 	}
 	
-	public boolean updateUser(String userId,String emplId, String userName, String password, boolean enabled,String modifierId) {
+	public boolean updateUser(String userId,Employee empl, String userName, String password, boolean enabled,String modifierId) {
 		boolean updated=false;
 		
-		Employee employee= searchEmployee(emplId);
 		User user=searchUser(userId);
 		User u=null;
-		if(user.getEmployee()!=employee) {
-			u=searchEmployeeInUsers(employee);
+		if(user.getEmployee()!=empl) {
+			u=searchEmployeeInUsers(empl);
 		}
 
 		if(u==null && !searchUserName(userName)) {
@@ -487,9 +485,9 @@ public class RestauranteLaCasaDorada {
 			user.setUserName(userName);
 			user.setPassword(password);
 			user.setModifier(modifier);
-			user.setEmployee(employee);
+			user.setEmployee(empl);
 			user.setEnabled(enabled);
-			user.setId(emplId);
+			user.setId(empl.getId());
 			updated=true;
 		}
 
@@ -570,15 +568,15 @@ public class RestauranteLaCasaDorada {
 		return clString;
 	}
 	
-	public ArrayList<String>  employeesToString() {
-		ArrayList<String> emplString= new ArrayList<String>();
+	public ArrayList<Employee>  enabledEmployees() {
+		ArrayList<Employee> empls= new ArrayList<Employee>();
 		for(int i=0; i<employees.size(); i++) {
 			if(employees.get(i).isEnabled()) {
-				emplString.add(employees.get(i).idAndName());
+				empls.add(employees.get(i));
 
 			}
 		}
-		return emplString;
+		return empls;
 	}
 	
 	public String logInUser(String userName, String password) {
