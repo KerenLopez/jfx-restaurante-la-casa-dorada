@@ -61,6 +61,14 @@ public class Product {
 		this.sizes = sizes;
 	}
 	
+	public String getAllSizes() {
+		String allSizes = "";
+		for(int k=0; k<sizes.size();k++) {
+			allSizes += sizes.get(k).getName()+"\n";
+		}
+		return allSizes;
+	}
+	
 	public ArrayList<Double> getPrices() {
 		return prices;
 	}
