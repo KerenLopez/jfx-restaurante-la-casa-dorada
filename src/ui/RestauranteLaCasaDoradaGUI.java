@@ -1156,11 +1156,9 @@ public class RestauranteLaCasaDoradaGUI {
         	alert2.showAndWait();
         	if(lbUserId.getText().equals(lbObjectId.getText())) {
         		
-        		if (restauranteLaCasaDorada.getEmployees().isEmpty()){
-        			manageAnEmployee(null);
-
-        		}else if(restauranteLaCasaDorada.getUsers().isEmpty()){
+        		if(restauranteLaCasaDorada.getUsers().isEmpty()){
         			manageAUser(null);
+            		btReturnToMenu.setDisable(true);
 
         		}
         		else {
@@ -1189,7 +1187,7 @@ public class RestauranteLaCasaDoradaGUI {
     @FXML
     public void updateUser(ActionEvent event) {
     	
-    	if (!cbEmployee.getSelectionModel().getSelectedItem().equals("Escoja un empleado") && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty()) {
+    	if (cbEmployee.getSelectionModel().getSelectedItem()!=null && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty()) {
     		
     		boolean updated = restauranteLaCasaDorada.updateUser(lbObjectId.getText(),cbEmployee.getSelectionModel().getSelectedItem() ,txtUserName.getText().toLowerCase(),passwordField.getText(), !ckbxDisable.isSelected(), lbUserId.getText());
     		if(updated) {
@@ -1207,6 +1205,7 @@ public class RestauranteLaCasaDoradaGUI {
             	lbObjectId.setText("");
             	txtUserName.clear();
             	passwordField.clear();
+            	cbEmployee.setValue(null);
             	cbEmployee.setPromptText("Elija un empleado");
             	disableButtons();
             	
@@ -1376,7 +1375,7 @@ public class RestauranteLaCasaDoradaGUI {
     	Alert alert1 = new Alert(AlertType.CONFIRMATION);
     	alert1.setTitle("Confirmacion de proceso");
     	alert1.setHeaderText(null);
-    	alert1.setContentText("¿Esta seguro de que quiere eliminar el usuario escogido?");
+    	alert1.setContentText("¿Esta seguro de que quiere eliminar el empleado escogido?");
     	Optional<ButtonType> result = alert1.showAndWait();
     	if (result.get() == ButtonType.OK){
         	
@@ -1513,20 +1512,122 @@ public class RestauranteLaCasaDoradaGUI {
 
     @FXML
     public void createClient(ActionEvent event) {
+    	if (!txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtAddress.getText().isEmpty() && !txtPhone.getText().isEmpty() && !txtObservations.getText().isEmpty()) {
 
+    		boolean added = restauranteLaCasaDorada.createClient(txtId.getText(),txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(), txtAddress.getText().toUpperCase(),txtPhone.getText(),txtObservations.getText(), lbUserId.getText());
+    		if(added) {
+    			Alert alert1 = new Alert(AlertType.INFORMATION);
+    			alert1.setTitle("Informacion");
+    			alert1.setHeaderText(null);
+    			alert1.setContentText("El cliente ha sido creado exitosamente!");
+    			alert1.showAndWait();
+
+    			txtName.clear();
+    			txtLastName.clear();
+    			txtId.clear();
+    			txtAddress.clear();
+    			txtPhone.clear();
+    			txtObservations.clear();
+
+
+    			initializeTableViewClients();
+
+    		}else {
+
+    			Alert alert2 = new Alert(AlertType.ERROR);
+    			alert2.setTitle("Error de validacion");
+    			alert2.setHeaderText(null);
+    			alert2.setContentText("No se pudo crear el cliente, intentelo nuevamente");
+    			alert2.showAndWait();
+    		}
+    	}else {
+    		showValidationErrorAlert();
+    	}
     }
 
     @FXML
     public void deleteClient(ActionEvent event) {
+    	Alert alert1 = new Alert(AlertType.CONFIRMATION);
+    	alert1.setTitle("Confirmacion de proceso");
+    	alert1.setHeaderText(null);
+    	alert1.setContentText("¿Esta seguro de que quiere eliminar el cliente escogido?");
+    	Optional<ButtonType> result = alert1.showAndWait();
+    	if (result.get() == ButtonType.OK){
+        	
+    		boolean deleted= restauranteLaCasaDorada.deleteClient(lbObjectId.getText());
+        	Alert alert2 = new Alert(AlertType.INFORMATION);
+        	alert2.setTitle("Informacion");
+        	alert2.setHeaderText(null);
+        	
+        	if(deleted) {
+        		alert2.setContentText("El cliente ha sido eliminado exitosamente");
+        		lbObjectId.setText("");
+        		txtName.clear();
+        		txtLastName.clear();
+            	txtId.clear();
+            	txtPhone.clear();
+            	txtAddress.clear();
+            	txtObservations.clear();
 
+            	disableButtons();
+
+            	
+            	initializeTableViewClients();
+            	
+            	           	
+        	}else {
+        		alert2.setContentText("El cliente no pudo ser eliminado");
+
+        	}
+        	alert2.showAndWait();
+        	
+        	
+    	}
+    	
     }
 
 
     @FXML
     public void updateClient(ActionEvent event) {
+    	if (!txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtAddress.getText().isEmpty() && !txtPhone.getText().isEmpty() && !txtObservations.getText().isEmpty()) {
 
+    		boolean updated = restauranteLaCasaDorada.updateClient(lbObjectId.getText(), txtId.getText(),txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(), txtAddress.getText().toUpperCase(),txtPhone.getText(),txtObservations.getText(), !ckbxDisable.isSelected(),lbUserId.getText());
+
+    		if(updated) {
+            	
+
+    			Alert alert1 = new Alert(AlertType.INFORMATION);
+        		alert1.setTitle("Informacion");
+        		alert1.setHeaderText(null);
+        		alert1.setContentText("El empleado ha sido actualizado exitosamente!");
+        		alert1.showAndWait();
+
+        		lbObjectId.setText("");
+        		txtName.clear();
+        		txtLastName.clear();
+            	txtId.clear();
+            	txtPhone.clear();
+            	txtAddress.clear();
+            	txtObservations.clear();
+
+            	disableButtons();
+            	tvListClients.getItems().clear();
+
+            	initializeTableViewClients();
+        		
+    		}else {
+    			Alert alert2 = new Alert(AlertType.ERROR);
+    			alert2.setTitle("Error de validacion");
+    			alert2.setHeaderText(null);
+    			alert2.setContentText("No se pudo actualizar el empleado, intentelo nuevamente");
+    			alert2.showAndWait();
+    		}
+
+    	}else {
+    		showValidationErrorAlert();
+    	}
+    	
     }
-
 
     
     

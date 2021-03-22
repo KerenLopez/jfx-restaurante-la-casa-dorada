@@ -1,8 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class RestauranteLaCasaDorada {
+public class RestauranteLaCasaDorada{
 	
 	private ArrayList<Order> orders;
 	private ArrayList<Product> products;
@@ -462,8 +463,12 @@ public class RestauranteLaCasaDorada {
 		if(user.getEmployee()!=empl) {
 			u=searchEmployeeInUsers(empl);
 		}
-
-		if(u==null && !searchUserName(userName)) {
+		
+		boolean findUName=false;
+		if(!user.getUserName().equals(userName)) {
+			findUName=searchUserName(userName);
+		}
+		if(u==null && !findUName) {
 			User modifier=searchUser(modifierId);
 			
 			user.setUserName(userName);
@@ -535,15 +540,7 @@ public class RestauranteLaCasaDorada {
 		return found;
 	}
 
-	public Client searchClient(String name) {
-		//boolean found=false;
-		Client c=null;
 		
-		return c;
-	}
-	
-	
-	
 	public ArrayList<Employee>  enabledEmployees() {
 		ArrayList<Employee> empls= new ArrayList<Employee>();
 		for(int i=0; i<employees.size(); i++) {
@@ -658,5 +655,118 @@ public class RestauranteLaCasaDorada {
 		
 		
 	}
+	
+
+	public boolean createClient(String id, String name, String lastName, String address, String phone, String observations, String creatorId) {
+		boolean created=false;
+
+		Client client= searchClient(id);
+		User creator;
+
+
+		if(client==null) {
+			
+			creator=searchUser(creatorId);
+			
+			client= new Client(name,lastName,id,address,phone,observations, creator);
+			addSortedClient(client);
+			created=true;
+			
+		}
+		
+
+
+		return created;
+	}
+	
+	public void addSortedClient(Client client) {
+		//AGREGAR DE FORMA ORDENADA ALFABETICAMENTE DESCENDENTE APELLIDOS Y NOMBRES 
+		Comparator<Client> clientLastNameAndNameComparator=new Comparator<Client>() {
+			@Override
+			public int compare(Client client1, Client client2) {
+				int comparing=client1.getLastName().compareTo(client2.getLastName());
+				if(comparing==0) {
+					comparing=client1.getName().compareTo(client2.getName());
+				}
+
+				
+				return comparing;
+			}
+		};
+		
+		if(clients.isEmpty()) {
+			clients.add(client);
+		}
+		else {
+			int i=0;
+			while(i<clients.size() && clientLastNameAndNameComparator.compare(clients.get(i),client)>0) {
+				i++;
+			}
+			clients.add(i, client);
+		}
+
+	}
+	
+	public Client searchClient(String clientId) {
+		boolean found=false;
+		
+		Client client=null;
+		for(int i=0; i<clients.size() && !found;i++ ) {
+			if(clients.get(i).getId().equals(clientId)) {
+				client=clients.get(i);
+				found=true;						
+			}
+		}
+		return client;
+		
+	}
+	
+	public boolean deleteClient(String clientId) {
+		boolean deleted=false;
+		Client client=searchClient(clientId);
+		int i=clients.indexOf(client);
+		clients.remove(i);
+		deleted=true;
+
+		
+		return deleted;
+
+	}
+
+
+	public boolean updateClient(String oldClientId, String newClientId, String name, String lastName, String address, String phone, String observations, boolean enabled, String modifierId) {
+		boolean updated=false;
+
+		Client client= searchClient(oldClientId);
+		Client client2= searchClient(newClientId);
+
+		boolean findClient=false;
+		if(client!=client2) {
+			if(client2!=null) {
+				findClient=true;
+			}
+		}
+
+		if(!findClient) {
+			User modifier=searchUser(modifierId);
+			client.setName(name);
+			client.setLastName(lastName);
+			client.setModifier(modifier);
+			client.setEnabled(enabled);
+			client.setId(newClientId);
+			client.setAddress(address);
+			client.setPhone(phone);
+			client.setObservations(observations);
+			
+			updated=true;
+		}
+
+
+		return updated;
+
+	}
+
+
+	
 
 }

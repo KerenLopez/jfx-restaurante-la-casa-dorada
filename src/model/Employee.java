@@ -17,8 +17,6 @@ public class Employee extends Person{
 	}
 	
 	
-	public String toString() {
-		return super.getName()+" "+super.getLastName()+"|"+super.getId();
-	}
+	
 	
 }

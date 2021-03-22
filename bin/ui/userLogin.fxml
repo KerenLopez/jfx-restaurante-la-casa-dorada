@@ -22,8 +22,8 @@
          </VBox.margin></Label>
       <GridPane prefHeight="168.0" prefWidth="1007.0">
         <columnConstraints>
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="505.0" minWidth="10.0" prefWidth="329.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="690.0" minWidth="10.0" prefWidth="690.0" />
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="445.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="714.0" minWidth="10.0" prefWidth="574.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -42,12 +42,12 @@
             </Label>
             <TextField fx:id="txtUserName" GridPane.columnIndex="1">
                <GridPane.margin>
-                  <Insets right="200.0" />
+                  <Insets right="350.0" />
                </GridPane.margin>
             </TextField>
             <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets right="200.0" />
+                  <Insets right="350.0" />
                </GridPane.margin>
             </PasswordField>
          </children>
