@@ -289,6 +289,15 @@ public class RestauranteLaCasaDorada{
 		}
 		return list;
 	}
+	public ArrayList<Product> returnEnabledProducts(){
+		ArrayList<Product> list = new ArrayList<Product>();
+		for(int k=0; k<products.size();k++) {
+			if(products.get(k).isEnabled()) {
+				list.add(products.get(k));
+			}
+		}
+		return list;
+	}
 	
 	public boolean addProduct(String name, int type, String userId) {
 		Product p=searchProductByName(name);
@@ -420,6 +429,13 @@ public class RestauranteLaCasaDorada{
 	}
 	*/
 	
+	public Size getSelectedSize(Product selectedProduct) {
+		
+	}
+	
+	public int getQuantity(Product selectedProduct){
+		
+	}
 	
 
 	public boolean createUser(Employee empl, String userName, String password, String creatorId){
@@ -541,6 +557,18 @@ public class RestauranteLaCasaDorada{
 	}
 
 		
+
+	
+	public ArrayList<Client>  returnEnabledClients() {
+		ArrayList<Client> clString= new ArrayList<Client>();
+		for(int i=0; i<clients.size(); i++) {
+			if(clients.get(i).isEnabled()) {
+				clString.add(clients.get(i));
+			}
+		}
+		return clString;
+	}
+	
 	public ArrayList<Employee>  enabledEmployees() {
 		ArrayList<Employee> empls= new ArrayList<Employee>();
 		for(int i=0; i<employees.size(); i++) {
