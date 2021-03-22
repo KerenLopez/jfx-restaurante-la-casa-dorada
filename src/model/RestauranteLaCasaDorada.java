@@ -866,7 +866,48 @@ public class RestauranteLaCasaDorada{
 		return updated;
 
 	}
+	
+	public int binarySearchClient(String clientNames, String clientLastNames, int posFind) {
+		
+		Client client= new Client(clientNames,clientLastNames,null,null,null,null, null);
+		Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
+		
+		int pos = -1;
+		int i=0;
+		int j=clients.size()-1;
+		
+		while(i<=j && pos<0){
+			int m= (i+j)/2;
+			if(m!= posFind && clientLastNameAndNameComparator.compare(clients.get(m),client)==0){
+				pos =m;
+			}else if(clientLastNameAndNameComparator.compare(clients.get(m),client)<0){
+				j=m-1;
+			}else{
+				i=m+1;
+			}
+		}
+		
+		return pos;
+	}
+	
+	public ArrayList<Client> searchClientByName(String clientNames, String clientLastNames){
+		ArrayList<Client> clientsByName=new ArrayList<Client>();
+		int pos;
+		int posFind=-1;
+		do {
+			pos=binarySearchClient(clientNames,clientLastNames, posFind);
 
+			if(pos>=0) {
+				if(clients.get(pos).isEnabled()) {
+					clientsByName.add(clients.get(pos));
+				}
+			}
+			posFind=pos;
+		}while(pos>=0);
+
+		return clientsByName;
+	}
+	
 
 	
 
