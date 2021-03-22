@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 public class RestauranteLaCasaDorada{
@@ -463,13 +464,77 @@ public class RestauranteLaCasaDorada{
 		return created;
 	}
 	
-	public void deleteUser(String userId) {
-		User user=searchUser(userId);
-		int i=users.indexOf(user);
-		users.remove(i);
+	public boolean deleteUser(User user) {
+		boolean deleted=false;
+		if(!searchUserInCreatedObjects(user)) {
+			int i=users.indexOf(user);
+			users.remove(i);
+			deleted=true;
+		}
+		
 
-
+		return deleted;
 	}
+	
+	public boolean searchUserInCreatedObjects(User user) {
+		boolean found=false;
+		for(int i=0; i<orders.size() && !found;i++) {
+			if(orders.get(i).getCreator()==user ||  orders.get(i).getModifier()==user) {
+				found=true;
+			}
+		}
+		if(!found) {
+			for(int i=0; i<products.size() && !found;i++) {
+				if(products.get(i).getCreator()==user ||  products.get(i).getModifier()==user) {
+					found=true;
+				}
+			}
+		}
+		
+		if(!found) {
+			for(int i=0; i<ingredients.size() && !found;i++) {
+				if(ingredients.get(i).getCreator()==user ||  ingredients.get(i).getModifier()==user) {
+					found=true;
+				}
+			}
+		}
+		
+		if(!found) {
+			for(int i=0; i<typesOfProducts.size() && !found;i++) {
+				if(typesOfProducts.get(i).getCreator()==user ||  typesOfProducts.get(i).getModifier()==user) {
+					found=true;
+				}
+			}
+		}
+		
+		if(!found) {
+			for(int i=0; i<employees.size() && !found;i++) {
+				if(employees.get(i).getCreator()==user ||  employees.get(i).getModifier()==user) {
+					found=true;
+				}
+			}
+		}
+		
+		if(!found) {
+			for(int i=0; i<clients.size() && !found;i++) {
+				if(clients.get(i).getCreator()==user ||  clients.get(i).getModifier()==user) {
+					found=true;
+				}
+			}
+		}
+		
+		if(!found) {
+			for(int i=0; i<users.size() && !found;i++) {
+				if(users.get(i).getCreator()==user ||  users.get(i).getModifier()==user) {
+					found=true;
+				}
+			}
+		}
+
+		return found;
+	}
+	
+	
 	
 	public boolean updateUser(String userId,Employee empl, String userName, String password, boolean enabled,String modifierId) {
 		boolean updated=false;
@@ -543,22 +608,7 @@ public class RestauranteLaCasaDorada{
 		return found;
 	}
 
-	//search the user id in the list of users
-	public boolean searchUserId(String userId) {
-		boolean found=false;
-		for(int i=0; i<users.size() && !found;i++) {
-			if(users.get(i).getId().equals(userId)) {
-
-				found=true;
-			}
-
-		}
-		return found;
-	}
-
 		
-
-	
 	public ArrayList<Client>  returnEnabledClients() {
 		ArrayList<Client> clString= new ArrayList<Client>();
 		for(int i=0; i<clients.size(); i++) {
@@ -628,7 +678,7 @@ public class RestauranteLaCasaDorada{
 	public boolean deleteEmployee(String emplId) {
 		boolean deleted=false;
 		Employee employee=searchEmployee(emplId);
-		if(searchEmployeeInUsers(employee)==null) {
+		if(searchEmployeeInUsers(employee)==null && searchEmployeeInOrder(employee)==null) {
 			int i=employees.indexOf(employee);
 			employees.remove(i);
 			deleted=true;
@@ -636,6 +686,18 @@ public class RestauranteLaCasaDorada{
 		
 		return deleted;
 
+	}
+	public Order searchEmployeeInOrder(Employee empl) {
+		Order order=null;
+		boolean found=false;
+		for(int i=0; i<orders.size() && !found;i++) {
+			if(orders.get(i).getDeliverer()==empl) {
+				found=true;
+				order=orders.get(i);
+			}
+
+		}
+		return order;
 	}
 	
 	public boolean updateEmployee(String oldEmplId,String newEmplId, String name, String lastName, boolean enabled,String modifierId) {
@@ -709,18 +771,7 @@ public class RestauranteLaCasaDorada{
 	
 	public void addSortedClient(Client client) {
 		//AGREGAR DE FORMA ORDENADA ALFABETICAMENTE DESCENDENTE APELLIDOS Y NOMBRES 
-		Comparator<Client> clientLastNameAndNameComparator=new Comparator<Client>() {
-			@Override
-			public int compare(Client client1, Client client2) {
-				int comparing=client1.getLastName().compareTo(client2.getLastName());
-				if(comparing==0) {
-					comparing=client1.getName().compareTo(client2.getName());
-				}
-
-				
-				return comparing;
-			}
-		};
+		Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
 		
 		if(clients.isEmpty()) {
 			clients.add(client);
@@ -749,23 +800,35 @@ public class RestauranteLaCasaDorada{
 		
 	}
 	
-	public boolean deleteClient(String clientId) {
+	public boolean deleteClient(Client client) {
 		boolean deleted=false;
-		Client client=searchClient(clientId);
-		int i=clients.indexOf(client);
-		clients.remove(i);
-		deleted=true;
-
-		
+		if(searchClientInOrder(client)==null) {
+			int i=clients.indexOf(client);
+			clients.remove(i);
+			deleted=true;
+		}
+				
 		return deleted;
 
 	}
+	
+	public Order searchClientInOrder(Client client) {
+		Order order=null;
+		boolean found=false;
+		for(int i=0; i<orders.size() && !found;i++) {
+			if(orders.get(i).getBuyer()==client) {
+				found=true;
+				order=orders.get(i);
+			}
+
+		}
+		return order;
+	}
 
 
-	public boolean updateClient(String oldClientId, String newClientId, String name, String lastName, String address, String phone, String observations, boolean enabled, String modifierId) {
+	public boolean updateClient(Client client, String newClientId, String name, String lastName, String address, String phone, String observations, boolean enabled, String modifierId) {
 		boolean updated=false;
 
-		Client client= searchClient(oldClientId);
 		Client client2= searchClient(newClientId);
 
 		boolean findClient=false;
@@ -776,6 +839,10 @@ public class RestauranteLaCasaDorada{
 		}
 
 		if(!findClient) {
+			boolean sortList=false;
+			if(!client.getLastName().equals(lastName) || !client.getName().equals(name) ) {
+				sortList= true;
+			}
 			User modifier=searchUser(modifierId);
 			client.setName(name);
 			client.setLastName(lastName);
@@ -787,6 +854,12 @@ public class RestauranteLaCasaDorada{
 			client.setObservations(observations);
 			
 			updated=true;
+			
+			if(sortList) {
+				Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
+
+				Collections.sort(clients,Collections.reverseOrder(clientLastNameAndNameComparator));
+			}
 		}
 
 
