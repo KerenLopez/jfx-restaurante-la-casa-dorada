@@ -38,6 +38,10 @@ public class Client extends Person {
 		this.observations = observations;
 	}
 	
+	public String getNameAndLastName() {
+		return super.getName()+" "+super.getLastName();
+	}
+	
 	
 	
 }
