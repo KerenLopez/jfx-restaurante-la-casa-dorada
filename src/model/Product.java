@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Product implements Serializable{
 	
@@ -142,6 +143,18 @@ public class Product implements Serializable{
 			}
 		}		
 		return size;
+	}
+	
+	public void sortSizes() {
+		for(int i=1;i<sizes.size();i++) {
+			for(int j=0;j<sizes.size()-i;j++) {
+				if(sizes.get(j).getPrice()>sizes.get(j+1).getPrice()) {
+					Size temp = sizes.get(j);
+					sizes.set(j, sizes.get(j+1));
+					sizes.set(j+1, temp);
+				}
+			}
+		}
 	}
 	
 	public int getId() {
