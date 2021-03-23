@@ -37,9 +37,9 @@ public class Main extends Application {
 		
 		if(!loadData) {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Billboard");
+			alert.setTitle("Restaurante La Casa Dorada");
 			alert.setHeaderText(null);
-			alert.setContentText("Error loading data from file ");
+			alert.setContentText("Error al cargar datos de archivo");
 
 			alert.showAndWait();
 		}
