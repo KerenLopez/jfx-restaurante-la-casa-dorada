@@ -1,9 +1,13 @@
 package ui;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import model.RestauranteLaCasaDorada;
 
@@ -15,6 +19,31 @@ public class Main extends Application {
 	public Main() {
 		restauranteLaCasaDorada= new RestauranteLaCasaDorada();
 		restauranteLaCasaDoradagui= new RestauranteLaCasaDoradaGUI(restauranteLaCasaDorada);
+		boolean loadData;
+		try {
+			loadData=restauranteLaCasaDorada.loadDataUsers();
+			loadData=restauranteLaCasaDorada.loadDataEmployees();
+			loadData=restauranteLaCasaDorada.loadDataClients();
+			loadData=restauranteLaCasaDorada.loadDataProducts();
+			loadData=restauranteLaCasaDorada.loadDataIngredients();
+			loadData=restauranteLaCasaDorada.loadDataTypesOfProducts();
+			loadData=restauranteLaCasaDorada.loadDataOrders();
+
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+			loadData=false;
+			
+		} 
+		
+		if(!loadData) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Billboard");
+			alert.setHeaderText(null);
+			alert.setContentText("Error loading data from file ");
+
+			alert.showAndWait();
+		}
+		
 	}
 	
 	public static void main(String[] args) {

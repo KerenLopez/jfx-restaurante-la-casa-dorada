@@ -1,11 +1,27 @@
 package model;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RestauranteLaCasaDorada{
+	
+	public final static String USERS_SAVE_PATH_FILE = "data/users.ackl";
+	public final static String EMPLOYEES_SAVE_PATH_FILE = "data/employees.ackl";
+	public final static String CLIENTS_SAVE_PATH_FILE = "data/clients.ackl";
+	public final static String PRODUCTS_SAVE_PATH_FILE = "data/products.ackl";
+	public final static String INGREDIENTS_SAVE_PATH_FILE = "data/users.ackl";
+	public final static String TYPE_OF_PROD_SAVE_PATH_FILE = "data/users.ackl";
+	public final static String ORDERS_SAVE_PATH_FILE = "data/users.ackl";
+
+
 	
 	private ArrayList<Order> orders;
 	private ArrayList<Product> products;
@@ -486,24 +502,21 @@ public class RestauranteLaCasaDorada{
 		return quantity;
 	}
 
-	public boolean createUser(Employee empl, String userName, String password, String creatorId){
+	public boolean createUser(Employee empl, String userName, String password, String creatorId) throws IOException{
 		boolean created=false;
-		User creator;
 		
 		if(searchEmployeeInUsers(empl)==null && !searchUserName(userName)) {
 
 			
 			User user=new User(empl, userName, password);
-			if(users.isEmpty()) {
-				creator=user;
-			}
-			else {
-				creator=searchUser(creatorId);
-			}
+			
+			User creator=searchUser(creatorId);
+			
 			user.setCreator(creator);
 
 			users.add(user);
 			created=true;
+			saveDataUsers();
 
 		}
 		
@@ -511,12 +524,14 @@ public class RestauranteLaCasaDorada{
 		return created;
 	}
 	
-	public boolean deleteUser(User user) {
+	public boolean deleteUser(User user) throws IOException {
 		boolean deleted=false;
 		if(!searchUserInCreatedObjects(user)) {
 			int i=users.indexOf(user);
 			users.remove(i);
 			deleted=true;
+			saveDataUsers();
+
 		}
 		
 
@@ -583,7 +598,7 @@ public class RestauranteLaCasaDorada{
 	
 	
 	
-	public boolean updateUser(String userId,Employee empl, String userName, String password, boolean enabled,String modifierId) {
+	public boolean updateUser(String userId,Employee empl, String userName, String password, boolean enabled,String modifierId) throws IOException {
 		boolean updated=false;
 		
 		User user=searchUser(userId);
@@ -606,6 +621,7 @@ public class RestauranteLaCasaDorada{
 			user.setEnabled(enabled);
 			user.setId(empl.getId());
 			updated=true;
+			saveDataUsers();
 		}
 
 
@@ -695,7 +711,7 @@ public class RestauranteLaCasaDorada{
 	}
 
 
-	public boolean createEmployee(String id, String name, String lastName, String creatorId) {
+	public boolean createEmployee(String id, String name, String lastName, String creatorId) throws IOException {
 
 		boolean created=false;
 
@@ -714,6 +730,7 @@ public class RestauranteLaCasaDorada{
 			employee= new Employee(name,lastName,id, creator);
 			employees.add(employee);
 			created=true;
+			saveDataEmployees();
 			
 		}
 		
@@ -722,13 +739,15 @@ public class RestauranteLaCasaDorada{
 		return created;
 	}
 	
-	public boolean deleteEmployee(String emplId) {
+	public boolean deleteEmployee(String emplId) throws IOException {
 		boolean deleted=false;
 		Employee employee=searchEmployee(emplId);
 		if(searchEmployeeInUsers(employee)==null && searchEmployeeInOrder(employee)==null) {
 			int i=employees.indexOf(employee);
 			employees.remove(i);
 			deleted=true;
+			saveDataEmployees();
+
 		}
 		
 		return deleted;
@@ -747,7 +766,7 @@ public class RestauranteLaCasaDorada{
 		return order;
 	}
 	
-	public boolean updateEmployee(String oldEmplId,String newEmplId, String name, String lastName, boolean enabled,String modifierId) {
+	public boolean updateEmployee(String oldEmplId,String newEmplId, String name, String lastName, boolean enabled,String modifierId) throws IOException {
 		boolean updated=false;
 		
 		Employee employee= searchEmployee(oldEmplId);
@@ -772,6 +791,7 @@ public class RestauranteLaCasaDorada{
 				u.setId(newEmplId);
 			}
 			updated=true;
+			saveDataEmployees();
 		}
 
 
@@ -794,7 +814,7 @@ public class RestauranteLaCasaDorada{
 	}
 	
 
-	public boolean createClient(String id, String name, String lastName, String address, String phone, String observations, String creatorId) {
+	public boolean createClient(String id, String name, String lastName, String address, String phone, String observations, String creatorId) throws IOException {
 		boolean created=false;
 
 		Client client= searchClient(id);
@@ -808,6 +828,7 @@ public class RestauranteLaCasaDorada{
 			client= new Client(name,lastName,id,address,phone,observations, creator);
 			addSortedClient(client);
 			created=true;
+			saveDataClients();
 			
 		}
 		
@@ -847,12 +868,14 @@ public class RestauranteLaCasaDorada{
 		
 	}
 	
-	public boolean deleteClient(Client client) {
+	public boolean deleteClient(Client client) throws IOException {
 		boolean deleted=false;
 		if(searchClientInOrder(client)==null) {
 			int i=clients.indexOf(client);
 			clients.remove(i);
 			deleted=true;
+			saveDataClients();
+
 		}
 				
 		return deleted;
@@ -873,7 +896,7 @@ public class RestauranteLaCasaDorada{
 	}
 
 
-	public boolean updateClient(Client client, String newClientId, String name, String lastName, String address, String phone, String observations, boolean enabled, String modifierId) {
+	public boolean updateClient(Client client, String newClientId, String name, String lastName, String address, String phone, String observations, boolean enabled, String modifierId) throws IOException {
 		boolean updated=false;
 
 		Client client2= searchClient(newClientId);
@@ -907,6 +930,7 @@ public class RestauranteLaCasaDorada{
 
 				Collections.sort(clients,Collections.reverseOrder(clientLastNameAndNameComparator));
 			}
+			saveDataClients();
 		}
 
 
@@ -955,7 +979,153 @@ public class RestauranteLaCasaDorada{
 		return clientsByName;
 	}
 	
-
+	public ArrayList<Ingredient> insertionSortIngredients() {
+		ArrayList<Ingredient> listSorted=new ArrayList<Ingredient>(ingredients);
+		
+		for(int i=1;i<listSorted.size();i++) {
+			for(int j=i;j>0 && listSorted.get(j-1).getName().compareTo(listSorted.get(j).getName())<0;j--) {
+				Ingredient temp=listSorted.get(j);
+				listSorted.set(j, listSorted.get(j-1));
+				listSorted.set(j-1, temp);
+			}
+		}
+		return listSorted;
+	}
 	
+
+	public void saveDataUsers() throws IOException{
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(USERS_SAVE_PATH_FILE));
+		oos.writeObject(users);
+		oos.close();
+	}
+	
+	public void saveDataEmployees() throws IOException{
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(EMPLOYEES_SAVE_PATH_FILE));
+		oos.writeObject(employees);
+		oos.close();
+	}
+	
+	public void saveDataClients() throws IOException{
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CLIENTS_SAVE_PATH_FILE));
+		oos.writeObject(clients);
+		oos.close();
+	}
+	
+	public void saveDataProducts() throws IOException{
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PRODUCTS_SAVE_PATH_FILE));
+		oos.writeObject(products);
+		oos.close();
+	}
+	
+	public void saveDataIngredients() throws IOException{
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(INGREDIENTS_SAVE_PATH_FILE));
+		oos.writeObject(ingredients);
+		oos.close();
+	}
+	
+	public void saveDataTypesOfProducts() throws IOException{
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(TYPE_OF_PROD_SAVE_PATH_FILE));
+		oos.writeObject(typesOfProducts);
+		oos.close();
+	}
+	
+	public void saveDataOrders() throws IOException{
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ORDERS_SAVE_PATH_FILE));
+		oos.writeObject(orders);
+		oos.close();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean loadDataUsers() throws IOException, ClassNotFoundException{
+		File f = new File(USERS_SAVE_PATH_FILE);
+		boolean loaded = false;
+		if(f.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			users = (ArrayList<User>)ois.readObject();
+			ois.close();
+			loaded = true;
+		}
+		return loaded;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean loadDataEmployees() throws IOException, ClassNotFoundException{
+		File f = new File(EMPLOYEES_SAVE_PATH_FILE);
+		boolean loaded = false;
+		if(f.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			employees = (ArrayList<Employee>)ois.readObject();
+			ois.close();
+			loaded = true;
+		}
+		return loaded;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean loadDataClients() throws IOException, ClassNotFoundException{
+		File f = new File(CLIENTS_SAVE_PATH_FILE);
+		boolean loaded = false;
+		if(f.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			clients = (ArrayList<Client>)ois.readObject();
+			ois.close();
+			loaded = true;
+		}
+		return loaded;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean loadDataProducts() throws IOException, ClassNotFoundException{
+		File f = new File(PRODUCTS_SAVE_PATH_FILE);
+		boolean loaded = false;
+		if(f.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			products = (ArrayList<Product>)ois.readObject();
+			ois.close();
+			loaded = true;
+		}
+		return loaded;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean loadDataIngredients() throws IOException, ClassNotFoundException{
+		File f = new File(INGREDIENTS_SAVE_PATH_FILE);
+		boolean loaded = false;
+		if(f.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			ingredients = (ArrayList<Ingredient>)ois.readObject();
+			ois.close();
+			loaded = true;
+		}
+		return loaded;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean loadDataTypesOfProducts() throws IOException, ClassNotFoundException{
+		File f = new File(CLIENTS_SAVE_PATH_FILE);
+		boolean loaded = false;
+		if(f.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			typesOfProducts = (ArrayList<TypeOfProduct>)ois.readObject();
+			ois.close();
+			loaded = true;
+		}
+		return loaded;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean loadDataOrders() throws IOException, ClassNotFoundException{
+		File f = new File(CLIENTS_SAVE_PATH_FILE);
+		boolean loaded = false;
+		if(f.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			orders = (ArrayList<Order>)ois.readObject();
+			ois.close();
+			loaded = true;
+		}
+		return loaded;
+	}
+	
+
 
 }
