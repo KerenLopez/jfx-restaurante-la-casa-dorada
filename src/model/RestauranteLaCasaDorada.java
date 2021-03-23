@@ -7,9 +7,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.concurrent.ThreadLocalRandom;
+
+import javafx.event.ActionEvent;
 
 public class RestauranteLaCasaDorada{
 	
@@ -452,6 +455,20 @@ public class RestauranteLaCasaDorada{
 		}
 		return p;
 	}
+	
+	public ArrayList<Product> sortingPricesOfProducts() {
+    	ArrayList<Product> copyOfProducts = new ArrayList<Product>(products);
+		for(int i=1;i<copyOfProducts.size();i++) {
+			for(int j=0;j<copyOfProducts.size()-i;j++) {
+				if(copyOfProducts.get(j).getSizes().get(j).getPrice()>copyOfProducts.get(j+1).getSizes().get(j+1).getPrice()) {
+					Product temp = copyOfProducts.get(j);
+					copyOfProducts.set(j, copyOfProducts.get(j+1));
+					copyOfProducts.set(j+1, temp);
+				}
+			}
+		}
+		return copyOfProducts;
+    }
 	
 	public void createOrder(Client sBuyer, Employee sDeliv, String obs, String userId) throws IOException {
 		User creator = searchUser(userId);

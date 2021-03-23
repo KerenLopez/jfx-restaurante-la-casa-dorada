@@ -1,6 +1,8 @@
 package ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -238,6 +240,9 @@ public class RestauranteLaCasaDoradaGUI {
     private Button btSizes;
     
     @FXML
+    private Button btSortProductPrices;
+    
+    @FXML
     private Button btUpdateSize;
 
     @FXML
@@ -443,6 +448,9 @@ public class RestauranteLaCasaDoradaGUI {
     	colModifierProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("ModifierName"));
     	tvOfProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     	tvOfProducts.setVisible(true);
+    	if(!restauranteLaCasaDorada.getProducts().isEmpty()) {
+    		btSortProductPrices.setDisable(false);
+    	}
 	}
 	
 	private void showComboBoxOfTypesOfProducts() {
@@ -783,6 +791,23 @@ public class RestauranteLaCasaDoradaGUI {
     	}else {
     		showValidationErrorAlert();
     	}
+    }
+    
+    @FXML
+    public void sortingPricesOfProducts(ActionEvent event) {
+    	ObservableList<Product> observableList;
+    	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.sortingPricesOfProducts());
+    	tvOfProducts.setItems(observableList);
+    	colNameProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Name"));
+    	colTypeProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("TypeName"));
+    	colProductSizes.setCellValueFactory(new PropertyValueFactory<Product, String>("AllSizes"));
+    	colProductPrices.setCellValueFactory(new PropertyValueFactory<Product, Double>("AllPrices"));
+    	colProductIngredients.setCellValueFactory(new PropertyValueFactory<Product, String>("AllIngredients"));
+    	colStatusProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Status"));
+    	colCreatorProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("CreatorName"));
+    	colModifierProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("ModifierName"));
+    	tvOfProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	tvOfProducts.setVisible(true);
     }
     
     private void initializeTableViewOfTypesOfProducts() {
