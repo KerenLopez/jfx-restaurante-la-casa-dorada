@@ -8,7 +8,6 @@ public class Product {
 	private String name;
 	private boolean enabled;
 	private ArrayList<Size> sizes;
-	private ArrayList<Double> prices;
 	private User creator;
 	private User modifier;
 	private TypeOfProduct type;
@@ -23,7 +22,6 @@ public class Product {
 		this.id = id;
 		listOfIngredients = new ArrayList<Ingredient>();
 		sizes= new ArrayList<Size>();
-		prices= new ArrayList<Double>();
 	}
 	
 	public String getName() {
@@ -69,12 +67,12 @@ public class Product {
 		return allSizes;
 	}
 	
-	public ArrayList<Double> getPrices() {
-		return prices;
-	}
-	
-	public void setPrices(ArrayList<Double> prices) {
-		this.prices = prices;
+	public String getAllPrices() {
+		String allPrices = "";
+		for(int k=0; k<sizes.size();k++) {
+			allPrices += sizes.get(k).getPrice()+"\n";
+		}
+		return allPrices;
 	}
 	
 	public User getCreator() {
@@ -101,12 +99,25 @@ public class Product {
 		this.type = type;
 	}
 	
+	public String getTypeName() {
+		String typeN = type.getName();
+		return typeN;
+	}
+	
 	public ArrayList<Ingredient> getListOfIngredients() {
 		return listOfIngredients;
 	}
 	
 	public void setListOfIngredients(ArrayList<Ingredient> listOfIngredients) {
 		this.listOfIngredients = listOfIngredients;
+	}
+	
+	public String getAllIngredients() {
+		String allSizes = "";
+		for(int k=0; k<listOfIngredients.size();k++) {
+			allSizes += listOfIngredients.get(k).getName()+"\n";
+		}
+		return allSizes;
 	}
 	
 	public boolean findIngredient(int ingId) {

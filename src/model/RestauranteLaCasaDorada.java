@@ -375,9 +375,22 @@ public class RestauranteLaCasaDorada{
 		return updated;
 	}
 
-	public void deleteProduct(Product product) {
-		int i=products.indexOf(product);
-		products.remove(i);
+	public boolean deleteProduct(Product product) {
+		boolean deleted = false;
+		boolean stop = false; 
+		boolean find = false;
+		for(int k=0; k<orders.size() && !stop;k++) {
+			find = orders.get(k).findProduct(product.getId());
+			if(find==true) {
+				stop = true;
+			}
+		}
+		if(find==false) {
+			int i=products.indexOf(product);
+			products.remove(i);
+			deleted = true;
+		}
+		return deleted;
 	}
 
 	public boolean updateProduct(Product p, String newName, boolean enabled, int TpId, String userId) {
@@ -428,9 +441,12 @@ public class RestauranteLaCasaDorada{
 	public boolean addProductsToAnOrder(Order selectedOrder, Product selectedProduct, Size selectedSize, int quantity, String userId) {
 		boolean added = false;
 		User modifier = searchUser(userId);
-		boolean find = selectedOrder.findProduct(selectedProduct.getId());
-		if(find==false) {
+		boolean findP = selectedOrder.findProduct(selectedProduct.getId());
+		Size findS = selectedOrder.findSize(selectedOrder.getListOfSizes().indexOf(selectedSize));
+		if(findP==false || findS==null) {
 			selectedOrder.getListOfProducts().add(selectedProduct);
+			selectedOrder.getListOfQuantity().add(quantity);
+			selectedOrder.getListOfSizes().add(selectedSize);
 			selectedOrder.setModifier(modifier);
 			added = true;
 		}
@@ -439,7 +455,10 @@ public class RestauranteLaCasaDorada{
 	
 	public void deleteProductsOfAnOrder(Order selectedOrder, Product selectedProduct, String userId) {
 		User modifier = searchUser(userId);
-		selectedOrder.getListOfProducts().remove(selectedOrder.getListOfProducts().indexOf(selectedProduct));
+		int indexOfOrder = selectedOrder.getListOfProducts().indexOf(selectedProduct);
+		selectedOrder.getListOfProducts().remove(indexOfOrder);
+		selectedOrder.getListOfQuantity().remove(indexOfOrder);
+		selectedOrder.getListOfSizes().remove(indexOfOrder);
 		selectedOrder.setModifier(modifier);
 	}
 	

@@ -125,9 +125,21 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     private TableView<Product> tvOfProducts;
+    
+    @FXML
+    private TableColumn<Product, String> colProductSizes;
+
+    @FXML
+    private TableColumn<Product, Double> colProductPrices;
+
+    @FXML
+    private TableColumn<Product, String> colProductIngredients;
 
     @FXML
     private TableColumn<Product, String> colNameProduct;
+    
+    @FXML
+    private TableColumn<Product, String> colTypeProduct;
 
     @FXML
     private TableColumn<Product, String> colStatusProduct;
@@ -181,25 +193,31 @@ public class RestauranteLaCasaDoradaGUI {
     private TableColumn<Order, String> colObservationsOrder;
     
     @FXML
-    private TableView<Product> tvOfOrderProducts;
+    private TableView<Product> tvOfOrderProductsN;
 
     @FXML
     private TableColumn<Product, String> colNameOrderProduct;
 
     @FXML
-    private TableColumn<Product, String> colSizeOrderProduct;
-    
-    @FXML
-    private TableView<Integer> tvOfOrderProductsQ;
+    private TableView<Order> tvOfOrderProductsS;
 
     @FXML
-    private TableColumn<Integer, Integer> colQuantityOrderProduct;
+    private TableColumn<Order, String> colSizeOrderProduct;
+    
+    @FXML
+    private TableView<Order> tvOfOrderProductsQ;
+
+    @FXML
+    private TableColumn<Order, String> colQuantityOrderProduct;
 
 	@FXML
 	private CheckBox ckbxDisable;
 
 	@FXML
     private Label lbManageProduct;
+	
+    @FXML
+    private Label lbManageOrder;
 	
 	@FXML
     private Button btAddProductsOrder;
@@ -416,6 +434,10 @@ public class RestauranteLaCasaDoradaGUI {
     	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.getProducts());
     	tvOfProducts.setItems(observableList);
     	colNameProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Name"));
+    	colTypeProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("TypeName"));
+    	colProductSizes.setCellValueFactory(new PropertyValueFactory<Product, String>("AllSizes"));
+    	colProductPrices.setCellValueFactory(new PropertyValueFactory<Product, Double>("AllPrices"));
+    	colProductIngredients.setCellValueFactory(new PropertyValueFactory<Product, String>("AllIngredients"));
     	colStatusProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Status"));
     	colCreatorProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("CreatorName"));
     	colModifierProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("ModifierName"));
@@ -480,7 +502,7 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     public void clickOnTableViewOfAddedIngredients(MouseEvent event) {
-    	if (tvOfAddedIngredients.getSelectionModel().getSelectedItems()!=null) {
+    	if (tvOfAddedIngredients.getSelectionModel().getSelectedItem()!=null) {
     		btAddIngredient.setDisable(false);
     		btDeleteIngredient.setDisable(true);
     		Ingredient selectedIngredient= tvOfAddedIngredients.getSelectionModel().getSelectedItem();
@@ -490,7 +512,7 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     public void clickOnTableViewOfIngredientsInAProduct(MouseEvent event) {
-    	if (tvOfIngredientsInAProduct.getSelectionModel().getSelectedItems()!=null) {
+    	if (tvOfIngredientsInAProduct.getSelectionModel().getSelectedItem()!=null) {
     		btDeleteIngredient.setDisable(false);
     		btAddIngredient.setDisable(true);
     		Ingredient selectedIngredient= tvOfIngredientsInAProduct.getSelectionModel().getSelectedItem();
@@ -567,7 +589,7 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     public void clickOnTableViewOfSizes(MouseEvent event) {
-    	if (tvOfSizes.getSelectionModel().getSelectedItems()!=null) {
+    	if (tvOfSizes.getSelectionModel().getSelectedItem()!=null) {
     		btDeleteSize.setDisable(false);
     		btAddSize.setDisable(true);
     		btUpdateSize.setDisable(false);
@@ -707,12 +729,17 @@ public class RestauranteLaCasaDoradaGUI {
     	alert1.setContentText("¿Esta seguro de que quiere eliminar este producto?");
     	Optional<ButtonType> result = alert1.showAndWait();
     	if (result.get() == ButtonType.OK && selectedProduct!=null){
-        	restauranteLaCasaDorada.deleteProduct(selectedProduct);
-        	Alert alert = new Alert(AlertType.INFORMATION);
-    		alert.setTitle("Informacion");
-    		alert.setHeaderText(null);
-        	alert.setContentText("El producto ha sido eliminado exitosamente");
-        	alert.showAndWait();
+        	boolean deleted = restauranteLaCasaDorada.deleteProduct(selectedProduct);
+        	Alert alert2 = new Alert(AlertType.INFORMATION);
+    		alert2.setTitle("Informacion");
+    		alert2.setHeaderText(null);
+        	if(deleted==true) {
+        		alert2.setContentText("El producto ha sido eliminado exitosamente");
+        		alert2.showAndWait();
+        	}else {
+        		alert2.setContentText("El producto no pudo ser eliminado debido a que se encuentra dentro de un pedido");
+        		alert2.showAndWait();
+        	}
         	txtProductName.clear();
         	cmbxTypeOfProduct.getItems().clear();
         	cmbxTypeOfProduct.setPromptText("Elija uno");
@@ -771,7 +798,7 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     public void clickOnTableViewOfTypeOfProducts(MouseEvent event) {
-    	if (tvOfTypeOfProducts.getSelectionModel().getSelectedItems()!=null) {
+    	if (tvOfTypeOfProducts.getSelectionModel().getSelectedItem()!=null) {
     		enableButtons();
     		TypeOfProduct selectedTypeOfProduct = tvOfTypeOfProducts.getSelectionModel().getSelectedItem();
     		lbObjectId.setText(""+selectedTypeOfProduct.getId());
@@ -1042,28 +1069,42 @@ public class RestauranteLaCasaDoradaGUI {
     }
 
     @FXML
-    public void changeStateOfAnOrder(ActionEvent event) {
+    public void showFormStateOfAnOrder(ActionEvent event) {
     	createOrderForm.setVisible(false);
     	updateStateForm.setVisible(true);
+    	tvOfOrders.setMouseTransparent(true);
     	Order selectedOrder = tvOfOrders.getSelectionModel().getSelectedItem();
     	switch(selectedOrder.getStateOfOrder().name()) {
     	case "SOLICITADO":
-    		rbSent.setDisable(true);
-    		rbDelivered.setDisable(true);
-    		rbCancelled.setDisable(true);
-    		rbInProcess.setDisable(true);
+    		rbSent.setDisable(false);
+    		rbDelivered.setDisable(false);
+    		rbCancelled.setDisable(false);
+    		rbInProcess.setDisable(false);
     		break;
     	case "EN_PROCESO":
-    		rbSent.setDisable(true);
-   		 	rbDelivered.setDisable(true);
-   		 	rbCancelled.setDisable(true);
+    		rbSent.setDisable(false);
+   		 	rbDelivered.setDisable(false);
+   		 	rbCancelled.setDisable(false);
    		 	break;
     	case "ENVIADO":
-   		 	rbDelivered.setDisable(true);
+   		 	rbDelivered.setDisable(false);
    		 	break;
     	}
+    }
+    
+    @FXML
+    public void changeStateOfAnOrder(ActionEvent event) throws IOException {
+    	Order selectedOrder = tvOfOrders.getSelectionModel().getSelectedItem();
     	String newState = getRadioButtonState();
     	restauranteLaCasaDorada.updateStateOfAnOrder(selectedOrder,newState);
+    	Alert alert2 = new Alert(AlertType.INFORMATION);
+		alert2.setTitle("Informacion");
+		alert2.setHeaderText(null);
+		alert2.setContentText("El estado de la orden ha sido actualizado exitosamente");
+		alert2.showAndWait();
+		tvOfOrders.getItems().clear();
+		initializeTableViewOfOrders();
+		returnToManageAnOrder(null);
     }
     
     public String getRadioButtonState() {
@@ -1089,24 +1130,33 @@ public class RestauranteLaCasaDoradaGUI {
     	tvOfAddedProducts.setVisible(true);
 	}
     
-    private void initializeTableViewOfOrderProducts() {
+    private void initializeTableViewOfOrderProductsN() {
     	ObservableList<Product> observableList;
     	if(!tvOfOrders.getSelectionModel().getSelectedItem().getListOfProducts().isEmpty()) {
     		observableList = FXCollections.observableArrayList(tvOfOrders.getSelectionModel().getSelectedItem().getListOfProducts());
-    		tvOfOrderProducts.setItems(observableList);
+    		tvOfOrderProductsN.setItems(observableList);
     		colNameOrderProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Name"));
-    		colSizeOrderProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("AllSizes"));
-    		tvOfOrderProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-    		tvOfOrderProducts.setVisible(true);
+    		tvOfOrderProductsN.setVisible(true);
+    	}
+	}
+    
+    private void initializeTableViewOfOrderProductsS() {
+    	ObservableList<Order> observableList;
+    	if(!tvOfOrders.getSelectionModel().getSelectedItem().getListOfProducts().isEmpty()) {
+    		observableList = FXCollections.observableArrayList(tvOfOrders.getSelectionModel().getSelectedItem());
+    		tvOfOrderProductsS.setItems(observableList);
+    		colSizeOrderProduct.setCellValueFactory(new PropertyValueFactory<Order, String>("AllSizes"));
+    		tvOfOrderProductsS.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    		tvOfOrderProductsS.setVisible(true);
     	}
 	}
     
     private void initializeTableViewOfOrderProductsQ() {
-    	ObservableList<Integer> observableList;
+    	ObservableList<Order> observableList;
     	if(!tvOfOrders.getSelectionModel().getSelectedItem().getListOfQuantity().isEmpty()) {
-    		observableList = FXCollections.observableArrayList(tvOfOrders.getSelectionModel().getSelectedItem().getListOfQuantity());
+    		observableList = FXCollections.observableArrayList(tvOfOrders.getSelectionModel().getSelectedItem());
     		tvOfOrderProductsQ.setItems(observableList);
-    		colQuantityOrderProduct.setCellValueFactory(new PropertyValueFactory<Integer, Integer>("ListOfQuantity"));
+    		colQuantityOrderProduct.setCellValueFactory(new PropertyValueFactory<Order, String>("AllQuantities"));
     		tvOfOrderProductsQ.setVisible(true);
     	}
 	}
@@ -1115,22 +1165,29 @@ public class RestauranteLaCasaDoradaGUI {
     public void chooseProductsOfAnOrder(ActionEvent event) {
     	createOrderForm.setVisible(false);
     	tvOfOrders.setVisible(false);
+    	lbManageOrder.setVisible(false);
     	addIngredientsToAnOrderForm.setVisible(true);
     	initializeTableViewOfAddedProducts();
-    	initializeTableViewOfOrderProducts();
+    	initializeTableViewOfOrderProductsN();
+    	initializeTableViewOfOrderProductsS();
     	initializeTableViewOfOrderProductsQ();
     }
 
     @FXML
     public void clickOnTableViewOfOrders(MouseEvent event) {
-    	if (tvOfOrders.getSelectionModel().getSelectedItem() != null) {
+    	if ((tvOfOrders.getSelectionModel().getSelectedItem() != null) && (!tvOfOrders.getSelectionModel().getSelectedItem().getStateOfOrder().name().equals("CANCELADO")&& (!tvOfOrders.getSelectionModel().getSelectedItem().getStateOfOrder().name().equals("ENTREGADO")))) {
     		String state = tvOfOrders.getSelectionModel().getSelectedItem().getStateOfOrder().name();
-    		if((!state.equals("ENTREGADO"))||(!state.equals("CANCELADO"))){
+    		if((!state.equals("ENTREGADO"))&&(!state.equals("CANCELADO"))){
     			btChangeState.setDisable(false);
     		}
-    		btAddProductsOrder.setDisable(false);
-    		btAdd.setDisable(true);
+    		if(state.equals("ENVIADO")) {
+    			btAddProductsOrder.setDisable(true);
+    		}else {
+    			btAddProductsOrder.setDisable(false);
+    		}
     		btUpdate.setDisable(false);
+    		btAdd.setDisable(true);
+    		btAddProductsOrder.setDisable(false);
     		Order selectedOrder = tvOfOrders.getSelectionModel().getSelectedItem();
     		lbObjectId.setText(""+selectedOrder.getCode());
     		cmbxClients.setValue(selectedOrder.getBuyer());
@@ -1154,7 +1211,7 @@ public class RestauranteLaCasaDoradaGUI {
     @FXML
     public void clickOnTableViewOfOrderProducts(MouseEvent event) {
     	Order selectedOrder = tvOfOrders.getSelectionModel().getSelectedItem();
-    	Product selectedProduct = tvOfOrderProducts.getSelectionModel().getSelectedItem();
+    	Product selectedProduct = tvOfOrderProductsN.getSelectionModel().getSelectedItem();
     	if (selectedProduct!= null) {
     		btDeleteProduct.setDisable(false);
     		txtNameProductOrder.setText(selectedProduct.getName());
@@ -1189,7 +1246,11 @@ public class RestauranteLaCasaDoradaGUI {
         		txtNameProductOrder.clear();
         		txtProductQuantity.clear();
         		cmbxProductSizes.getItems().clear();
-        		initializeTableViewOfOrderProducts();
+        		tvOfOrderProductsN.getItems().clear();
+        		tvOfOrderProductsS.getItems().clear();
+        		tvOfOrderProductsQ.getItems().clear();
+        		initializeTableViewOfOrderProductsN();
+        		initializeTableViewOfOrderProductsS();
         		initializeTableViewOfOrderProductsQ();
     		}else {
     		    showValidationErrorAlert();
@@ -1200,7 +1261,7 @@ public class RestauranteLaCasaDoradaGUI {
     @FXML
     public void deleteProductOfAnOrder(ActionEvent event) {
     	Order selectedOrder = tvOfOrders.getSelectionModel().getSelectedItem();
-    	Product selectedProduct = tvOfOrderProducts.getSelectionModel().getSelectedItem();
+    	Product selectedProduct = tvOfOrderProductsN.getSelectionModel().getSelectedItem();
     	String userId = lbUserId.getText();
     	Alert alert1 = new Alert(AlertType.CONFIRMATION);
     	alert1.setTitle("Confirmacion de proceso");
@@ -1218,8 +1279,14 @@ public class RestauranteLaCasaDoradaGUI {
     	txtNameProductOrder.clear();
     	txtProductQuantity.clear();
     	cmbxProductSizes.getItems().clear();
-    	initializeTableViewOfOrderProducts();
+		tvOfOrderProductsN.getItems().clear();
+		tvOfOrderProductsS.getItems().clear();
+		tvOfOrderProductsQ.getItems().clear();
+    	initializeTableViewOfOrderProductsN();
+    	initializeTableViewOfOrderProductsS();
     	initializeTableViewOfOrderProductsQ();
+    	btDeleteProduct.setDisable(true);
+    	cmbxProductSizes.setPromptText("Elija un tamaño");
     }
     
     @FXML
@@ -1238,6 +1305,8 @@ public class RestauranteLaCasaDoradaGUI {
     		cmbxClients.getItems().clear();
     		cbEmployee.getItems().clear();
     		txtAreaObservations.clear();
+    		initializeComboBoxOfClients();
+    		initializeComboBoxEmployees();
     		initializeTableViewOfOrders();
     	}else {
     		showValidationErrorAlert();
@@ -1263,6 +1332,8 @@ public class RestauranteLaCasaDoradaGUI {
     		txtAreaObservations.clear();
     		tvOfOrders.getItems().clear();
     		initializeTableViewOfOrders();
+    		initializeComboBoxOfClients();
+    		initializeComboBoxEmployees();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -1297,7 +1368,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    void returnToManageAProduct(ActionEvent event) throws IOException {
+    public void returnToManageAProduct(ActionEvent event) throws IOException {
     	manageAProduct(null);
     }
     

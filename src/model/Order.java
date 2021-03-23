@@ -153,6 +153,22 @@ public class Order {
 	public void setListOfQuantity(ArrayList<Integer> listOfQuantity) {
 		this.listOfQuantity = listOfQuantity;
 	}
+	
+	public String getAllQuantities() {
+		String quantities = "";
+		for(int i=0; i<listOfQuantity.size();i++ ) {
+			quantities += listOfQuantity.get(i)+"\n";
+		}
+		return quantities;
+	}
+	
+	public String getAllSizes() {
+		String sizes = "";
+		for(int i=0; i<listOfSizes.size();i++ ) {
+			sizes += listOfSizes.get(i)+"\n";
+		}
+		return sizes;
+	}
 
 	public ArrayList<Size> getListOfSizes() {
 		return listOfSizes;

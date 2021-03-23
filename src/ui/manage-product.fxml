@@ -82,14 +82,18 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ScrollPane prefHeight="453.0" prefWidth="695.0" GridPane.columnIndex="1">
+            <ScrollPane prefHeight="421.0" prefWidth="866.0" GridPane.columnIndex="1">
               <content>
-                <AnchorPane>
+                <AnchorPane prefHeight="463.0" prefWidth="788.0">
                      <children>
-                        <TableView fx:id="tvOfProducts" blendMode="DARKEN" layoutX="-5.0" onMouseClicked="#clickOnTableViewOfProducts" prefHeight="458.0" prefWidth="688.0" visible="false">
+                        <TableView fx:id="tvOfProducts" blendMode="DARKEN" layoutX="-5.0" onMouseClicked="#clickOnTableViewOfProducts" prefHeight="458.0" prefWidth="1000.0" visible="false">
                            <columns>
                               <TableColumn fx:id="colNameProduct" prefWidth="158.481689453125" text="Nombre" />
+                              <TableColumn fx:id="colTypeProduct" prefWidth="158.481689453125" text="Tipo " />
                               <TableColumn fx:id="colStatusProduct" prefWidth="162.639892578125" text="Estado" />
+                              <TableColumn fx:id="colProductSizes" prefWidth="167.0" text="Tamaños" />
+                              <TableColumn fx:id="colProductPrices" prefWidth="167.0" text="Precios" />
+                              <TableColumn fx:id="colProductIngredients" prefWidth="167.0" text="Ingredientes" />
                               <TableColumn fx:id="colCreatorProduct" prefWidth="167.0" text="Creado por" />
                               <TableColumn fx:id="colModifierProduct" prefWidth="167.0" text="Modificado por" />
                            </columns>
