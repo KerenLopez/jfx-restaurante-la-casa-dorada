@@ -1054,6 +1054,14 @@ public class RestauranteLaCasaDoradaGUI {
     	}
     }
     
+    @FXML
+    void sortListIngredients(ActionEvent event) {
+    	ObservableList<Ingredient> observableList;
+    	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.insertionSortIngredients());
+    	tvOfIngredients.setItems(observableList);
+    }
+    
+    
     private void initializeTableViewOfOrders() {
     	ObservableList<Order> observableList;
     	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.getOrders());
@@ -1568,6 +1576,7 @@ public class RestauranteLaCasaDoradaGUI {
         		
         		txtUserName.clear();
             	passwordField.clear();
+            	cbEmployee.setValue(null);
             	cbEmployee.setPromptText("Elija un empleado");
             	
             	initializeTableViewUsers();
@@ -1619,8 +1628,9 @@ public class RestauranteLaCasaDoradaGUI {
     			lbObjectId.setText("");
     			txtUserName.clear();
     			passwordField.clear();
-    			cbEmployee.setPromptText("Elija un empleado");
-    			disableButtons();
+    			cbEmployee.setValue(null);
+            	cbEmployee.setPromptText("Elija un empleado");
+            	disableButtons();
 
     		}else {
     			alert2.setContentText("El usuario no se pudo eliminar");

@@ -20,9 +20,9 @@ public class RestauranteLaCasaDorada{
 	public final static String EMPLOYEES_SAVE_PATH_FILE = "data/employees.ackl";
 	public final static String CLIENTS_SAVE_PATH_FILE = "data/clients.ackl";
 	public final static String PRODUCTS_SAVE_PATH_FILE = "data/products.ackl";
-	public final static String INGREDIENTS_SAVE_PATH_FILE = "data/users.ackl";
-	public final static String TYPE_OF_PROD_SAVE_PATH_FILE = "data/users.ackl";
-	public final static String ORDERS_SAVE_PATH_FILE = "data/users.ackl";
+	public final static String INGREDIENTS_SAVE_PATH_FILE = "data/ingredients.ackl";
+	public final static String TYPE_OF_PROD_SAVE_PATH_FILE = "data/type-of-prods.ackl";
+	public final static String ORDERS_SAVE_PATH_FILE = "data/orders.ackl";
 
 
 	
