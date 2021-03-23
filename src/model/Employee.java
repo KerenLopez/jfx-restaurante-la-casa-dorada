@@ -1,6 +1,8 @@
 package model;
 
 public class Employee extends Person{
+	
+	private static final long serialVersionUID = 1;
 	private int numberOrders;
 	
 	public Employee(String name, String lastName, String id, User creator) {

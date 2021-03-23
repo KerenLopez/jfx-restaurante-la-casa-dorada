@@ -1376,90 +1376,100 @@ public class RestauranteLaCasaDoradaGUI {
 
     @FXML
     public void deleteUser(ActionEvent event) throws IOException {
-    	
+
     	Alert alert1 = new Alert(AlertType.CONFIRMATION);
     	alert1.setTitle("Confirmacion de proceso");
     	alert1.setHeaderText(null);
     	alert1.setContentText("¿Esta seguro de que quiere eliminar el usuario escogido?");
     	Optional<ButtonType> result = alert1.showAndWait();
+
+    	Alert alert2 = new Alert(AlertType.INFORMATION);
+
     	if (result.get() == ButtonType.OK){
-        	boolean deleted=restauranteLaCasaDorada.deleteUser(tvListUsers.getSelectionModel().getSelectedItem() );
-        	
-        	Alert alert2 = new Alert(AlertType.INFORMATION);
-        	alert2.setTitle("Informacion");
-        	alert2.setHeaderText(null);
-        	if(deleted) {
-        		alert2.setContentText("El usuario ha sido eliminado exitosamente");
-            	if(lbUserId.getText().equals(lbObjectId.getText())) {
-            		
-            		if(restauranteLaCasaDorada.getUsers().isEmpty()){
-            			manageAUser(null);
-                		btReturnToMenu.setDisable(true);
 
-            		}
-            		else {
-            		
-            			loadLogIn(null);
+    		boolean deleted=false;
+    		if(!lbUserId.getText().equals(lbObjectId.getText())){
+    			deleted=restauranteLaCasaDorada.deleteUser(tvListUsers.getSelectionModel().getSelectedItem() );
 
-            		}
-            	}
-            	
-            	initializeTableViewUsers();
-            	
-            	lbObjectId.setText("");
-            	txtUserName.clear();
-            	passwordField.clear();
-            	cbEmployee.setPromptText("Elija un empleado");
-            	disableButtons();
+    		}
 
-        	}else {
-        		alert2.setContentText("El usuario no se pudo eliminar");
-
-        	}
-        	        	
-        	alert2.showAndWait();
+    		alert2.setTitle("Informacion");
+    		alert2.setHeaderText(null);
+    		if(deleted) {
+    			alert2.setContentText("El usuario ha sido eliminado exitosamente");
 
 
-    	} 
+    			initializeTableViewUsers();
+
+    			lbObjectId.setText("");
+    			txtUserName.clear();
+    			passwordField.clear();
+    			cbEmployee.setPromptText("Elija un empleado");
+    			disableButtons();
+
+    		}else {
+    			alert2.setContentText("El usuario no se pudo eliminar");
+
+    		}
+
+    		alert2.showAndWait();
+    	}
+
+
+    } 
+
     	
-    }
+    
 
 
 
     @FXML
-    public void updateUser(ActionEvent event) {
+    public void updateUser(ActionEvent event) throws IOException {
     	
     	if (cbEmployee.getSelectionModel().getSelectedItem()!=null && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty()) {
-    		
-    		boolean updated = restauranteLaCasaDorada.updateUser(lbObjectId.getText(),cbEmployee.getSelectionModel().getSelectedItem() ,txtUserName.getText().toLowerCase(),passwordField.getText(), !ckbxDisable.isSelected(), lbUserId.getText());
-    		if(updated) {
-    			Alert alert1 = new Alert(AlertType.INFORMATION);
-        		alert1.setTitle("Informacion");
-        		alert1.setHeaderText(null);
-        		alert1.setContentText("El usuario ha sido actualizado exitosamente!");
-        		alert1.showAndWait();
-        		tvListUsers.getItems().clear();
+			Alert alert2 = new Alert(AlertType.ERROR);
+			alert2.setTitle("Error de validacion");
+			alert2.setHeaderText(null);
 
-        		initializeTableViewUsers();
-        		if(lbUserId.getText().equals(lbObjectId.getText())) {
-            		lbUserName.setText(txtUserName.getText().toLowerCase());
-            	}
-            	lbObjectId.setText("");
-            	txtUserName.clear();
-            	passwordField.clear();
-            	cbEmployee.setValue(null);
-            	cbEmployee.setPromptText("Elija un empleado");
-            	disableButtons();
-            	
-        		
-        		
-    		}else {
-    			Alert alert2 = new Alert(AlertType.ERROR);
-    			alert2.setTitle("Error de validacion");
-    			alert2.setHeaderText(null);
-    			alert2.setContentText("No se pudo actualizar el usuario, intentelo nuevamente");
-    			alert2.showAndWait();
+    		boolean sameUserDisabled=false;
+    		if(lbUserId.getText().equals(lbObjectId.getText())){
+    			if(ckbxDisable.isSelected()) {
+    				sameUserDisabled=true;
+    			}
     		}
+    		if(sameUserDisabled) {
+    			alert2.setContentText("No puede deshabilitar el usuario con el que inició sesión");
+    			alert2.showAndWait();
+    		}else {
+    			boolean updated = restauranteLaCasaDorada.updateUser(lbObjectId.getText(),cbEmployee.getSelectionModel().getSelectedItem() ,txtUserName.getText().toLowerCase(),passwordField.getText(), !ckbxDisable.isSelected(), lbUserId.getText());
+        		        		
+        		if(updated) {
+        			Alert alert1 = new Alert(AlertType.INFORMATION);
+            		alert1.setTitle("Informacion");
+            		alert1.setHeaderText(null);
+            		alert1.setContentText("El usuario ha sido actualizado exitosamente!");
+            		alert1.showAndWait();
+            		tvListUsers.getItems().clear();
+
+            		initializeTableViewUsers();
+            		if(lbUserId.getText().equals(lbObjectId.getText())) {
+                		lbUserName.setText(txtUserName.getText().toLowerCase());
+                	}
+                	lbObjectId.setText("");
+                	txtUserName.clear();
+                	passwordField.clear();
+                	cbEmployee.setValue(null);
+                	cbEmployee.setPromptText("Elija un empleado");
+                	disableButtons();
+                	
+            		           		
+        		}else {    			
+        			alert2.setContentText("No se pudo actualizar el usuario, intentelo nuevamente");
+        			alert2.showAndWait();
+        		}
+    		}
+    		
+    		
     	}else {
     		showValidationErrorAlert();
     	}
@@ -1612,7 +1622,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
 
     @FXML
-    public void deleteEmployee(ActionEvent event) {
+    public void deleteEmployee(ActionEvent event) throws IOException {
     	
     	Alert alert1 = new Alert(AlertType.CONFIRMATION);
     	alert1.setTitle("Confirmacion de proceso");
@@ -1654,7 +1664,7 @@ public class RestauranteLaCasaDoradaGUI {
    
 
     @FXML
-    public void updateEmployee(ActionEvent event) {
+    public void updateEmployee(ActionEvent event) throws IOException {
     	if (!txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtId.getText().isEmpty()) {
 
     		boolean updated = restauranteLaCasaDorada.updateEmployee(lbObjectId.getText(),txtId.getText() ,txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(), !ckbxDisable.isSelected(), lbUserId.getText());
@@ -1729,7 +1739,7 @@ public class RestauranteLaCasaDoradaGUI {
     	colModifierClient.setCellValueFactory(new PropertyValueFactory<Client, String>("modifierName"));
     	
 
-    	tvListEmployees.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	tvListClients.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
     }
 
@@ -1753,7 +1763,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
 
     @FXML
-    public void createClient(ActionEvent event) {
+    public void createClient(ActionEvent event) throws IOException {
     	if (!txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtAddress.getText().isEmpty() && !txtPhone.getText().isEmpty() && !txtObservations.getText().isEmpty()) {
 
     		boolean added = restauranteLaCasaDorada.createClient(txtId.getText(),txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(), txtAddress.getText().toUpperCase(),txtPhone.getText(),txtObservations.getText(), lbUserId.getText());
@@ -1788,7 +1798,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
 
     @FXML
-    public void deleteClient(ActionEvent event) {
+    public void deleteClient(ActionEvent event) throws IOException {
     	Alert alert1 = new Alert(AlertType.CONFIRMATION);
     	alert1.setTitle("Confirmacion de proceso");
     	alert1.setHeaderText(null);
@@ -1830,7 +1840,7 @@ public class RestauranteLaCasaDoradaGUI {
 
 
     @FXML
-    public void updateClient(ActionEvent event) {
+    public void updateClient(ActionEvent event) throws IOException {
     	if (!txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtAddress.getText().isEmpty() && !txtPhone.getText().isEmpty() && !txtObservations.getText().isEmpty()) {
 
     		boolean updated = restauranteLaCasaDorada.updateClient(tvListClients.getSelectionModel().getSelectedItem(), txtId.getText(),txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(), txtAddress.getText().toUpperCase(),txtPhone.getText(),txtObservations.getText(), !ckbxDisable.isSelected(),lbUserId.getText());
