@@ -1,10 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Order {
+public class Order implements Serializable{
+	
+	private static final long serialVersionUID = 1;
 	private String code;
 	private Date dateAndTime;
 	private String observations;
@@ -152,6 +155,22 @@ public class Order {
 
 	public void setListOfQuantity(ArrayList<Integer> listOfQuantity) {
 		this.listOfQuantity = listOfQuantity;
+	}
+	
+	public String getAllQuantities() {
+		String quantities = "";
+		for(int i=0; i<listOfQuantity.size();i++ ) {
+			quantities += listOfQuantity.get(i)+"\n";
+		}
+		return quantities;
+	}
+	
+	public String getAllSizes() {
+		String sizes = "";
+		for(int i=0; i<listOfSizes.size();i++ ) {
+			sizes += listOfSizes.get(i)+"\n";
+		}
+		return sizes;
 	}
 
 	public ArrayList<Size> getListOfSizes() {

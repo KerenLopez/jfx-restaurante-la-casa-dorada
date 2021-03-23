@@ -119,7 +119,7 @@ public class RestauranteLaCasaDorada{
 		this.users = users;
 	}
 
-	public boolean addIngredient(String name, String userId) {
+	public boolean addIngredient(String name, String userId) throws IOException {
 		Ingredient ingredient=searchIngredientByName(name);
 		User creator=searchUser(userId);
 
@@ -129,12 +129,14 @@ public class RestauranteLaCasaDorada{
 			ingredients.add(ingredient);
 			idIngredient++;
 			added=true;
+			saveDataIngredients();
+
 		}
 
 		return added;
 	}
 
-	public boolean deleteIngredient(int ingredientId) {
+	public boolean deleteIngredient(int ingredientId) throws IOException {
 		boolean deleted=false;
 		Ingredient ing=searchIngredientById(ingredientId);
 		if(ing!=null) {
@@ -142,12 +144,13 @@ public class RestauranteLaCasaDorada{
 				int i=ingredients.indexOf(ing);
 				ingredients.remove(i);
 				deleted=true;
+				saveDataIngredients();
 			}
 		}
 		return deleted;
 	}
 	
-	public boolean updateIngredient(String newName, int ingredientId, boolean enabled, String userId) {
+	public boolean updateIngredient(String newName, int ingredientId, boolean enabled, String userId) throws IOException {
 		Ingredient ing = searchIngredientById(ingredientId);
 		Ingredient ing1 = searchIngredientByName(newName);
 		boolean updated=false;
@@ -164,6 +167,7 @@ public class RestauranteLaCasaDorada{
 			ing.setName(newName);
 			ing.setModifier(searchUser(userId));
 			updated=true;
+			saveDataIngredients();
 		}
 		return updated;
 	}
@@ -213,7 +217,7 @@ public class RestauranteLaCasaDorada{
 		return list;
 	}
 
-	public boolean addTypeOfProduct(String name, String userId) {
+	public boolean addTypeOfProduct(String name, String userId) throws IOException {
 		TypeOfProduct top=searchTypeOfProductByName(name);
 		User creator=searchUser(userId);
 
@@ -223,11 +227,12 @@ public class RestauranteLaCasaDorada{
 			typesOfProducts.add(top);
 			idTypeOfProduct++;
 			added=true;
+			saveDataTypesOfProducts();
 		}
 		return added;
 	}
 	
-	public boolean deleteTypeOfProduct(int TpId) {
+	public boolean deleteTypeOfProduct(int TpId) throws IOException {
 		boolean deleted=false;
 		TypeOfProduct top=searchTypeOfProductById(TpId);
 		if(top!=null) {
@@ -235,12 +240,13 @@ public class RestauranteLaCasaDorada{
 				int i=typesOfProducts.indexOf(top);
 				typesOfProducts.remove(i);
 				deleted=true;
+				saveDataTypesOfProducts();
 			}
 		}
 		return deleted;
 	}
 
-	public boolean updateTypeOfProduct(String newName, int TpId, boolean enabled, String userId) {
+	public boolean updateTypeOfProduct(String newName, int TpId, boolean enabled, String userId) throws IOException {
 		TypeOfProduct Tp=searchTypeOfProductById(TpId);
 		TypeOfProduct Tp1=searchTypeOfProductByName(newName);
 		boolean updated=false;
@@ -256,6 +262,7 @@ public class RestauranteLaCasaDorada{
 			Tp.setName(newName);
 			Tp.setModifier(searchUser(userId));
 			updated=true;
+			saveDataTypesOfProducts();
 		}
 		return updated;
 	}
@@ -317,7 +324,7 @@ public class RestauranteLaCasaDorada{
 		return list;
 	}
 	
-	public boolean addProduct(String name, int type, String userId) {
+	public boolean addProduct(String name, int type, String userId) throws IOException {
 		Product p=searchProductByName(name);
 		User creator=searchUser(userId);
 		TypeOfProduct tp=searchTypeOfProductById(type);
@@ -327,11 +334,12 @@ public class RestauranteLaCasaDorada{
 			products.add(p);
 			idProduct++;
 			added=true;
+			saveDataProducts();
 		}
 		return added;
 	}
 	
-	public boolean addIngredientToAProduct(Product p, Ingredient ing, String userId) {
+	public boolean addIngredientToAProduct(Product p, Ingredient ing, String userId){
 		ArrayList<Ingredient> list = p.getListOfIngredients();
 		User modifier = searchUser(userId);
 		boolean find = p.findIngredient(ing.getId());
@@ -391,12 +399,26 @@ public class RestauranteLaCasaDorada{
 		return updated;
 	}
 
-	public void deleteProduct(Product product) {
-		int i=products.indexOf(product);
-		products.remove(i);
+	public boolean deleteProduct(Product product) throws IOException {
+		boolean deleted = false;
+		boolean stop = false; 
+		boolean find = false;
+		for(int k=0; k<orders.size() && !stop;k++) {
+			find = orders.get(k).findProduct(product.getId());
+			if(find==true) {
+				stop = true;
+			}
+		}
+		if(find==false) {
+			int i=products.indexOf(product);
+			products.remove(i);
+			deleted = true;
+			saveDataProducts();
+		}
+		return deleted;
 	}
 
-	public boolean updateProduct(Product p, String newName, boolean enabled, int TpId, String userId) {
+	public boolean updateProduct(Product p, String newName, boolean enabled, int TpId, String userId) throws IOException {
 		boolean updated=false;
 		boolean findProduct = false;
 		Product product = searchProductByName(newName);
@@ -412,6 +434,7 @@ public class RestauranteLaCasaDorada{
 			p.setType(searchTypeOfProductById(TpId));
 			p.setModifier(searchUser(userId));
 			updated=true;
+			saveDataProducts();
 		}
 		return updated;
 	}
@@ -430,7 +453,7 @@ public class RestauranteLaCasaDorada{
 		return p;
 	}
 	
-	public void createOrder(Client sBuyer, Employee sDeliv, String obs, String userId) {
+	public void createOrder(Client sBuyer, Employee sDeliv, String obs, String userId) throws IOException {
 		User creator = searchUser(userId);
 		Client buyer=searchClient(sBuyer.getId());
 		Employee deliverer= searchEmployee(sDeliv.getId());
@@ -439,14 +462,18 @@ public class RestauranteLaCasaDorada{
 		int codeNum = ThreadLocalRandom.current().nextInt(1000, 10000);
 		String code = codeNum+"-"+orders.size();
 		order.setCode(code);
+		saveDataOrders();
 	}
 	
 	public boolean addProductsToAnOrder(Order selectedOrder, Product selectedProduct, Size selectedSize, int quantity, String userId) {
 		boolean added = false;
 		User modifier = searchUser(userId);
-		boolean find = selectedOrder.findProduct(selectedProduct.getId());
-		if(find==false) {
+		boolean findP = selectedOrder.findProduct(selectedProduct.getId());
+		Size findS = selectedOrder.findSize(selectedOrder.getListOfSizes().indexOf(selectedSize));
+		if(findP==false || findS==null) {
 			selectedOrder.getListOfProducts().add(selectedProduct);
+			selectedOrder.getListOfQuantity().add(quantity);
+			selectedOrder.getListOfSizes().add(selectedSize);
 			selectedOrder.setModifier(modifier);
 			added = true;
 		}
@@ -455,7 +482,10 @@ public class RestauranteLaCasaDorada{
 	
 	public void deleteProductsOfAnOrder(Order selectedOrder, Product selectedProduct, String userId) {
 		User modifier = searchUser(userId);
-		selectedOrder.getListOfProducts().remove(selectedOrder.getListOfProducts().indexOf(selectedProduct));
+		int indexOfOrder = selectedOrder.getListOfProducts().indexOf(selectedProduct);
+		selectedOrder.getListOfProducts().remove(indexOfOrder);
+		selectedOrder.getListOfQuantity().remove(indexOfOrder);
+		selectedOrder.getListOfSizes().remove(indexOfOrder);
 		selectedOrder.setModifier(modifier);
 	}
 	
@@ -463,12 +493,13 @@ public class RestauranteLaCasaDorada{
 		selectedOrder.updateState(newState);
 	}
 	
-	public void updateOrder(Order selectedOrder, Client selectedClient, Employee selectedEmployee, String obs, String userId) {
+	public void updateOrder(Order selectedOrder, Client selectedClient, Employee selectedEmployee, String obs, String userId) throws IOException {
 		User modifier = searchUser(userId);
 		selectedOrder.setModifier(modifier);
 		selectedOrder.setBuyer(selectedClient);
 		selectedOrder.setDeliverer(selectedEmployee);
 		selectedOrder.setObservations(obs);
+		saveDataOrders();
 	}
 	
 	public Size getSelectedSize(Order selectedOrder, Product selectedProduct) {

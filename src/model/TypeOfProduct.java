@@ -1,7 +1,11 @@
 package model;
 
-public class TypeOfProduct {
+import java.io.Serializable;
+
+public class TypeOfProduct implements Serializable {
 	
+	
+	private static final long serialVersionUID = 1;
 	private int id;
 	private String name;
 	private boolean enabled;
