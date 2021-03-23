@@ -691,7 +691,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    public void addProduct(ActionEvent event) {
+    public void addProduct(ActionEvent event) throws IOException {
     	if (!txtProductName.getText().equals("") && cmbxTypeOfProduct.getValue()!=null) {
     		String pN = txtProductName.getText();
     		int Tp = cmbxTypeOfProduct.getValue().getId();
@@ -721,7 +721,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    public void deleteProduct(ActionEvent event) {
+    public void deleteProduct(ActionEvent event) throws IOException {
     	Product selectedProduct = tvOfProducts.getSelectionModel().getSelectedItem();
     	Alert alert1 = new Alert(AlertType.CONFIRMATION);
     	alert1.setTitle("Confirmacion de proceso");
@@ -750,7 +750,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
 
     @FXML
-    public void updateProduct(ActionEvent event) {
+    public void updateProduct(ActionEvent event) throws IOException {
     	Product selectedProduct = tvOfProducts.getSelectionModel().getSelectedItem();
     	if (!txtProductName.getText().equals("") && cmbxTypeOfProduct.getValue()!=null) {
     		String newName = txtProductName.getText();
@@ -821,7 +821,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    public void addTypeOfProduct(ActionEvent event) {
+    public void addTypeOfProduct(ActionEvent event) throws IOException {
     	if (!txtTypeOfProductName.getText().equals("")) {
     		String newTP = txtTypeOfProductName.getText();
     		String userID = lbUserId.getText();
@@ -848,7 +848,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
 
     @FXML
-    public void deleteTypeOfProduct(ActionEvent event) {
+    public void deleteTypeOfProduct(ActionEvent event) throws IOException {
     	Alert alert1 = new Alert(AlertType.CONFIRMATION);
     	alert1.setTitle("Confirmacion de proceso");
     	alert1.setHeaderText(null);
@@ -875,7 +875,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
 
     @FXML
-    public void updateTypeOfProduct(ActionEvent event) {
+    public void updateTypeOfProduct(ActionEvent event) throws IOException {
     	if (!txtTypeOfProductName.getText().equals("")) {
     		String newName = txtTypeOfProductName.getText();
     		String userID = lbUserId.getText();
@@ -943,7 +943,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    public void addIngredient(ActionEvent event) {
+    public void addIngredient(ActionEvent event) throws IOException {
     	if (!txtIngredientName.getText().equals("")) {
     		String newIng = txtIngredientName.getText();
     		String userID = lbUserId.getText();
@@ -970,7 +970,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
 
     @FXML
-    public void deleteIngredient(ActionEvent event) {
+    public void deleteIngredient(ActionEvent event) throws IOException {
     	Alert alert1 = new Alert(AlertType.CONFIRMATION);
     	alert1.setTitle("Confirmacion de proceso");
     	alert1.setHeaderText(null);
@@ -997,7 +997,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
 
     @FXML
-    public void updateIngredient(ActionEvent event) {
+    public void updateIngredient(ActionEvent event) throws IOException {
     	if (!txtIngredientName.getText().equals("")) {
     		String newName = txtIngredientName.getText();
     		String userID = lbUserId.getText();
@@ -1290,7 +1290,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    public void addOrder(ActionEvent event) {
+    public void addOrder(ActionEvent event) throws IOException {
     	if (cmbxClients.getValue()!=null && cbEmployee.getValue()!=null && !txtAreaObservations.getText().equals("")) {
     		Client selectedClient = cmbxClients.getValue();
     		Employee selectedEmployee = cbEmployee.getValue();
@@ -1314,7 +1314,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
 
     @FXML
-    public void updateOrder(ActionEvent event) {
+    public void updateOrder(ActionEvent event) throws IOException {
     	Order selectedOrder = tvOfOrders.getSelectionModel().getSelectedItem();
     	if (cmbxClients.getValue()!=null && cbEmployee.getValue()!=null && !txtAreaObservations.getText().equals("")) {
     		Client selectedClient = cmbxClients.getValue();
