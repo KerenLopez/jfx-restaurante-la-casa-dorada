@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class RestauranteLaCasaDorada{
 	
@@ -330,30 +331,36 @@ public class RestauranteLaCasaDorada{
 		return added;
 	}
 	
-	public boolean addIngredientToAProduct(Product p, Ingredient ing) {
+	public boolean addIngredientToAProduct(Product p, Ingredient ing, String userId) {
 		ArrayList<Ingredient> list = p.getListOfIngredients();
-		boolean find = searchProductIngredient(ing.getId());
+		User modifier = searchUser(userId);
+		boolean find = p.findIngredient(ing.getId());
 		boolean added = false;
 		if(find==false) {
 			list.add(ing);
+			p.setModifier(modifier);
 			added = true;
 		}
 		return added;
 	}
 	
-	public void deleteAnIngredientOfAProduct(Product p, Ingredient ing) {
+	public void deleteAnIngredientOfAProduct(Product p, Ingredient ing, String userId) {
+		User modifier = searchUser(userId);
 		ArrayList<Ingredient> list = p.getListOfIngredients();
 		list.remove(list.indexOf(ing));
+		p.setModifier(modifier);
 	}
 	
-	public boolean addSizeOfAProduct(Product p, String name, double price) {
+	public boolean addSizeOfAProduct(Product p, String name, double price, String userId) {
 		ArrayList<Size> list = p.getSizes();
+		User modifier = searchUser(userId);
 		Size find = p.findSize(name);
 		boolean added = false;
 		if(find==null) {
 			Size size = new Size(name, price, idSize);
 			list.add(size);
 			idSize++;
+			p.setModifier(modifier);
 			added = true;
 		}
 		return added;
@@ -364,7 +371,8 @@ public class RestauranteLaCasaDorada{
 		list.remove(list.indexOf(s));
 	}
 	
-	public boolean updateSizeOfAProduct(Product p, Size selectedSize, String newName, double newPrice) {
+	public boolean updateSizeOfAProduct(Product p, Size selectedSize, String newName, double newPrice, String userId) {
+		User modifier = searchUser(userId);
 		Size s = p.findSize(newName);
 		boolean updated = false;
 		boolean findSize =false;
@@ -377,6 +385,7 @@ public class RestauranteLaCasaDorada{
 		if(!findSize) {
 			selectedSize.setName(newName);
 			selectedSize.setPrice(newPrice);
+			p.setModifier(modifier);
 			updated = true;
 		}
 		return updated;
@@ -421,39 +430,58 @@ public class RestauranteLaCasaDorada{
 		return p;
 	}
 	
-	/*public void createOrder(String sBuyer, String sDeliv, String listProd, String obs) {
-		
-		Client buyer=searchClient(sBuyer);
-		Employee deliverer= searchEmployee(sDeliv);
-		
-		String[] parts= listProd.split(";");
-		ArrayList<Product> list= new ArrayList<Product>();
-		for(int i=0; i<parts.length;i++) {
-
-			list.add(searchProduct(parts[i]));
-		}
-		
-		Order order= new  Order(buyer,deliverer, list, obs);
+	public void createOrder(Client sBuyer, Employee sDeliv, String obs, String userId) {
+		User creator = searchUser(userId);
+		Client buyer=searchClient(sBuyer.getId());
+		Employee deliverer= searchEmployee(sDeliv.getId());
+		Order order= new  Order(buyer,deliverer,obs,creator);
 		orders.add(order);
-		order.setCode(orders.size());
-
-
+		int codeNum = ThreadLocalRandom.current().nextInt(1000, 10000);
+		String code = codeNum+"-"+orders.size();
+		order.setCode(code);
 	}
 	
-	public void updateOrderState(int code, String state) {
-		Order order = orders.get(code-1);
-		order.updateState(state);
-	}
-	*/
-	
-	public Size getSelectedSize(Product selectedProduct) {
-		
-	}
-	
-	public int getQuantity(Product selectedProduct){
-		
+	public boolean addProductsToAnOrder(Order selectedOrder, Product selectedProduct, Size selectedSize, int quantity, String userId) {
+		boolean added = false;
+		User modifier = searchUser(userId);
+		boolean find = selectedOrder.findProduct(selectedProduct.getId());
+		if(find==false) {
+			selectedOrder.getListOfProducts().add(selectedProduct);
+			selectedOrder.setModifier(modifier);
+			added = true;
+		}
+		return added;
 	}
 	
+	public void deleteProductsOfAnOrder(Order selectedOrder, Product selectedProduct, String userId) {
+		User modifier = searchUser(userId);
+		selectedOrder.getListOfProducts().remove(selectedOrder.getListOfProducts().indexOf(selectedProduct));
+		selectedOrder.setModifier(modifier);
+	}
+	
+	public void updateStateOfAnOrder(Order selectedOrder, String newState) {
+		selectedOrder.updateState(newState);
+	}
+	
+	public void updateOrder(Order selectedOrder, Client selectedClient, Employee selectedEmployee, String obs, String userId) {
+		User modifier = searchUser(userId);
+		selectedOrder.setModifier(modifier);
+		selectedOrder.setBuyer(selectedClient);
+		selectedOrder.setDeliverer(selectedEmployee);
+		selectedOrder.setObservations(obs);
+	}
+	
+	public Size getSelectedSize(Order selectedOrder, Product selectedProduct) {
+		int indexProduct = selectedOrder.getListOfProducts().indexOf(selectedProduct);
+		Size selectedSize = selectedOrder.findSize(indexProduct);
+		return selectedSize;
+	}
+	
+	public int getQuantity(Order selectedOrder, Product selectedProduct){
+		int indexProduct = selectedOrder.getListOfProducts().indexOf(selectedProduct);
+		int quantity = selectedOrder.findQuantity(indexProduct);
+		return quantity;
+	}
 
 	public boolean createUser(Employee empl, String userName, String password, String creatorId) throws IOException{
 		boolean created=false;

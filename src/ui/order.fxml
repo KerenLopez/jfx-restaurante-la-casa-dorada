@@ -20,37 +20,63 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="1095.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="1019.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <HBox prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Orden" textAlignment="CENTER" textFill="WHITE">
-               <padding>
-                  <Insets left="140.0" top="20.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
-            <Label text="Lista de ordenes creadas" textFill="WHITE">
-               <padding>
-                  <Insets left="390.0" top="20.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
-         </children>
+      <VBox BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" top="10.0" />
          </BorderPane.margin>
-      </HBox>
+         <children>
+            <HBox alignment="TOP_RIGHT">
+               <children>
+                  <Label text="Usuario: " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lbUserName" text="-" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbUserId" text="id" visible="false">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="50.0" prefWidth="200.0">
+               <children>
+                  <Label text="Orden" textAlignment="CENTER" textFill="WHITE">
+                     <padding>
+                        <Insets left="140.0" top="20.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="Lista de ordenes creadas" textFill="WHITE">
+                     <padding>
+                        <Insets left="390.0" top="20.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </top>
    <left>
       <GridPane alignment="CENTER" prefHeight="448.0" prefWidth="1083.0" BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="579.0" minWidth="10.0" prefWidth="293.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="790.0" minWidth="10.0" prefWidth="790.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="579.0" minWidth="10.0" prefWidth="343.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="790.0" minWidth="10.0" prefWidth="676.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -58,15 +84,17 @@
          <children>
             <VBox fx:id="createOrderForm" prefHeight="448.0" prefWidth="320.0" visible="false">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="275.0" text="*Para actualizar una determinada orden seleccionela de la lista." textAlignment="CENTER" wrapText="true">
-                     <padding>
-                        <Insets left="50.0" />
-                     </padding>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="331.0" text="*Para actualizar una determinada orden seleccionela de la lista." textAlignment="CENTER" wrapText="true">
                      <VBox.margin>
-                        <Insets top="20.0" />
+                        <Insets left="20.0" right="10.0" />
                      </VBox.margin>
                   </Label>
-                  <GridPane maxHeight="250.0" minHeight="200.0" prefHeight="250.0" prefWidth="277.0">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="30.0" prefHeight="60.0" prefWidth="319.0" text="*Para cambiar el estado de una orden o agregarle productos, seleccionela de la lista." textAlignment="CENTER" wrapText="true">
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <GridPane maxHeight="240.0" minHeight="200.0" prefHeight="240.0" prefWidth="277.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="135.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="165.0" />
@@ -74,14 +102,14 @@
                     <rowConstraints>
                       <RowConstraints />
                         <RowConstraints />
-                      <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" onAction="#chooseProductsOfAnOrder" text="Añadir o eliminar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button fx:id="btAddProductsOrder" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#chooseProductsOfAnOrder" text="Añadir o eliminar" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label text="Productos:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="65.0" right="5.0" />
@@ -132,7 +160,7 @@
                         <Button fx:id="btChangeState" disable="true" mnemonicParsing="false" onAction="#changeStateOfAnOrder" text="Cambiar estado" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                      <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
+                        <Insets bottom="10.0" />
                      </VBox.margin>
                   </GridPane>
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
@@ -147,13 +175,15 @@
                   </HBox>
                   <Button mnemonicParsing="false" onAction="#returnToMenu" text="Atrás">
                      <VBox.margin>
-                        <Insets left="130.0" top="20.0" />
+                        <Insets left="130.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Label fx:id="lbObjectId" />
                </children>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
             </VBox>
-            <ScrollPane maxWidth="1055.0" prefHeight="433.0" prefWidth="1055.0" GridPane.columnIndex="1">
+            <ScrollPane maxWidth="650.0" minWidth="614.0" prefHeight="433.0" prefWidth="614.0" GridPane.columnIndex="1">
               <content>
                 <AnchorPane>
                      <children>
@@ -172,7 +202,7 @@
                               <TableColumn fx:id="colObservationsOrder" prefWidth="200.0" text="Observaciones" />
                            </columns>
                         </TableView>
-                        <TableView fx:id="tvOfAddedProducts" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfAddedProducts" prefHeight="458.0" prefWidth="295.0" visible="false">
+                        <TableView fx:id="tvOfAddedProducts" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfAddedProducts" prefHeight="458.0" prefWidth="211.0" visible="false">
                            <columns>
                               <TableColumn fx:id="colNameAddedProduct" prefWidth="158.481689453125" text="Nombre" />
                            </columns>
@@ -180,7 +210,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <TableView fx:id="tvOfOrderProducts" blendMode="DARKEN" layoutX="294.0" onMouseClicked="#clickOnTableViewOfOrderProducts" prefHeight="458.0" prefWidth="308.0" visible="false">
+                        <TableView fx:id="tvOfOrderProducts" blendMode="DARKEN" layoutX="211.0" onMouseClicked="#clickOnTableViewOfOrderProducts" prefHeight="458.0" prefWidth="292.0" visible="false">
                            <columns>
                               <TableColumn fx:id="colNameOrderProduct" prefWidth="158.481689453125" text="Nombre" />
                               <TableColumn fx:id="colSizeOrderProduct" prefWidth="162.639892578125" text="Tamaño" />
@@ -189,7 +219,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <TableView fx:id="tvOfOrderProductsQ" blendMode="DARKEN" layoutX="602.0" prefHeight="458.0" prefWidth="167.0" visible="false">
+                        <TableView fx:id="tvOfOrderProductsQ" blendMode="DARKEN" layoutX="503.0" prefHeight="458.0" prefWidth="145.0" visible="false">
                            <columns>
                               <TableColumn fx:id="colQuantityOrderProduct" prefWidth="158.481689453125" text="Cantidad" />
                            </columns>
@@ -289,16 +319,13 @@
             <VBox fx:id="updateStateForm" layoutX="10.0" layoutY="10.0" prefHeight="448.0" prefWidth="320.0" visible="false">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="275.0" text="*Seleccione el nuevo estado de la orden." textAlignment="CENTER" wrapText="true">
-                     <padding>
-                        <Insets left="50.0" />
-                     </padding>
                      <VBox.margin>
                         <Insets bottom="20.0" top="80.0" />
                      </VBox.margin>
                   </Label>
                   <VBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
                      <children>
-                        <RadioButton fx:id="rbInProcess" mnemonicParsing="false" text="En proceso">
+                        <RadioButton fx:id="rbInProcess" disable="true" mnemonicParsing="false" text="En proceso">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
@@ -306,13 +333,13 @@
                               <ToggleGroup fx:id="rbStateOrder" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="rbSent" mnemonicParsing="false" text="Enviado" />
-                        <RadioButton fx:id="rbDelivered" mnemonicParsing="false" text="Entregado">
+                        <RadioButton fx:id="rbSent" disable="true" mnemonicParsing="false" text="Enviado" toggleGroup="$rbStateOrder" />
+                        <RadioButton fx:id="rbDelivered" disable="true" mnemonicParsing="false" text="Entregado" toggleGroup="$rbStateOrder">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
                         </RadioButton>
-                        <RadioButton fx:id="rbCancelled" mnemonicParsing="false" text="Cancelado">
+                        <RadioButton fx:id="rbCancelled" disable="true" mnemonicParsing="false" text="Cancelado" toggleGroup="$rbStateOrder">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
@@ -323,7 +350,7 @@
                      <children>
                         <Button fx:id="btChangeState" mnemonicParsing="false" onAction="#changeStateOfAnOrder" text="Cambiar">
                            <HBox.margin>
-                              <Insets left="15.0" />
+                              <Insets left="10.0" />
                            </HBox.margin>
                         </Button>
                      </children>
@@ -333,7 +360,7 @@
                   </HBox>
                   <Button mnemonicParsing="false" onAction="#returnToManageAnOrder" text="Atrás">
                      <VBox.margin>
-                        <Insets left="130.0" top="30.0" />
+                        <Insets left="110.0" top="30.0" />
                      </VBox.margin>
                   </Button>
                </children>

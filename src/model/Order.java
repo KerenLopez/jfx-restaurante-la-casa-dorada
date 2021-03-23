@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
-	private int code;
+	private String code;
 	private Date dateAndTime;
 	private String observations;
 	private State stateOfOrder;
@@ -17,23 +17,24 @@ public class Order {
 	private ArrayList<Size> listOfSizes;
 	private ArrayList<Integer> listOfQuantity;
 	
-	public Order(Client buyer, Employee deliverer, ArrayList<Product> listOfProducts, ArrayList<Size> listOfSizes, ArrayList<Integer> listOfQuantity, String observations, User creator) {
+	public Order(Client buyer, Employee deliverer, String observations, User creator) {
 		this.dateAndTime = new Date();
 		this.stateOfOrder = State.SOLICITADO;
 		this.creator = creator;
 		this.modifier = creator;
 		this.buyer = buyer;
+		this.observations = observations;
 		this.deliverer = deliverer;
-		this.listOfProducts = listOfProducts;
-		this.listOfQuantity = listOfQuantity;
-		this.listOfSizes = listOfSizes;
+		listOfProducts = new ArrayList<Product>();
+		listOfQuantity = new ArrayList<Integer>();
+		listOfSizes = new ArrayList<Size>();
 	}
 	
-	public int getCode() {
+	public String getCode() {
 		return code;
 	}
 	
-	public void setCode(int code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 	
@@ -60,26 +61,6 @@ public class Order {
 		this.stateOfOrder = stateOfOrder;
 	}
 	
-	public String getStatus() {
-		String status = "";
-		if(stateOfOrder==State.EN_PROCESO) {
-			status = "En proceso";
-		}
-		if(stateOfOrder==State.CANCELADO) {
-			status = "Cancelada";
-		}
-		if(stateOfOrder==State.ENTREGADO) {
-			status="Entregada";
-		}
-		if(stateOfOrder==State.SOLICITADO) {
-			status="Solicitada";
-		}
-		if(stateOfOrder==State.ENVIADO) {
-			status="Enviada";
-		}
-		return status;
-	}
-	
 	public Client getBuyer() {
 		return buyer;
 	}
@@ -88,12 +69,22 @@ public class Order {
 		this.buyer = buyer;
 	}
 	
+	public String getClientName() {
+		String name = buyer.getName();
+		return name;
+	}
+	
 	public Employee getDeliverer() {
 		return deliverer;
 	}
 	
 	public void setDeliverer(Employee deliverer) {
 		this.deliverer = deliverer;
+	}
+	
+	public String getEmployeeName() {
+		String name = deliverer.getName();
+		return name;
 	}
 	
 	public ArrayList<Product> getListOfProducts() {
@@ -169,5 +160,39 @@ public class Order {
 
 	public void setListOfSizes(ArrayList<Size> listOfSizes) {
 		this.listOfSizes = listOfSizes;
+	}
+	
+	public boolean findProduct(int pId) {
+		boolean found=false;
+		for(int i=0; i<listOfProducts.size() && !found;i++ ) {
+			if(listOfProducts.get(i).getId()==pId) {
+				found=true;						
+			}
+		}		
+		return found;
+	}
+	
+	public Size findSize(int index) {
+		boolean found=false;
+		Size size = null;
+		for(int i=0; i<listOfSizes.size() && !found;i++ ) {
+			if(i==index) {
+				size = listOfSizes.get(i);
+				found=true;						
+			}
+		}		
+		return size;
+	}
+	
+	public int findQuantity(int index) {
+		boolean found=false;
+		int quantity = 0;
+		for(int i=0; i<listOfQuantity.size() && !found;i++ ) {
+			if(i==index) {
+				quantity = listOfQuantity.get(i);
+				found=true;						
+			}
+		}		
+		return quantity;
 	}
 }
