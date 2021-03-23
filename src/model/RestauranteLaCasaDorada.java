@@ -684,6 +684,9 @@ public class RestauranteLaCasaDorada{
 				
 				if(users.get(i).getPassword().equals(password)) {
 					id=users.get(i).getId();
+					if(!users.get(i).isEnabled()) {
+						id="";
+					}
 				}
 			}
 
