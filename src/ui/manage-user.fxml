@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="1019.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1019.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -153,11 +153,11 @@
                   </GridPane>
                </children>
             </VBox>
-            <ScrollPane prefHeight="453.0" prefWidth="490.0" GridPane.columnIndex="1">
+            <ScrollPane prefHeight="445.0" prefWidth="668.0" GridPane.columnIndex="1">
               <content>
                 <AnchorPane>
                      <children>
-                        <TableView fx:id="tvListUsers" onMouseClicked="#clickOnTableViewUsers" prefHeight="458.0" prefWidth="659.0">
+                        <TableView fx:id="tvListUsers" onMouseClicked="#clickOnTableViewUsers" prefHeight="511.0" prefWidth="750.0">
                           <columns>
                             <TableColumn fx:id="colNameUser" prefWidth="75.0" text="Nombres" />
                             <TableColumn fx:id="colLastNameUser" prefWidth="75.0" text="Apellidos" />

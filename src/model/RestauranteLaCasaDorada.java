@@ -1134,7 +1134,7 @@ public class RestauranteLaCasaDorada{
 	
 	@SuppressWarnings("unchecked")
 	public boolean loadDataTypesOfProducts() throws IOException, ClassNotFoundException{
-		File f = new File(CLIENTS_SAVE_PATH_FILE);
+		File f = new File(TYPE_OF_PROD_SAVE_PATH_FILE);
 		boolean loaded = false;
 		if(f.exists()){
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
@@ -1147,7 +1147,7 @@ public class RestauranteLaCasaDorada{
 	
 	@SuppressWarnings("unchecked")
 	public boolean loadDataOrders() throws IOException, ClassNotFoundException{
-		File f = new File(CLIENTS_SAVE_PATH_FILE);
+		File f = new File(ORDERS_SAVE_PATH_FILE);
 		boolean loaded = false;
 		if(f.exists()){
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
