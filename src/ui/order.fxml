@@ -82,7 +82,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox fx:id="createOrderForm" prefHeight="448.0" prefWidth="320.0">
+            <VBox fx:id="createOrderForm" prefHeight="448.0" prefWidth="320.0" visible="false">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="331.0" text="*Para actualizar una determinada orden seleccionela de la lista." textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <VBox.margin>
