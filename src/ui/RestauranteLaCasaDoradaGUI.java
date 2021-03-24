@@ -424,7 +424,6 @@ public class RestauranteLaCasaDoradaGUI {
     private Button btChangeState;
     
     @FXML
-<<<<<<< HEAD
     private DatePicker dtPickerInitialDate;
 
     @FXML
@@ -444,12 +443,12 @@ public class RestauranteLaCasaDoradaGUI {
 
     @FXML
     private TextField txtSeparator;
-=======
+    
+    @FXML
     private TextField txtClientSearchedName;
 
     @FXML
     private TextField txtClientSearchedLastName;
->>>>>>> c297c3dcc311b0a69ccbdffa1d1b3d1003937643
 
     
 	public RestauranteLaCasaDoradaGUI(RestauranteLaCasaDorada rlcd) {
