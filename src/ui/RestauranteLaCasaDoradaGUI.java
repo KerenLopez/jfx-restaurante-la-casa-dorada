@@ -418,6 +418,12 @@ public class RestauranteLaCasaDoradaGUI {
 
     @FXML
     private Button btChangeState;
+    
+    @FXML
+    private TextField txtClientSearchedName;
+
+    @FXML
+    private TextField txtClientSearchedLastName;
 
     
 	public RestauranteLaCasaDoradaGUI(RestauranteLaCasaDorada rlcd) {
@@ -1371,6 +1377,27 @@ public class RestauranteLaCasaDoradaGUI {
     		showValidationErrorAlert();
     	}
     }
+    
+    @FXML
+    void searchClientByName(ActionEvent event) {
+    	Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText(null);
+    	if(!txtClientSearchedName.getText().isEmpty() && !txtClientSearchedName.getText().isEmpty()) {
+    		ObservableList<Client> clientsList = FXCollections.observableArrayList(restauranteLaCasaDorada.searchClientByName(txtClientSearchedName.getText().toUpperCase(),txtClientSearchedLastName.getText().toUpperCase()));
+    		cmbxClients.setItems(clientsList);
+    		if(clientsList.isEmpty()) {
+    			alert.setContentText("No se encontró al cliente");
+        		alert.showAndWait();
+    		}
+    	}else {
+    		
+    		alert.setContentText("Debe ingresar nombre y apellido para buscar el cliente");
+    		alert.showAndWait();
+    	}
+		
+    }
+
 
     @FXML
     public void returnToManageAnOrder(ActionEvent event) throws IOException {
@@ -2105,7 +2132,11 @@ public class RestauranteLaCasaDoradaGUI {
     	}
     	
     }
+    
 
+      
+    
+    
     
     
 

@@ -971,7 +971,7 @@ public class RestauranteLaCasaDorada{
 
 	}
 	
-	public int binarySearchClient(String clientNames, String clientLastNames, int posFind) {
+	public int binarySearchClient(String clientNames, String clientLastNames) {
 		
 		Client client= new Client(clientNames,clientLastNames,null,null,null,null, null);
 		Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
@@ -982,32 +982,55 @@ public class RestauranteLaCasaDorada{
 		
 		while(i<=j && pos<0){
 			int m= (i+j)/2;
-			if(m!= posFind && clientLastNameAndNameComparator.compare(clients.get(m),client)==0){
+			
+			if(clientLastNameAndNameComparator.compare(clients.get(m),client)==0){
 				pos =m;
 			}else if(clientLastNameAndNameComparator.compare(clients.get(m),client)<0){
 				j=m-1;
 			}else{
 				i=m+1;
 			}
+			
+		
 		}
 		
 		return pos;
 	}
 	
 	public ArrayList<Client> searchClientByName(String clientNames, String clientLastNames){
+		Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
 		ArrayList<Client> clientsByName=new ArrayList<Client>();
 		int pos;
-		int posFind=-1;
-		do {
-			pos=binarySearchClient(clientNames,clientLastNames, posFind);
 
-			if(pos>=0) {
-				if(clients.get(pos).isEnabled()) {
-					clientsByName.add(clients.get(pos));
-				}
+		pos=binarySearchClient(clientNames,clientLastNames);
+		int sameUp=1;
+		int sameDown=1;
+		if(pos>=0) {
+			if(clients.get(pos).isEnabled()) {
+				clientsByName.add(clients.get(pos));
 			}
-			posFind=pos;
-		}while(pos>=0);
+			
+			boolean same=false;
+			do {
+				same=false;
+				if((pos-sameDown)>=0 && clientLastNameAndNameComparator.compare(clients.get(pos), clients.get(pos-sameDown))==0) {
+					if(clients.get(pos-sameDown).isEnabled()) {
+						clientsByName.add(clients.get(pos-sameDown));
+						sameDown++;
+						same=true;
+					}
+				}
+
+				if((pos+sameUp)<=clients.size()-1 && clientLastNameAndNameComparator.compare(clients.get(pos), clients.get(pos+sameUp))==0) {
+					if(clients.get(pos+sameUp).isEnabled()) {
+						clientsByName.add(clients.get(pos+sameUp));
+						sameUp++;
+						same=true;
+					}
+				}
+			}while(same);
+					
+		}
 
 		return clientsByName;
 	}
