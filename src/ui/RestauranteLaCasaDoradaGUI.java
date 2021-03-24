@@ -1,6 +1,8 @@
 package ui;
 
+import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
@@ -19,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
@@ -30,6 +33,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import model.Client;
 import model.Employee;
 import model.Ingredient;
@@ -418,6 +422,27 @@ public class RestauranteLaCasaDoradaGUI {
 
     @FXML
     private Button btChangeState;
+    
+    @FXML
+    private DatePicker dtPickerInitialDate;
+
+    @FXML
+    private DatePicker dtPickerFinalDate;
+
+    @FXML
+    private ComboBox<String> cmbxInitialHour;
+
+    @FXML
+    private ComboBox<String> cmbxInitialMinute;
+
+    @FXML
+    private ComboBox<String> cmbxFinalHour;
+
+    @FXML
+    private ComboBox<String> cmbxFinalMinute;
+
+    @FXML
+    private TextField txtSeparator;
 
     
 	public RestauranteLaCasaDoradaGUI(RestauranteLaCasaDorada rlcd) {
@@ -1413,8 +1438,68 @@ public class RestauranteLaCasaDoradaGUI {
     	lbUserIdMenu.setText(lbUserId.getText());
     }
     
+    private void initializeComboBoxOfHours() {
+		ObservableList<String> hoursList = FXCollections.observableArrayList(restauranteLaCasaDorada.getHours());
+		cmbxInitialHour.setItems(hoursList);
+		cmbxInitialHour.setPromptText("00");
+		cmbxFinalHour.setItems(hoursList);
+		cmbxFinalHour.setPromptText("00");
+	}
     
+    private void initializeComboBoxOfMinutes() {
+		ObservableList<String> minutesList = FXCollections.observableArrayList(restauranteLaCasaDorada.getMinutes());
+		cmbxInitialMinute.setItems(minutesList);
+		cmbxInitialMinute.setPromptText("00");
+		cmbxFinalMinute.setItems(minutesList);
+		cmbxFinalMinute.setPromptText("00");
+	}
     
+    @FXML
+    public void exportOrderReport(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportReport.fxml"));
+		fxmlLoader.setController(this);
+		Parent menuPane = fxmlLoader.load();
+		mainPanel.getChildren().clear();
+		mainPanel.setCenter(menuPane);
+		mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+		initializeComboBoxOfHours();
+		initializeComboBoxOfMinutes();
+		dtPickerInitialDate.setValue(LocalDate.MAX);
+		dtPickerFinalDate.setValue(LocalDate.MAX);
+    }
+    
+    @FXML
+    public void generateReport(ActionEvent event) {
+    	if(dtPickerInitialDate.getValue()!=null && dtPickerFinalDate.getValue()!=null && cmbxInitialHour.getValue()!=null && cmbxInitialMinute.getValue()!=null && cmbxFinalHour.getValue()!=null && cmbxFinalMinute.getValue()!=null && !txtSeparator.getText().equals("")) {
+    		String intialDate = dtPickerInitialDate.getValue().toString();
+    		String finalDate = dtPickerFinalDate.getValue().toString();
+    		String initialHour = cmbxInitialHour.getValue();
+    		String finalHour = cmbxFinalHour.getValue();
+    		String initialMinute = cmbxInitialMinute.getValue();
+    		String finalMinute = cmbxFinalMinute.getValue();
+    		String separator = txtSeparator.getText();
+    		FileChooser fileChooser = new FileChooser();
+        	fileChooser.setTitle("Elija el archivo en donde se va a guardar el reporte");
+        	File fExp= fileChooser.showSaveDialog(mainPanel.getScene().getWindow());
+        	if(fExp!=null) {
+        		Alert alert = new Alert(AlertType.INFORMATION);
+    		    alert.setTitle("Exportar reporte sobre ordenes");
+    		    try {
+    				restauranteLaCasaDorada.exportOrdersReport(fExp.getAbsolutePath(), intialDate, finalDate, initialHour, finalHour, initialMinute, finalMinute, separator);
+    			    alert.setHeaderText(null);
+    			    alert.setContentText("The billboards were export successfully");
+    			    alert.showAndWait();
+    			} catch (IOException e) {
+    				alert.setHeaderText(null);
+    			    alert.setContentText("Sorry, an error has been ocurred");
+    				e.printStackTrace();
+    			}
+        	}
+    	}else {
+    		showValidationErrorAlert();
+    	}
+    }
+
         
     
     

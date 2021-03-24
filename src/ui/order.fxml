@@ -185,7 +185,7 @@
             </VBox>
             <ScrollPane maxWidth="650.0" minWidth="614.0" prefHeight="433.0" prefWidth="614.0" GridPane.columnIndex="1">
               <content>
-                <AnchorPane>
+                <AnchorPane prefHeight="484.0" prefWidth="1500.0">
                      <children>
                         <TableView fx:id="tvOfOrders" onMouseClicked="#clickOnTableViewOfOrders" prefHeight="431.0" prefWidth="1500.0" visible="false">
                            <columnResizePolicy>
@@ -238,7 +238,7 @@
                   </AnchorPane>
               </content>
                <GridPane.margin>
-                  <Insets bottom="15.0" left="5.0" right="15.0" />
+                  <Insets bottom="30.0" left="5.0" right="15.0" />
                </GridPane.margin>
             </ScrollPane>
             <VBox fx:id="addIngredientsToAnOrderForm" layoutX="10.0" layoutY="10.0" prefHeight="448.0" prefWidth="320.0" visible="false">
