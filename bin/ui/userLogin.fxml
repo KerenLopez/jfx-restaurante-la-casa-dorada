@@ -20,6 +20,7 @@
          <VBox.margin>
             <Insets bottom="50.0" />
          </VBox.margin></Label>
+      <Label fx:id="lbObjectId" visible="false" />
       <GridPane prefHeight="168.0" prefWidth="1007.0">
         <columnConstraints>
           <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="445.0" />
