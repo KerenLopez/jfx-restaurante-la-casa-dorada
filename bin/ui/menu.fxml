@@ -44,7 +44,7 @@
    <top>
       <VBox alignment="CENTER">
          <children>
-            <MenuBar>
+            <MenuBar prefWidth="1019.0">
               <menus>
                 <Menu mnemonicParsing="false" text="Archivo">
                   <items>
@@ -52,7 +52,10 @@
                         <MenuItem mnemonicParsing="false" text="Exportar" />
                   </items>
                 </Menu>
-                  <Menu mnemonicParsing="false" onAction="#showAboutCreators" text="Ayuda" />
+                  <Menu mnemonicParsing="false" text="Ayuda">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#showAboutCreators" text="Acerca de" />
+                     </items></Menu>
               </menus>
             </MenuBar>
             <Label fx:id="lbUserNameMenu" text="username" visible="false" />

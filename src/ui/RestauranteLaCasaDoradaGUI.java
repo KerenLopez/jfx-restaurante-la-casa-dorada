@@ -1383,17 +1383,36 @@ public class RestauranteLaCasaDoradaGUI {
     	Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
 		alert.setHeaderText(null);
-    	if(!txtClientSearchedName.getText().isEmpty() && !txtClientSearchedName.getText().isEmpty()) {
+    	if(!txtClientSearchedName.getText().isEmpty() && !txtClientSearchedLastName.getText().isEmpty()) {
+    	    long start= System.currentTimeMillis();
     		ObservableList<Client> clientsList = FXCollections.observableArrayList(restauranteLaCasaDorada.searchClientByName(txtClientSearchedName.getText().toUpperCase(),txtClientSearchedLastName.getText().toUpperCase()));
+    	    long end = System.currentTimeMillis();
+    	    long time=end-start;
     		cmbxClients.setItems(clientsList);
     		if(clientsList.isEmpty()) {
-    			alert.setContentText("No se encontró al cliente");
+    			alert.setHeaderText("No se encontró al cliente "+txtClientSearchedName.getText().toUpperCase()+" "+txtClientSearchedLastName.getText().toUpperCase());
+
+    			alert.setContentText("Tiempo que tardó la búsqueda: "+time+" milisegundos");
         		alert.showAndWait();
+        		initializeComboBoxOfClients();
+        		txtClientSearchedName.clear();
+        		txtClientSearchedLastName.clear();
+
+    		}else {
+    			Alert alert2 = new Alert(AlertType.INFORMATION);
+    		    alert2.setTitle("Cliente(s) encontrado(s)");
+    		    alert2.setHeaderText("Puede desplegar la lista para seleccionar al cliente buscado");
+    		    alert2.setContentText("Tiempo que tardó la búsqueda: "+time+" milisegundos");
+    		    alert2.showAndWait();
+    			txtClientSearchedName.clear();
+        		txtClientSearchedLastName.clear();
     		}
     	}else {
     		
     		alert.setContentText("Debe ingresar nombre y apellido para buscar el cliente");
     		alert.showAndWait();
+    		initializeComboBoxOfClients();
+
     	}
 		
     }
@@ -1408,8 +1427,8 @@ public class RestauranteLaCasaDoradaGUI {
     public void showAboutCreators(ActionEvent event) {
     	Alert alert = new Alert(AlertType.INFORMATION);
 	    alert.setTitle("Restaurante La Casa Dorada");
-	    alert.setHeaderText("Créditos:");
-	    alert.setContentText("Keren Lopez Cordoba y Angelica Corrales Quevedo\nEstudiantes de Ingenieria de Sistemas\nAlgoritmos y programación II, Universidad Icesi.");
+	    alert.setHeaderText("Créditos");
+	    alert.setContentText("Keren López Cordoba y Angélica Corrales Quevedo\nEstudiantes de Ingeniería de Sistemas\nAlgoritmos y programación II, Universidad Icesi.");
 	    alert.showAndWait();
     }
     
