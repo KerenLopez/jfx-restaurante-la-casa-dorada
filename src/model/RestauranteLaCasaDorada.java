@@ -2,17 +2,18 @@ package model;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-
-import javafx.event.ActionEvent;
 
 public class RestauranteLaCasaDorada{
 	
@@ -742,7 +743,34 @@ public class RestauranteLaCasaDorada{
 		}
 		return id;
 	}
-
+	
+	public List<String> getHours(){
+		List<String> allHours = new ArrayList<String>();
+		String[] hours = {"00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"};
+		allHours = Arrays.asList(hours);
+		return allHours;
+	}
+	
+	public List<String> getMinutes(){
+		List<String> allMinutes = new ArrayList<String>();
+		String[] minutes = {"00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"};
+		allMinutes = Arrays.asList(minutes);
+		return allMinutes;
+	}
+	
+	public void exportOrdersReport(String fn, String initialDate, String finalDate, String initialHour, String finalHour, String initialMinute, String finalMinute, String separator) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(fn);
+		pw.println("Reporte de ordenes creadas en el sistema");
+		pw.println("Fecha inicial del reporte: "+initialDate);
+		pw.println("Fecha final del reporte: "+finalDate);
+		pw.println("Hora inicial del reporte "+initialHour+":"+initialMinute);
+		pw.println("Hora final del reporte "+finalHour+":"+finalMinute);
+	    for(int i=0;i<orders.size();i++){
+	      Order objOrder = orders.get(i);
+	      pw.println("Order # "+objOrder.getCode()+separator+" State:"+objBillboard.getBrand()+" with area "+objBillboard.getArea());
+	    }
+	    pw.close();
+	}
 
 	public boolean createEmployee(String id, String name, String lastName, String creatorId) throws IOException {
 
