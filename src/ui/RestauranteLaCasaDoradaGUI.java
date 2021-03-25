@@ -1545,6 +1545,29 @@ public class RestauranteLaCasaDoradaGUI {
     		showValidationErrorAlert();
     	}
     }
+    
+    
+    @FXML
+    void importClientsData(ActionEvent event) {
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Open Resource File");
+    	File f=fileChooser.showOpenDialog(mainPanel.getScene().getWindow());
+    	if(f!=null) {
+    		Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Importar clientes");
+    		
+    		try {
+    			
+    			restauranteLaCasaDorada.importClientsData(f.getAbsolutePath());
+        		alert.setContentText("Los clientes fueron importados exitosamente");
+        		alert.showAndWait();
+    		}catch(IOException e){
+        		alert.setContentText("Los clientes no se importaron. Ocurrió un error");
+        		alert.showAndWait();
+    		}
+    	}
+    }
+
 
         
     

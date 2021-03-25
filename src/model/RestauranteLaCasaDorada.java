@@ -1,9 +1,11 @@
 package model;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -1209,6 +1211,22 @@ public class RestauranteLaCasaDorada{
 		}
 		return loaded;
 	}
+	
+	public void importClientsData(String fileName) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		String line = br.readLine();
+		while(line!=null){
+			String[] parts = line.split(";");
+			if(!parts[0].equals("id")) {
+
+				createClient( parts[0],  parts[1].toUpperCase(),  parts[2].toUpperCase(),  parts[3],  parts[4],  parts[5],  "");
+			}
+			
+			line = br.readLine();
+		}
+	    br.close();
+	}
+
 	
 
 
