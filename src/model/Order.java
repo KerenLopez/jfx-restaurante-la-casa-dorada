@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Order implements Serializable{
+public class Order implements Serializable, Comparable<Order>{
 	
 	private static final long serialVersionUID = 1;
 	private String code;
@@ -50,7 +50,7 @@ public class Order implements Serializable{
 	}
 	
 	public String getDateAndHour() {
-		String strDateFormat = "hh: mm: ss a dd-MMM-aaaa"; 
+		String strDateFormat = "yyyy-MM-dd HH:mm"; 
         SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
         String dateAndHour = objSDF.format(dateAndTime);
         return dateAndHour;
@@ -213,5 +213,10 @@ public class Order implements Serializable{
 			}
 		}		
 		return quantity;
+	}
+
+	@Override
+	public int compareTo(Order order) {
+		return dateAndTime.compareTo(order.getDateAndTime());
 	}
 }

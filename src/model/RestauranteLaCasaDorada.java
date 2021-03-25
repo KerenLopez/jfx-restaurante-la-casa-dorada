@@ -8,14 +8,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class RestauranteLaCasaDorada{
+public class RestauranteLaCasaDorada {
 	
 	public final static String USERS_SAVE_PATH_FILE = "data/users.ackl";
 	public final static String EMPLOYEES_SAVE_PATH_FILE = "data/employees.ackl";
@@ -758,16 +761,50 @@ public class RestauranteLaCasaDorada{
 		return allMinutes;
 	}
 	
-	public void exportOrdersReport(String fn, String initialDate, String finalDate, String initialHour, String finalHour, String initialMinute, String finalMinute, String separator) throws FileNotFoundException {
+	public ArrayList<Order> sortByDateAndTime() {
+		ArrayList<Order> copyOfOrders = new ArrayList<Order>(orders);
+		Collections.sort(copyOfOrders);
+		return copyOfOrders;
+	}
+	
+	public ArrayList<Order> selectedOrders(String initialTime, String finalTime){
+		boolean correct = false;
+		ArrayList<Order> selectedOrders = new ArrayList<Order>();
+		ArrayList<Order> sortingOrders = sortByDateAndTime();
+		for(int k=0; k<sortingOrders.size();k++) {
+			correct = compareWithInitialAndFinalDate(sortingOrders.get(k),initialTime,finalTime);
+			if(correct==true){
+				selectedOrders.add(sortingOrders.get(k));
+			}
+		}
+		return selectedOrders;
+	}
+	
+	public boolean compareWithInitialAndFinalDate(Order order, String initialTime, String finalTime) {
+		boolean correct = false;
+		Date date1 = null;
+		Date date2 = null;
+		String strFormat = "yyyy-MM-dd HH:mm";
+		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
+		try {
+			date1 = formato.parse(initialTime);
+			date2 = formato.parse(finalTime);
+		} catch (ParseException ex) {
+			ex.printStackTrace();
+		}
+		if((date1.compareTo(order.getDateAndTime())>= 0) && (date2.compareTo(order.getDateAndTime())<=0)) {
+			correct = true;
+		} 
+		return correct;
+	}
+	
+	public void exportOrdersReport(String fn, String separator, String initialTime, String finalTime) throws FileNotFoundException {
+		ArrayList<Order> ordersS = selectedOrders(initialTime,finalTime);
 		PrintWriter pw = new PrintWriter(fn);
-		pw.println("Reporte de ordenes creadas en el sistema");
-		pw.println("Fecha inicial del reporte: "+initialDate);
-		pw.println("Fecha final del reporte: "+finalDate);
-		pw.println("Hora inicial del reporte "+initialHour+":"+initialMinute);
-		pw.println("Hora final del reporte "+finalHour+":"+finalMinute);
-	    for(int i=0;i<orders.size();i++){
-	      Order objOrder = orders.get(i);
-	      pw.println("Order # "+objOrder.getCode()+separator+" State:"+objBillboard.getBrand()+" with area "+objBillboard.getArea());
+		pw.println("nombre columnas");
+	    for(int i=0;i<ordersS.size();i++){
+	      Order objOrder = ordersS.get(i);
+	      pw.println("Order # "+objOrder.getCode()+separator+" State:");
 	    }
 	    pw.close();
 	}

@@ -3,6 +3,7 @@ package ui;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
@@ -424,7 +425,6 @@ public class RestauranteLaCasaDoradaGUI {
     private Button btChangeState;
     
     @FXML
-<<<<<<< HEAD
     private DatePicker dtPickerInitialDate;
 
     @FXML
@@ -444,12 +444,12 @@ public class RestauranteLaCasaDoradaGUI {
 
     @FXML
     private TextField txtSeparator;
-=======
+    
+    @FXML
     private TextField txtClientSearchedName;
 
     @FXML
     private TextField txtClientSearchedLastName;
->>>>>>> c297c3dcc311b0a69ccbdffa1d1b3d1003937643
 
     
 	public RestauranteLaCasaDoradaGUI(RestauranteLaCasaDorada rlcd) {
@@ -1499,13 +1499,13 @@ public class RestauranteLaCasaDoradaGUI {
     @FXML
     public void generateReport(ActionEvent event) {
     	if(dtPickerInitialDate.getValue()!=null && dtPickerFinalDate.getValue()!=null && cmbxInitialHour.getValue()!=null && cmbxInitialMinute.getValue()!=null && cmbxFinalHour.getValue()!=null && cmbxFinalMinute.getValue()!=null && !txtSeparator.getText().equals("")) {
-    		String intialDate = dtPickerInitialDate.getValue().toString();
-    		String finalDate = dtPickerFinalDate.getValue().toString();
-    		String initialHour = cmbxInitialHour.getValue();
-    		String finalHour = cmbxFinalHour.getValue();
-    		String initialMinute = cmbxInitialMinute.getValue();
-    		String finalMinute = cmbxFinalMinute.getValue();
+    		LocalDate initialDate = dtPickerInitialDate.getValue();
+    		LocalDate finalDate = dtPickerFinalDate.getValue();
     		String separator = txtSeparator.getText();
+    		String iniDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(initialDate).toString();
+    		String finDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(finalDate).toString();
+    		String initialTime = iniDate+" "+cmbxInitialHour.getValue().toString()+":"+cmbxInitialMinute.getValue().toString();
+    		String finalTime = finDate+" "+cmbxFinalHour.getValue().toString()+":"+cmbxFinalMinute.getValue().toString();
     		FileChooser fileChooser = new FileChooser();
         	fileChooser.setTitle("Elija el archivo en donde se va a guardar el reporte");
         	File fExp= fileChooser.showSaveDialog(mainPanel.getScene().getWindow());
@@ -1513,7 +1513,7 @@ public class RestauranteLaCasaDoradaGUI {
         		Alert alert = new Alert(AlertType.INFORMATION);
     		    alert.setTitle("Exportar reporte sobre ordenes");
     		    try {
-    				restauranteLaCasaDorada.exportOrdersReport(fExp.getAbsolutePath(), intialDate, finalDate, initialHour, finalHour, initialMinute, finalMinute, separator);
+    				restauranteLaCasaDorada.exportOrdersReport(fExp.getAbsolutePath(),initialTime,finalTime,separator);
     			    alert.setHeaderText(null);
     			    alert.setContentText("The billboards were export successfully");
     			    alert.showAndWait();
