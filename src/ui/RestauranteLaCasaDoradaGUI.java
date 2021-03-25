@@ -1409,15 +1409,15 @@ public class RestauranteLaCasaDoradaGUI {
 		alert.setTitle("Error");
 		alert.setHeaderText(null);
     	if(!txtClientSearchedName.getText().isEmpty() && !txtClientSearchedLastName.getText().isEmpty()) {
-    	    long start= System.currentTimeMillis();
+    	    long start= System.nanoTime();
     		ObservableList<Client> clientsList = FXCollections.observableArrayList(restauranteLaCasaDorada.searchClientByName(txtClientSearchedName.getText().toUpperCase(),txtClientSearchedLastName.getText().toUpperCase()));
-    	    long end = System.currentTimeMillis();
+    	    long end = System.nanoTime();
     	    long time=end-start;
     		cmbxClients.setItems(clientsList);
     		if(clientsList.isEmpty()) {
     			alert.setHeaderText("No se encontró al cliente "+txtClientSearchedName.getText().toUpperCase()+" "+txtClientSearchedLastName.getText().toUpperCase());
 
-    			alert.setContentText("Tiempo que tardó la búsqueda: "+time+" milisegundos");
+    			alert.setContentText("Tiempo que tardó la búsqueda: "+time+" nanosegundos");
         		alert.showAndWait();
         		initializeComboBoxOfClients();
         		txtClientSearchedName.clear();
@@ -1427,7 +1427,7 @@ public class RestauranteLaCasaDoradaGUI {
     			Alert alert2 = new Alert(AlertType.INFORMATION);
     		    alert2.setTitle("Cliente(s) encontrado(s)");
     		    alert2.setHeaderText("Puede desplegar la lista para seleccionar al cliente buscado");
-    		    alert2.setContentText("Tiempo que tardó la búsqueda: "+time+" milisegundos");
+    		    alert2.setContentText("Tiempo que tardó la búsqueda: "+time+" nanosegundos");
     		    alert2.showAndWait();
     			txtClientSearchedName.clear();
         		txtClientSearchedLastName.clear();
