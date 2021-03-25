@@ -44,15 +44,22 @@
    <top>
       <VBox alignment="CENTER">
          <children>
-            <MenuBar>
+            <MenuBar prefWidth="1019.0">
               <menus>
                 <Menu mnemonicParsing="false" text="Archivo">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Importar" />
+                        <Menu mnemonicParsing="false" text="Importar">
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#importClientsData" text="Clientes" />
+                          </items>
+                        </Menu>
                         <MenuItem mnemonicParsing="false" onAction="#exportOrderReport" text="Exportar reporte de pedidos" />
                   </items>
                 </Menu>
-                  <Menu mnemonicParsing="false" onAction="#showAboutCreators" text="Ayuda" />
+                  <Menu mnemonicParsing="false" text="Ayuda">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#showAboutCreators" text="Acerca de" />
+                     </items></Menu>
               </menus>
             </MenuBar>
             <Label fx:id="lbUserNameMenu" text="username" visible="false" />
