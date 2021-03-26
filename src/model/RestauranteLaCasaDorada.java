@@ -489,7 +489,7 @@ public class RestauranteLaCasaDorada {
 		saveDataOrders();
 	}
 	
-	public boolean addProductsToAnOrder(Order selectedOrder, Product selectedProduct, Size selectedSize, int quantity, String userId) {
+	public boolean addProductsToAnOrder(Order selectedOrder, Product selectedProduct, Size selectedSize, int quantity, String userId) throws IOException {
 		boolean added = false;
 		User modifier = searchUser(userId);
 		boolean findP = selectedOrder.findProduct(selectedProduct.getId());
@@ -500,6 +500,7 @@ public class RestauranteLaCasaDorada {
 			selectedOrder.getListOfSizes().add(selectedSize);
 			selectedOrder.setModifier(modifier);
 			added = true;
+			saveDataOrders();
 		}
 		return added;
 	}
@@ -809,7 +810,7 @@ public class RestauranteLaCasaDorada {
 		PrintWriter pw = new PrintWriter(fn);
 		String productColumns = "";
 		String info ="";
-		String nameColumns = "Código"+separator+"Estado"+separator+"Fecha y hora"+separator+"Observaciones"+separator+"Nombre del cliente"+separator+"Direccion del cliente"+separator+"Telefono del cliente"+separator+"Empleado"+separator;
+		String nameColumns = "Código"+separator+"Estado"+separator+"Fecha y hora"+separator+"Observaciones"+separator+"Nombre del cliente"+separator+"Direccion del cliente"+separator+"Telefono del cliente"+separator+"Empleado";
 		for(int i=0;i<ordersS.size();i++){
 			Order objOrder = ordersS.get(i);
 			info+=objOrder.getCode()+separator+objOrder.getStateOfOrder().name()+separator+objOrder.getDateAndHour()+separator+objOrder.getObservations()+separator+objOrder.getClientName()+separator+objOrder.getBuyer().getAddress()+separator+objOrder.getBuyer().getPhone()+separator+objOrder.getEmployeeName()+separator;
@@ -817,10 +818,11 @@ public class RestauranteLaCasaDorada {
 				info += objOrder.getListOfProducts().get(k).getName()+separator;
 				info += objOrder.getListOfQuantity().get(k)+separator;
 				info += objOrder.getListOfSizes().get(k).getName()+separator; 
-				info += objOrder.getListOfSizes().get(k).getPrice();  
-				if(k!=objOrder.getListOfProducts().size()-1) {
+				info += objOrder.getListOfSizes().get(k).getPrice(); 
+				int listSize = objOrder.getListOfProducts().size();
+				if(k<listSize) {
 					info+=separator;
-					productColumns+="Nombre producto"+separator+"Cantidad producto"+separator+"Tamanio producto"+separator+"Valor producto"+separator;
+					productColumns+=separator+"Nombre producto"+separator+"Cantidad producto"+separator+"Tamanio producto"+separator+"Valor producto";
 				}
 			}
 			if(i!=ordersS.size()-1) {

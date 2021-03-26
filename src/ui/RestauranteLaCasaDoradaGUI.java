@@ -1290,7 +1290,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
    
     @FXML
-    public void addProductToAnOrder(ActionEvent event) {
+    public void addProductToAnOrder(ActionEvent event) throws IOException {
     	Order selectedOrder = tvOfOrders.getSelectionModel().getSelectedItem();
     	Product selectedProduct = tvOfAddedProducts.getSelectionModel().getSelectedItem();
     	String userId = lbUserId.getText();
@@ -1500,17 +1500,17 @@ public class RestauranteLaCasaDoradaGUI {
     private void initializeComboBoxOfHours() {
 		ObservableList<String> hoursList = FXCollections.observableArrayList(restauranteLaCasaDorada.getHours());
 		cmbxInitialHour.setItems(hoursList);
-		cmbxInitialHour.setPromptText("00");
+		cmbxInitialHour.setValue("00");
 		cmbxFinalHour.setItems(hoursList);
-		cmbxFinalHour.setPromptText("00");
+		cmbxFinalHour.setValue("23");
 	}
     
     private void initializeComboBoxOfMinutes() {
 		ObservableList<String> minutesList = FXCollections.observableArrayList(restauranteLaCasaDorada.getMinutes());
 		cmbxInitialMinute.setItems(minutesList);
-		cmbxInitialMinute.setPromptText("00");
+		cmbxInitialMinute.setValue("00");
 		cmbxFinalMinute.setItems(minutesList);
-		cmbxFinalMinute.setPromptText("00");
+		cmbxFinalMinute.setValue("59");
 	}
     
     @FXML
@@ -1525,6 +1525,8 @@ public class RestauranteLaCasaDoradaGUI {
 		initializeComboBoxOfMinutes();
 		dtPickerInitialDate.setValue(LocalDate.now());
 		dtPickerFinalDate.setValue(LocalDate.now());
+		lbUserName.setText(lbUserNameMenu.getText());
+    	lbUserId.setText(lbUserIdMenu.getText()); 
     }
     
     @FXML
