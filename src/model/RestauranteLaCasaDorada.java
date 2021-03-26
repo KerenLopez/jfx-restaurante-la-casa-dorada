@@ -786,30 +786,52 @@ public class RestauranteLaCasaDorada {
 		boolean correct = false;
 		Date date1 = null;
 		Date date2 = null;
+		Date dateOrder = null;
 		String strFormat = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
 		try {
 			date1 = formato.parse(initialTime);
 			date2 = formato.parse(finalTime);
+			dateOrder = formato.parse(order.getDateAndHour());
+			int result1 = dateOrder.compareTo(date1);
+			int result2 = dateOrder.compareTo(date2);
+			if((result1>0 || result1==0)&&(result2<0||result2==0)) {
+				correct = true;
+			}
 		} catch (ParseException ex) {
 			ex.printStackTrace();
-		}
-		if((date1.compareTo(order.getDateAndTime())>= 0) && (date2.compareTo(order.getDateAndTime())<=0)) {
-			correct = true;
 		} 
 		return correct;
 	}
 	
-	public void exportOrdersReport(String fn, String separator, String initialTime, String finalTime) throws FileNotFoundException {
+	public void exportOrdersReport(String fn, String initialTime, String finalTime, String separator) throws FileNotFoundException {
 		ArrayList<Order> ordersS = selectedOrders(initialTime,finalTime);
 		PrintWriter pw = new PrintWriter(fn);
-		pw.println("nombre columnas");
-	    for(int i=0;i<ordersS.size();i++){
-	      Order objOrder = ordersS.get(i);
-	      pw.println("Order # "+objOrder.getCode()+separator+" State:");
-	    }
-	    pw.close();
+		String productColumns = "";
+		String info ="";
+		String nameColumns = "Código"+separator+"Estado"+separator+"Fecha y hora"+separator+"Observaciones"+separator+"Nombre del cliente"+separator+"Direccion del cliente"+separator+"Telefono del cliente"+separator+"Empleado"+separator;
+		for(int i=0;i<ordersS.size();i++){
+			Order objOrder = ordersS.get(i);
+			info+=objOrder.getCode()+separator+objOrder.getStateOfOrder().name()+separator+objOrder.getDateAndHour()+separator+objOrder.getObservations()+separator+objOrder.getClientName()+separator+objOrder.getBuyer().getAddress()+separator+objOrder.getBuyer().getPhone()+separator+objOrder.getEmployeeName()+separator;
+			for(int k=0;k<objOrder.getListOfProducts().size();k++) {
+				info += objOrder.getListOfProducts().get(k).getName()+separator;
+				info += objOrder.getListOfQuantity().get(k)+separator;
+				info += objOrder.getListOfSizes().get(k).getName()+separator; 
+				info += objOrder.getListOfSizes().get(k).getPrice();  
+				if(k!=objOrder.getListOfProducts().size()-1) {
+					info+=separator;
+					productColumns+="Nombre producto"+separator+"Cantidad producto"+separator+"Tamanio producto"+separator+"Valor producto"+separator;
+				}
+			}
+			if(i!=ordersS.size()-1) {
+				info+="\n";
+			}
+		}
+		pw.println(nameColumns+productColumns);
+		pw.print(info);
+		pw.close();
 	}
+	
 
 	public boolean createEmployee(String id, String name, String lastName, String creatorId) throws IOException {
 
@@ -833,9 +855,6 @@ public class RestauranteLaCasaDorada {
 			saveDataEmployees();
 			
 		}
-		
-
-
 		return created;
 	}
 	

@@ -1161,15 +1161,19 @@ public class RestauranteLaCasaDoradaGUI {
     public void changeStateOfAnOrder(ActionEvent event) throws IOException {
     	Order selectedOrder = tvOfOrders.getSelectionModel().getSelectedItem();
     	String newState = getRadioButtonState();
-    	restauranteLaCasaDorada.updateStateOfAnOrder(selectedOrder,newState);
-    	Alert alert2 = new Alert(AlertType.INFORMATION);
-		alert2.setTitle("Informacion");
-		alert2.setHeaderText(null);
-		alert2.setContentText("El estado de la orden ha sido actualizado exitosamente");
-		alert2.showAndWait();
-		tvOfOrders.getItems().clear();
-		initializeTableViewOfOrders();
-		returnToManageAnOrder(null);
+    	if(!newState.equals("")) {
+    		restauranteLaCasaDorada.updateStateOfAnOrder(selectedOrder,newState);
+        	Alert alert2 = new Alert(AlertType.INFORMATION);
+    		alert2.setTitle("Informacion");
+    		alert2.setHeaderText(null);
+    		alert2.setContentText("El estado de la orden ha sido actualizado exitosamente");
+    		alert2.showAndWait();
+    		tvOfOrders.getItems().clear();
+    		initializeTableViewOfOrders();
+    		returnToManageAnOrder(null);
+    	}else {
+    		showValidationErrorAlert();
+    	}
     }
     
     public String getRadioButtonState() {
@@ -1180,7 +1184,7 @@ public class RestauranteLaCasaDoradaGUI {
     		state = "ENTREGADO";
     	}else if (rbCancelled.isSelected()) {
     		state = "CANCELADO";
-    	} else {
+    	} else if(rbInProcess.isSelected()){
     		state = "EN_PROCESO";
     	}
     	return state;
@@ -1245,7 +1249,7 @@ public class RestauranteLaCasaDoradaGUI {
     		if((!state.equals("ENTREGADO"))&&(!state.equals("CANCELADO"))){
     			btChangeState.setDisable(false);
     		}
-    		if(state.equals("ENVIADO")) {
+    		if(state.equals("ENVIADO")||state.equals("CANCELADO")||state.equals("ENTREGADO")) {
     			btAddProductsOrder.setDisable(true);
     		}else {
     			btAddProductsOrder.setDisable(false);
@@ -1294,29 +1298,37 @@ public class RestauranteLaCasaDoradaGUI {
     		if (!txtProductQuantity.getText().equals("") && cmbxProductSizes.getValue()!=null) {
     			Size selectedSize = cmbxProductSizes.getValue();
         		int quantity = Integer.parseInt(txtProductQuantity.getText());
-        		boolean added = restauranteLaCasaDorada.addProductsToAnOrder(selectedOrder,selectedProduct,selectedSize,quantity, userId);
-        		if(added==false) {
+        		if(quantity>0) {
+        			boolean added = restauranteLaCasaDorada.addProductsToAnOrder(selectedOrder,selectedProduct,selectedSize,quantity, userId);
+            		if(added==false) {
+            			Alert alert1 = new Alert(AlertType.ERROR);
+            			alert1.setTitle("Error de validacion");
+            			alert1.setHeaderText(null);
+            			alert1.setContentText("El producto ya se encuentra agregado en la lista de productos de la orden, intentelo nuevamente");
+            			alert1.showAndWait();
+            		}else {
+            			Alert alert2 = new Alert(AlertType.INFORMATION);
+                		alert2.setTitle("Informacion");
+                		alert2.setHeaderText(null);
+                		alert2.setContentText("El producto ha sido agregado exitosamente a la lista de productos de la orden");
+                		alert2.showAndWait();
+            		}
+            		txtNameProductOrder.clear();
+            		txtProductQuantity.clear();
+            		cmbxProductSizes.getItems().clear();
+            		tvOfOrderProductsN.getItems().clear();
+            		tvOfOrderProductsS.getItems().clear();
+            		tvOfOrderProductsQ.getItems().clear();
+            		initializeTableViewOfOrderProductsN();
+            		initializeTableViewOfOrderProductsS();
+            		initializeTableViewOfOrderProductsQ();
+        		}else {
         			Alert alert1 = new Alert(AlertType.ERROR);
         			alert1.setTitle("Error de validacion");
         			alert1.setHeaderText(null);
-        			alert1.setContentText("El producto ya se encuentra agregado en la lista de productos de la orden, intentelo nuevamente");
+        			alert1.setContentText("La cantidad del producto no puede ser cero o un número negativo, intentelo nuevamente");
         			alert1.showAndWait();
-        		}else {
-        			Alert alert2 = new Alert(AlertType.INFORMATION);
-            		alert2.setTitle("Informacion");
-            		alert2.setHeaderText(null);
-            		alert2.setContentText("El producto ha sido agregado exitosamente a la lista de productos de la orden");
-            		alert2.showAndWait();
         		}
-        		txtNameProductOrder.clear();
-        		txtProductQuantity.clear();
-        		cmbxProductSizes.getItems().clear();
-        		tvOfOrderProductsN.getItems().clear();
-        		tvOfOrderProductsS.getItems().clear();
-        		tvOfOrderProductsQ.getItems().clear();
-        		initializeTableViewOfOrderProductsN();
-        		initializeTableViewOfOrderProductsS();
-        		initializeTableViewOfOrderProductsQ();
     		}else {
     		    showValidationErrorAlert();
     		}
@@ -1511,8 +1523,8 @@ public class RestauranteLaCasaDoradaGUI {
 		mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 		initializeComboBoxOfHours();
 		initializeComboBoxOfMinutes();
-		dtPickerInitialDate.setValue(LocalDate.MAX);
-		dtPickerFinalDate.setValue(LocalDate.MAX);
+		dtPickerInitialDate.setValue(LocalDate.now());
+		dtPickerFinalDate.setValue(LocalDate.now());
     }
     
     @FXML
@@ -1534,11 +1546,11 @@ public class RestauranteLaCasaDoradaGUI {
     		    try {
     				restauranteLaCasaDorada.exportOrdersReport(fExp.getAbsolutePath(),initialTime,finalTime,separator);
     			    alert.setHeaderText(null);
-    			    alert.setContentText("The billboards were export successfully");
+    			    alert.setContentText("El reporte de ordenes ha sido exportado exitosamente");
     			    alert.showAndWait();
     			} catch (IOException e) {
     				alert.setHeaderText(null);
-    			    alert.setContentText("Sorry, an error has been ocurred");
+    			    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso");
     				e.printStackTrace();
     			}
         	}
