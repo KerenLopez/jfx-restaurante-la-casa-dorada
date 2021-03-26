@@ -52,6 +52,7 @@
                           <items>
                             <MenuItem mnemonicParsing="false" onAction="#importClientsData" text="Clientes" />
                               <MenuItem mnemonicParsing="false" onAction="#importProductsData" text="Productos" />
+                              <MenuItem mnemonicParsing="false" onAction="#importOrdersData" text="Pedidos" />
                           </items>
                         </Menu>
                         <MenuItem mnemonicParsing="false" onAction="#exportOrderReport" text="Exportar reporte de pedidos" />
