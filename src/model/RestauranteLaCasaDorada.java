@@ -1284,6 +1284,36 @@ public class RestauranteLaCasaDorada {
 		}
 	    br.close();
 	}
+	
+	
+	public void importProductsData(String fileName) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		String line = br.readLine();
+		String creator="";
+		while(line!=null){
+			String[] parts = line.split(";");
+			if(!parts[0].equals("productName")) {
+				addTypeOfProduct(parts[1],creator);
+				TypeOfProduct top=searchTypeOfProductByName(parts[1]);
+				addProduct( parts[0],  top.getId(), creator);
+				String[] ingredients=parts[2].split("-");
+				Product prod=searchProductByName( parts[0]);
+
+				for(int i=0; i<ingredients.length;i++) {
+					addIngredient( ingredients[i],  creator);
+					Ingredient ing=searchIngredientByName(ingredients[i]);
+					addIngredientToAProduct( prod,  ing,  creator);
+
+				}
+				double price= Double.parseDouble(parts[4]);
+				addSizeOfAProduct( prod,  parts[3],  price,creator); 
+
+			}
+			
+			line = br.readLine();
+		}
+	    br.close();
+	}
 
 	
 

@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -1565,7 +1563,7 @@ public class RestauranteLaCasaDoradaGUI {
     @FXML
     void importClientsData(ActionEvent event) {
     	FileChooser fileChooser = new FileChooser();
-    	fileChooser.setTitle("Open Resource File");
+    	fileChooser.setTitle("Abrir el archivo");
     	File f=fileChooser.showOpenDialog(mainPanel.getScene().getWindow());
     	if(f!=null) {
     		Alert alert = new Alert(AlertType.INFORMATION);
@@ -1578,6 +1576,27 @@ public class RestauranteLaCasaDoradaGUI {
         		alert.showAndWait();
     		}catch(IOException e){
         		alert.setContentText("Los clientes no se importaron. Ocurrió un error");
+        		alert.showAndWait();
+    		}
+    	}
+    }
+    
+    @FXML
+    void importProductsData(ActionEvent event) {
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Abrir el archivo");
+    	File f=fileChooser.showOpenDialog(mainPanel.getScene().getWindow());
+    	if(f!=null) {
+    		Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Importar productos");
+    		
+    		try {
+    			
+    			restauranteLaCasaDorada.importProductsData(f.getAbsolutePath());
+        		alert.setContentText("Los productos fueron importados exitosamente");
+        		alert.showAndWait();
+    		}catch(IOException e){
+        		alert.setContentText("Los productos no se importaron. Ocurrió un error");
         		alert.showAndWait();
     		}
     	}
