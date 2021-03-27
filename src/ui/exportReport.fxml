@@ -34,11 +34,11 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Fecha inicial del reporte:" />
-                  <Label text="Hora inicial del reporte:" GridPane.rowIndex="1" />
-                  <Label text="Fecha final del reporte:" GridPane.rowIndex="2" />
-                  <Label text="Hora final del reporte:" GridPane.rowIndex="3" />
-                  <Label text="Separador a implementar:" GridPane.rowIndex="4" />
+                  <Label text="Fecha inicial del reporte:" textFill="WHITE" />
+                  <Label text="Hora inicial del reporte:" textFill="WHITE" GridPane.rowIndex="1" />
+                  <Label text="Fecha final del reporte:" textFill="WHITE" GridPane.rowIndex="2" />
+                  <Label text="Hora final del reporte:" textFill="WHITE" GridPane.rowIndex="3" />
+                  <Label text="Separador a implementar:" textFill="WHITE" GridPane.rowIndex="4" />
                   <DatePicker fx:id="dtPickerInitialDate" editable="false" GridPane.columnIndex="1" />
                   <DatePicker fx:id="dtPickerFinalDate" editable="false" layoutX="231.0" layoutY="14.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -100,8 +100,30 @@
    <top>
       <VBox alignment="CENTER">
          <children>
-            <Label fx:id="lbUserNameMenu" text="username" visible="false" />
-            <Label fx:id="lbUserIdMenu" text="userid" visible="false" />
+            <HBox prefHeight="15.0" prefWidth="200.0">
+               <children>
+                  <Label text="Usuario:  " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="800.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lbUserName" alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lbUserId" visible="false" />
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
             <Label alignment="CENTER" contentDisplay="CENTER" text="Exportar reporte de pedidos" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
