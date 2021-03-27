@@ -177,6 +177,9 @@ public class RestauranteLaCasaDoradaGUI {
 
     @FXML
     private TableColumn<Order, String> colCodeOrder;
+    
+    @FXML
+    private TableColumn<Order, String> colOrderTotalPrice;
 
     @FXML
     private TableColumn<Order, String> colStateOrder;
@@ -1111,7 +1114,7 @@ public class RestauranteLaCasaDoradaGUI {
     	colModifierOrder.setCellValueFactory(new PropertyValueFactory<Order, String>("ModifierName"));
     	colObservationsOrder.setCellValueFactory(new PropertyValueFactory<Order, String>("Observations"));
     	colProductsInOrder.setCellValueFactory(new PropertyValueFactory<Order, String>("AllProducts"));
-
+    	colOrderTotalPrice.setCellValueFactory(new PropertyValueFactory<Order, String>("OrderTotalPrice"));
     	tvOfOrders.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     	tvOfOrders.setVisible(true);
 	}
@@ -1255,10 +1258,10 @@ public class RestauranteLaCasaDoradaGUI {
     		if((!state.equals("ENTREGADO"))&&(!state.equals("CANCELADO"))){
     			btChangeState.setDisable(false);
     		}
-    		if(state.equals("ENVIADO")||state.equals("CANCELADO")||state.equals("ENTREGADO")) {
-    			btAddProductsOrder.setDisable(true);
-    		}else {
+    		if(!state.equals("ENVIADO")&& !state.equals("CANCELADO")&& !state.equals("ENTREGADO")) {
     			btAddProductsOrder.setDisable(false);
+    		}else {
+    			btAddProductsOrder.setDisable(true);
     		}
     		btUpdate.setDisable(false);
     		btAdd.setDisable(true);

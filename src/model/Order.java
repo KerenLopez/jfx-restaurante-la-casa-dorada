@@ -223,7 +223,7 @@ public class Order implements Serializable, Comparable<Order>{
 		return quantity;
 	}
 	
-	public double returnOrderTotalPrice() {
+	public double getOrderTotalPrice() {
 		double sumPrices = 0;
 		for(int k=0; k<listOfSizes.size();k++) {
 			sumPrices += listOfSizes.get(k).getPrice()*listOfQuantity.get(k);
