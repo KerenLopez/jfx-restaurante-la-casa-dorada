@@ -181,6 +181,14 @@ public class Order implements Serializable, Comparable<Order>{
 		this.listOfSizes = listOfSizes;
 	}
 	
+	public String getAllProducts() {
+		String allProducts = "";
+		for(int k=0; k<listOfProducts.size();k++) {
+			allProducts += listOfQuantity.get(k)+" "+listOfProducts.get(k).getName()+" "+listOfSizes.get(k)+"\n";
+		}
+		return allProducts;
+	}
+	
 	public boolean findProduct(int pId) {
 		boolean found=false;
 		for(int i=0; i<listOfProducts.size() && !found;i++ ) {
