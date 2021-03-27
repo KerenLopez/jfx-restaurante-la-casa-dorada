@@ -1417,7 +1417,6 @@ public class RestauranteLaCasaDorada {
 				}
 
 			}
-			
 			line = br.readLine();
 		}
 	    br.close();
