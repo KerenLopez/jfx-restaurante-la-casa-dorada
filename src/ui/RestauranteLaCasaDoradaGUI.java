@@ -1698,6 +1698,27 @@ public class RestauranteLaCasaDoradaGUI {
     		}
     	}
     }
+    
+    @FXML
+    void importOrdersData(ActionEvent event) {
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Abrir el archivo");
+    	File f=fileChooser.showOpenDialog(mainPanel.getScene().getWindow());
+    	if(f!=null) {
+    		Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Importar pedidos");
+    		
+    		try {
+    			
+    			restauranteLaCasaDorada.importOrdersData(f.getAbsolutePath());
+        		alert.setContentText("Los pedidos fueron importados exitosamente");
+        		alert.showAndWait();
+    		}catch(IOException e){
+        		alert.setContentText("Los pedidos no se importaron. Ocurrió un error");
+        		alert.showAndWait();
+    		}
+    	}
+    }
 
 
         

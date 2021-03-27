@@ -73,7 +73,7 @@ public class Order implements Serializable, Comparable<Order>{
 	}
 	
 	public String getClientName() {
-		String name = buyer.getName();
+		String name = buyer.toString();
 		return name;
 	}
 	
@@ -86,7 +86,7 @@ public class Order implements Serializable, Comparable<Order>{
 	}
 	
 	public String getEmployeeName() {
-		String name = deliverer.getName();
+		String name = deliverer.toString();
 		return name;
 	}
 	
@@ -160,7 +160,7 @@ public class Order implements Serializable, Comparable<Order>{
 	public String getAllQuantities() {
 		String quantities = "";
 		for(int i=0; i<listOfQuantity.size();i++ ) {
-			quantities += listOfQuantity.get(i)+"\n";
+			quantities += listOfQuantity.get(i)+"\n\n";
 		}
 		return quantities;
 	}
@@ -168,7 +168,7 @@ public class Order implements Serializable, Comparable<Order>{
 	public String getAllSizes() {
 		String sizes = "";
 		for(int i=0; i<listOfSizes.size();i++ ) {
-			sizes += listOfSizes.get(i)+"\n";
+			sizes += listOfSizes.get(i)+"\n\n";
 		}
 		return sizes;
 	}

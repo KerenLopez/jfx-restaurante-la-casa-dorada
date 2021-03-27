@@ -1378,6 +1378,41 @@ public class RestauranteLaCasaDorada {
 	    br.close();
 	}
 
+	public void importOrdersData(String fileName) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		String line = br.readLine();
+		String creator="";
+		int k=0;
+		while(line!=null){
+			String[] parts = line.split(";");
+			if(!parts[0].equals("client")) {
+				Client buyer=clients.get(k);
+				k++;
+				Employee deliverer=searchEmployee(parts[1]);
+				if(deliverer==null) {
+					createEmployee( parts[1],  parts[2].toUpperCase(),  parts[3].toUpperCase(),  creator);
+					deliverer=searchEmployee(parts[1]);
+
+				}
+				createOrder( buyer,  deliverer,  parts[4],  creator);
+				Order order=orders.get(orders.size()-1);
+				String[] prods=parts[5].split("_");
+				String[] quantities=parts[6].split("_");
+				
+				for(int i=0;i<prods.length;i++) {
+					int prod=Integer.parseInt(prods[i])-1;
+					Product p=products.get(prod);
+					int quantity=Integer.parseInt(quantities[i]);
+					addProductsToAnOrder(order, p, p.getSizes().get(0), quantity, creator);
+				}
+
+			}
+			
+			line = br.readLine();
+		}
+	    br.close();
+	}
+	
 	
 
 
