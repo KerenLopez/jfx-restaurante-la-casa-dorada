@@ -119,7 +119,7 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </HBox>
-            <Label fx:id="lbExportTitle" alignment="CENTER" contentDisplay="CENTER" text="Exportar reporte de productos" textFill="WHITE">
+            <Label fx:id="lbExportTitle" alignment="CENTER" contentDisplay="CENTER" text="Exportar reporte de productos a partir de ordenes entregadas" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

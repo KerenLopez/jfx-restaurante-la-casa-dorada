@@ -215,20 +215,21 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                            <columns>
-                              <TableColumn fx:id="colCodeOrder" maxWidth="1000.0" prefWidth="133.0" text="Código" />
-                              <TableColumn fx:id="colStateOrder" prefWidth="93.0" text="Estado" />
-                              <TableColumn fx:id="colDateandTimeOrder" prefWidth="200.0" text="Fecha y hora" />
-                              <TableColumn fx:id="colClientOrder" prefWidth="200.0" text="Cliente" />
-                              <TableColumn fx:id="colEmployeeOrder" prefWidth="200.0" text="Empleado encargado" />
-                              <TableColumn fx:id="colProductsInOrder" prefWidth="75.0" text="Productos" />
-                              <TableColumn fx:id="colObservationsOrder" prefWidth="200.0" text="Observaciones" />
-                              <TableColumn fx:id="colCreatorOrder" prefWidth="75.0" text="Creada por" />
-                              <TableColumn fx:id="colModifierOrder" prefWidth="75.0" text="Modificada por" />
+                              <TableColumn fx:id="colCodeOrder" maxWidth="1000.0" prefWidth="133.0" sortable="false" text="Código" />
+                              <TableColumn fx:id="colStateOrder" prefWidth="93.0" sortable="false" text="Estado" />
+                              <TableColumn fx:id="colDateandTimeOrder" prefWidth="200.0" sortable="false" text="Fecha y hora" />
+                              <TableColumn fx:id="colClientOrder" prefWidth="200.0" sortable="false" text="Cliente" />
+                              <TableColumn fx:id="colEmployeeOrder" prefWidth="200.0" sortable="false" text="Empleado encargado" />
+                              <TableColumn fx:id="colProductsInOrder" prefWidth="75.0" sortable="false" text="Productos" />
+                              <TableColumn fx:id="colOrderTotalPrice" prefWidth="75.0" sortable="false" text="Valor total" />
+                              <TableColumn fx:id="colObservationsOrder" prefWidth="200.0" sortable="false" text="Observaciones" />
+                              <TableColumn fx:id="colCreatorOrder" prefWidth="75.0" sortable="false" text="Creada por" />
+                              <TableColumn fx:id="colModifierOrder" prefWidth="75.0" sortable="false" text="Modificada por" />
                            </columns>
                         </TableView>
                         <TableView fx:id="tvOfAddedProducts" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfAddedProducts" prefHeight="478.0" prefWidth="211.0" visible="false">
                            <columns>
-                              <TableColumn fx:id="colNameAddedProduct" prefWidth="158.481689453125" text="Lista de productos" />
+                              <TableColumn fx:id="colNameAddedProduct" prefWidth="158.481689453125" sortable="false" text="Lista de productos" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -236,7 +237,7 @@
                         </TableView>
                         <TableView fx:id="tvOfOrderProductsN" blendMode="DARKEN" layoutX="211.0" onMouseClicked="#clickOnTableViewOfOrderProducts" prefHeight="478.0" prefWidth="151.0" visible="false">
                            <columns>
-                              <TableColumn fx:id="colNameOrderProduct" prefWidth="158.481689453125" text="Productos de la orden" />
+                              <TableColumn fx:id="colNameOrderProduct" prefWidth="158.481689453125" sortable="false" text="Productos de la orden" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -244,7 +245,7 @@
                         </TableView>
                         <TableView fx:id="tvOfOrderProductsS" blendMode="DARKEN" layoutX="362.0" mouseTransparent="true" onMouseClicked="#clickOnTableViewOfOrderProducts" prefHeight="475.0" prefWidth="145.0" visible="false">
                            <columns>
-                              <TableColumn fx:id="colSizeOrderProduct" prefWidth="162.639892578125" text="Tamaño" />
+                              <TableColumn fx:id="colSizeOrderProduct" prefWidth="162.639892578125" sortable="false" text="Tamaño" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -252,7 +253,7 @@
                         </TableView>
                         <TableView fx:id="tvOfOrderProductsQ" blendMode="DARKEN" layoutX="507.0" mouseTransparent="true" prefHeight="474.0" prefWidth="145.0" visible="false">
                            <columns>
-                              <TableColumn fx:id="colQuantityOrderProduct" prefWidth="158.481689453125" text="Cantidad" />
+                              <TableColumn fx:id="colQuantityOrderProduct" prefWidth="158.481689453125" sortable="false" text="Cantidad" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

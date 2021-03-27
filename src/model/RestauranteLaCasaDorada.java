@@ -524,7 +524,7 @@ public class RestauranteLaCasaDorada {
 		selectedOrder.updateState(newState);
 		if(newState.equals(State.ENTREGADO.name())) {
 			selectedOrder.getDeliverer().setNumberOrders((selectedOrder.getDeliverer().getNumberOrders())+1);
-			selectedOrder.getDeliverer().setSumTotalOrders((selectedOrder.getDeliverer().getSumTotalOrders())+(selectedOrder.returnOrderTotalPrice()));
+			selectedOrder.getDeliverer().setSumTotalOrders((selectedOrder.getDeliverer().getSumTotalOrders())+(selectedOrder.getOrderTotalPrice()));
 		}
 		saveDataOrders();
 	}
