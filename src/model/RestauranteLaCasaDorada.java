@@ -524,7 +524,7 @@ public class RestauranteLaCasaDorada {
 		selectedOrder.updateState(newState);
 		if(newState.equals(State.ENTREGADO.name())) {
 			selectedOrder.getDeliverer().setNumberOrders((selectedOrder.getDeliverer().getNumberOrders())+1);
-			selectedOrder.getDeliverer().setSumTotalOrders((selectedOrder.getDeliverer().getSumTotalOrders())+selectedOrder.returnOrderTotalPrice());
+			selectedOrder.getDeliverer().setSumTotalOrders((selectedOrder.getDeliverer().getSumTotalOrders())+(selectedOrder.returnOrderTotalPrice()));
 		}
 		saveDataOrders();
 	}
@@ -838,9 +838,8 @@ public class RestauranteLaCasaDorada {
 	public void exportOrdersReport(String fn, String initialTime, String finalTime, String separator) throws FileNotFoundException {
 		ArrayList<Order> ordersS = selectedOrders(initialTime,finalTime);
 		PrintWriter pw = new PrintWriter(fn);
-		String productColumns = "";
 		String info ="";
-		String nameColumns = "Código"+separator+"Estado"+separator+"Fecha y hora"+separator+"Observaciones"+separator+"Nombre del cliente"+separator+"Direccion del cliente"+separator+"Telefono del cliente"+separator+"Empleado";
+		String nameColumns = "Código"+separator+"Estado"+separator+"Fecha y hora"+separator+"Observaciones"+separator+"Nombre del cliente"+separator+"Direccion del cliente"+separator+"Telefono del cliente"+separator+"Empleado"+separator+"Producto(s): Nombre, cantidad, tamanio y valor";
 		for(int i=0;i<ordersS.size();i++){
 			Order objOrder = ordersS.get(i);
 			info+=objOrder.getCode()+separator+objOrder.getStateOfOrder().name()+separator+objOrder.getDateAndHour()+separator+objOrder.getObservations()+separator+objOrder.getClientName()+separator+objOrder.getBuyer().getAddress()+separator+objOrder.getBuyer().getPhone()+separator+objOrder.getEmployeeName()+separator;
@@ -852,14 +851,13 @@ public class RestauranteLaCasaDorada {
 				int listSize = objOrder.getListOfProducts().size();
 				if(k<listSize) {
 					info+=separator;
-					productColumns+=separator+"Nombre producto"+separator+"Cantidad producto"+separator+"Tamanio producto"+separator+"Valor producto";
 				}
 			}
 			if(i!=ordersS.size()-1) {
 				info+="\n";
 			}
 		}
-		pw.println(nameColumns+productColumns);
+		pw.println(nameColumns);
 		pw.print(info);
 		pw.close();
 	}

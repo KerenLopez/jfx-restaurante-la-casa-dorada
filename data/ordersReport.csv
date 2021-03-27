@@ -1,0 +1,11 @@
+Código;Estado;Fecha y hora;Observaciones;Nombre del cliente;Direccion del cliente;Telefono del cliente;Empleado;Producto(s): Nombre, cantidad, tamanio y valor
+8017-1;EN_PROCESO;2021-03-25 08:51;aaaaaaaaaaaaaaaaaaaaaaa;G G|g;G;g;K K|k;Helado de vainilla;2;bola y media;1500.0;Helado de oreo;1;1 bola;4000.0;
+7250-2;ENVIADO;2021-03-25 08:51;eeeeeeeeeeeeeeeee;J J|j;J;j;K K|k;Helado de menta;1;2 bolas;6000.0;
+2486-3;ENTREGADO;2021-03-25 08:51;iiiiiiiiiiiiiiiiiiiiiiiiiiiiii;GG G|gggggggg;G;g;K K|k;Helado de oreo;2;2 bolas;2000.0;Helado de vainilla;2;1 bola;2000.0;
+2039-4;CANCELADO;2021-03-25 08:51;wiiiiiiii;J J|j;J;j;K K|k;Helado de oreo;3;1 bola;4000.0;
+3060-5;EN_PROCESO;2021-03-25 08:52;ooooooooooooooooooo;J J|j;J;j;K K|k;Helado de menta;1;1 bola;3000.0;Helado de menta;1;2 bolas;6000.0;
+1428-6;ENTREGADO;2021-03-25 08:52;rrrrrrrrrrrrrr;GG G|gggggggg;G;g;J J|j;Helado de oreo;1;media bola;1000.0;Helado de mandarina;2;1 bola;2000.0;
+5177-7;ENTREGADO;2021-03-25 09:08;ttttttttttt;GG G|gggggggg;G;g;K K|k;Helado de vainilla chips;1;1 bola;2500.0;Helado de chocolate;3;1 bola;4500.0;
+4683-8;ENTREGADO;2021-03-25 09:08;ttttttttttttt;J J|j;J;j;L L|l;Helado de fresa;4;media bola;1500.0;
+1053-9;SOLICITADO;2021-03-26 16:18;ggggggggggg;GG G|gggggggg;G;g;M M|m;Helado de oreo;1;bola y media;2800.0;Helado de mandarina;2;1 bola;2000.0;Helado de vainilla chips;3;1 bola;2500.0;Helado de chocolate;2;1 bola;4500.0;
+5685-10;ENTREGADO;2021-03-26 17:32;hhhhhhhhhhh;GG G|gggggggg;G;g;K K|k;Helado de vainilla;1;1 bola;2000.0;Helado de Mandarina;2;1 bola;2500.0;
