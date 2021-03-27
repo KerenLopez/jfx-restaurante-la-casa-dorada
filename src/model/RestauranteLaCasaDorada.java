@@ -1319,10 +1319,12 @@ public class RestauranteLaCasaDorada {
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		String line = br.readLine();
 		String creator="";
+		int k=0;
 		while(line!=null){
 			String[] parts = line.split(";");
 			if(!parts[0].equals("client")) {
-				Client buyer=searchClient(parts[0]);
+				Client buyer=clients.get(k);
+				k++;
 				Employee deliverer=searchEmployee(parts[1]);
 				if(deliverer==null) {
 					createEmployee( parts[1],  parts[2].toUpperCase(),  parts[3].toUpperCase(),  creator);
@@ -1330,14 +1332,15 @@ public class RestauranteLaCasaDorada {
 
 				}
 				createOrder( buyer,  deliverer,  parts[4],  creator);
-				Order order=searchOrder(String.valueOf(orders.size()));
-				String[] products=parts[5].split("_");
+				Order order=orders.get(orders.size()-1);
+				String[] prods=parts[5].split("_");
 				String[] quantities=parts[6].split("_");
 				
-				for(int i=0;i<products.length;i++) {
-					Product prod=searchProductById(Integer.parseInt(products[i]));
+				for(int i=0;i<prods.length;i++) {
+					int prod=Integer.parseInt(prods[i])-1;
+					Product p=products.get(prod);
 					int quantity=Integer.parseInt(quantities[i]);
-					addProductsToAnOrder(order, prod, prod.getSizes().get(0), quantity, creator);
+					addProductsToAnOrder(order, p, p.getSizes().get(0), quantity, creator);
 				}
 
 			}
@@ -1347,30 +1350,6 @@ public class RestauranteLaCasaDorada {
 	    br.close();
 	}
 	
-	public Product searchProductById(int prodId) {
-		Product prod=null;
-		boolean found=false;
-		for(int i=0; i<products.size() && !found;i++) {
-			if(products.get(i).getId()==prodId) {
-				prod=products.get(i);
-				found=true;
-			}
-		}
-		return prod;
-	}
-	
-	public Order searchOrder(String partId) {
-		Order order=null;
-		boolean found=false;
-		for(int i=0; i<orders.size() && !found;i++) {
-			String[] orderLastId=orders.get(i).getCode().split("-");
-			if(orderLastId[1].equals(partId)) {
-				order=orders.get(i);
-				found=true;
-			}
-		}
-		return order;
-	}
 	
 
 
