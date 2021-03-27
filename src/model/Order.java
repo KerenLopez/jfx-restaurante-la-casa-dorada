@@ -160,7 +160,7 @@ public class Order implements Serializable, Comparable<Order>{
 	public String getAllQuantities() {
 		String quantities = "";
 		for(int i=0; i<listOfQuantity.size();i++ ) {
-			quantities += listOfQuantity.get(i)+"\n\n";
+			quantities += listOfQuantity.get(i)+"\n";
 		}
 		return quantities;
 	}
@@ -168,7 +168,7 @@ public class Order implements Serializable, Comparable<Order>{
 	public String getAllSizes() {
 		String sizes = "";
 		for(int i=0; i<listOfSizes.size();i++ ) {
-			sizes += listOfSizes.get(i)+"\n\n";
+			sizes += listOfSizes.get(i)+"\n";
 		}
 		return sizes;
 	}
@@ -184,7 +184,7 @@ public class Order implements Serializable, Comparable<Order>{
 	public String getAllProducts() {
 		String allProducts = "";
 		for(int k=0; k<listOfProducts.size();k++) {
-			allProducts += listOfQuantity.get(k)+" "+listOfProducts.get(k).getName()+" "+listOfSizes.get(k)+"\n";
+			allProducts += listOfQuantity.get(k)+" "+listOfProducts.get(k).getName()+" "+listOfSizes.get(k).getName()+" - "+listOfSizes.get(k).getPrice()+"c/u\n";
 		}
 		return allProducts;
 	}
@@ -226,7 +226,7 @@ public class Order implements Serializable, Comparable<Order>{
 	public double returnOrderTotalPrice() {
 		double sumPrices = 0;
 		for(int k=0; k<listOfSizes.size();k++) {
-			sumPrices = listOfSizes.get(k).getPrice()*listOfQuantity.get(k);
+			sumPrices += listOfSizes.get(k).getPrice()*listOfQuantity.get(k);
 		}
 		return sumPrices;
 	}

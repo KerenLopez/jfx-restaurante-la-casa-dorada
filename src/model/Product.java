@@ -11,6 +11,7 @@ public class Product implements Serializable{
 	private String name;
 	private int numTimesAddedOrders;
 	private double totalPriceAddedOrders;
+	private int cont;
 	private boolean enabled;
 	private ArrayList<Size> sizes;
 	private User creator;
@@ -29,6 +30,7 @@ public class Product implements Serializable{
 		sizes= new ArrayList<Size>();
 		numTimesAddedOrders = 0;
 		totalPriceAddedOrders = 0;
+		cont = 0;
 	}
 	
 	public String getName() {
@@ -203,5 +205,13 @@ public class Product implements Serializable{
 
 	public void setTotalPriceAddedOrders(double totalPriceAddedOrders) {
 		this.totalPriceAddedOrders = totalPriceAddedOrders;
+	}
+
+	public int getCont() {
+		return cont;
+	}
+
+	public void setCont(int cont) {
+		this.cont = cont;
 	}
 }

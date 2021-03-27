@@ -869,9 +869,16 @@ public class RestauranteLaCasaDorada {
 		pw.println(nameColumns);
 		for(int i=0;i<ordersS.size();i++){
 			Order objOrder = ordersS.get(i);
-			pw.println(objOrder.getDeliverer().getName()+SEPARATOR+objOrder.getDeliverer().getId()+SEPARATOR+objOrder.getDeliverer().getNumberOrders()+SEPARATOR+objOrder.getDeliverer().getSumTotalOrders());
+			objOrder.getDeliverer().setCont((objOrder.getDeliverer().getCont())+1);
+			if(objOrder.getDeliverer().getCont()==1) {
+				pw.println(objOrder.getDeliverer().getName()+SEPARATOR+objOrder.getDeliverer().getId()+SEPARATOR+objOrder.getDeliverer().getNumberOrders()+SEPARATOR+objOrder.getDeliverer().getSumTotalOrders());
+			}
 		}
 		pw.close();
+		
+		for(int k=0;k<employees.size();k++) {
+			employees.get(k).setCont(0);
+		}
 	}
 	
 	public void exportProductsReport(String fn, String initialTime, String finalTime) throws FileNotFoundException {
@@ -882,7 +889,11 @@ public class RestauranteLaCasaDorada {
 		for(int i=0;i<ordersS.size();i++){
 			Order objOrder = ordersS.get(i);
 			for(int k=0;k<objOrder.getListOfProducts().size();k++) {
-				pw.println(objOrder.getListOfProducts().get(k).getName()+SEPARATOR+objOrder.getListOfProducts().get(k).getNumTimesAddedOrders()+SEPARATOR+objOrder.getListOfProducts().get(k).getTotalPriceAddedOrders());
+				Product pd = objOrder.getListOfProducts().get(k);
+				pd.setCont((pd.getCont())+1);
+				if(pd.getCont()==1) {
+					pw.println(pd.getName()+SEPARATOR+pd.getNumTimesAddedOrders()+SEPARATOR+pd.getTotalPriceAddedOrders());
+				}
 			}
 		}
 		pw.close();
@@ -892,6 +903,7 @@ public class RestauranteLaCasaDorada {
 				Product p = ord.getListOfProducts().get(k);
 				p.setNumTimesAddedOrders(0);
 				p.setTotalPriceAddedOrders(0);
+				p.setCont(0);
 			}
 		}
 	}
