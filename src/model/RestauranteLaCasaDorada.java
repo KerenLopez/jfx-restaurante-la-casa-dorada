@@ -31,7 +31,7 @@ public class RestauranteLaCasaDorada {
 	public final static String ORDERS_SAVE_PATH_FILE = "data/orders.ackl";
 
 
-	
+	public final static String SEPARATOR = ";";
 	private ArrayList<Order> orders;
 	private ArrayList<Product> products;
 	private ArrayList<Ingredient> ingredients;
@@ -348,7 +348,7 @@ public class RestauranteLaCasaDorada {
 		return added;
 	}
 	
-	public boolean addIngredientToAProduct(Product p, Ingredient ing, String userId){
+	public boolean addIngredientToAProduct(Product p, Ingredient ing, String userId) throws IOException{
 		ArrayList<Ingredient> list = p.getListOfIngredients();
 		User modifier = searchUser(userId);
 		boolean find = p.findIngredient(ing.getId());
@@ -357,18 +357,20 @@ public class RestauranteLaCasaDorada {
 			list.add(ing);
 			p.setModifier(modifier);
 			added = true;
+			saveDataProducts();
 		}
 		return added;
 	}
 	
-	public void deleteAnIngredientOfAProduct(Product p, Ingredient ing, String userId) {
+	public void deleteAnIngredientOfAProduct(Product p, Ingredient ing, String userId) throws IOException {
 		User modifier = searchUser(userId);
 		ArrayList<Ingredient> list = p.getListOfIngredients();
 		list.remove(list.indexOf(ing));
 		p.setModifier(modifier);
+		saveDataProducts();
 	}
 	
-	public boolean addSizeOfAProduct(Product p, String name, double price, String userId) {
+	public boolean addSizeOfAProduct(Product p, String name, double price, String userId) throws IOException {
 		ArrayList<Size> list = p.getSizes();
 		User modifier = searchUser(userId);
 		Size find = p.findSize(name);
@@ -379,17 +381,19 @@ public class RestauranteLaCasaDorada {
 			idSize++;
 			p.setModifier(modifier);
 			p.sortSizes();
+			saveDataProducts();
 			added = true;
 		}
 		return added;
 	}
 	
-	public void deleteSizeOfAProduct(Product p, Size s) {
+	public void deleteSizeOfAProduct(Product p, Size s) throws IOException {
 		ArrayList<Size> list = p.getSizes();
 		list.remove(list.indexOf(s));
+		saveDataProducts();
 	}
 	
-	public boolean updateSizeOfAProduct(Product p, Size selectedSize, String newName, double newPrice, String userId) {
+	public boolean updateSizeOfAProduct(Product p, Size selectedSize, String newName, double newPrice, String userId) throws IOException {
 		User modifier = searchUser(userId);
 		Size s = p.findSize(newName);
 		boolean updated = false;
@@ -404,6 +408,7 @@ public class RestauranteLaCasaDorada {
 			selectedSize.setName(newName);
 			selectedSize.setPrice(newPrice);
 			p.setModifier(modifier);
+			saveDataProducts();
 			updated = true;
 		}
 		return updated;
@@ -443,8 +448,8 @@ public class RestauranteLaCasaDorada {
 			p.setEnabled(enabled);
 			p.setType(searchTypeOfProductById(TpId));
 			p.setModifier(searchUser(userId));
-			updated=true;
 			saveDataProducts();
+			updated=true;
 		}
 		return updated;
 	}
@@ -505,17 +510,23 @@ public class RestauranteLaCasaDorada {
 		return added;
 	}
 	
-	public void deleteProductsOfAnOrder(Order selectedOrder, Product selectedProduct, String userId) {
+	public void deleteProductsOfAnOrder(Order selectedOrder, Product selectedProduct, String userId) throws IOException {
 		User modifier = searchUser(userId);
 		int indexOfOrder = selectedOrder.getListOfProducts().indexOf(selectedProduct);
 		selectedOrder.getListOfProducts().remove(indexOfOrder);
 		selectedOrder.getListOfQuantity().remove(indexOfOrder);
 		selectedOrder.getListOfSizes().remove(indexOfOrder);
 		selectedOrder.setModifier(modifier);
+		saveDataOrders();
 	}
 	
-	public void updateStateOfAnOrder(Order selectedOrder, String newState) {
+	public void updateStateOfAnOrder(Order selectedOrder, String newState) throws IOException {
 		selectedOrder.updateState(newState);
+		if(newState.equals(State.ENTREGADO.name())) {
+			selectedOrder.getDeliverer().setNumberOrders((selectedOrder.getDeliverer().getNumberOrders())+1);
+			selectedOrder.getDeliverer().setSumTotalOrders((selectedOrder.getDeliverer().getSumTotalOrders())+selectedOrder.returnOrderTotalPrice());
+		}
+		saveDataOrders();
 	}
 	
 	public void updateOrder(Order selectedOrder, Client selectedClient, Employee selectedEmployee, String obs, String userId) throws IOException {
@@ -783,6 +794,25 @@ public class RestauranteLaCasaDorada {
 		return selectedOrders;
 	}
 	
+	public ArrayList<Order> selectDeliveredOrders(String initialTime, String finalTime){
+		boolean correct = false;
+		ArrayList<Order> selectedOrders = new ArrayList<Order>();
+		ArrayList<Order> sortingOrders = sortByDateAndTime();
+		for(int k=0; k<sortingOrders.size();k++) {
+			correct = compareWithInitialAndFinalDate(sortingOrders.get(k),initialTime,finalTime);
+			if(correct==true && sortingOrders.get(k).getStateOfOrder().name().equals("ENTREGADO")){
+				Order ord = sortingOrders.get(k);
+				for(int j=0;j<ord.getListOfProducts().size();j++) {
+					Product p = ord.getListOfProducts().get(j);
+					p.setNumTimesAddedOrders((p.getNumTimesAddedOrders())+ord.getListOfQuantity().get(j));
+					p.setTotalPriceAddedOrders((p.getTotalPriceAddedOrders())+(ord.getListOfQuantity().get(j)*ord.getListOfSizes().get(j).getPrice()));
+				}
+				selectedOrders.add(ord);
+			}
+		}
+		return selectedOrders;
+	}
+	
 	public boolean compareWithInitialAndFinalDate(Order order, String initialTime, String finalTime) {
 		boolean correct = false;
 		Date date1 = null;
@@ -834,6 +864,39 @@ public class RestauranteLaCasaDorada {
 		pw.close();
 	}
 	
+	public void exportEmployeesReport(String fn, String initialTime, String finalTime) throws FileNotFoundException {
+		ArrayList<Order> ordersS = selectedOrders(initialTime,finalTime);
+		PrintWriter pw = new PrintWriter(fn);
+		String nameColumns = "Empleado"+SEPARATOR+"Identificacion"+SEPARATOR+"Número de ordenes entregadas"+SEPARATOR+"Precio total de las ordenes entregadas";
+		pw.println(nameColumns);
+		for(int i=0;i<ordersS.size();i++){
+			Order objOrder = ordersS.get(i);
+			pw.println(objOrder.getDeliverer().getName()+SEPARATOR+objOrder.getDeliverer().getId()+SEPARATOR+objOrder.getDeliverer().getNumberOrders()+SEPARATOR+objOrder.getDeliverer().getSumTotalOrders());
+		}
+		pw.close();
+	}
+	
+	public void exportProductsReport(String fn, String initialTime, String finalTime) throws FileNotFoundException {
+		ArrayList<Order> ordersS = selectDeliveredOrders(initialTime,finalTime);
+		PrintWriter pw = new PrintWriter(fn);
+		String nameColumns = "Nombre del producto"+SEPARATOR+"Numero total de veces que fue pedido"+SEPARATOR+"Cantidad de total de dinero recaudado";
+		pw.println(nameColumns);
+		for(int i=0;i<ordersS.size();i++){
+			Order objOrder = ordersS.get(i);
+			for(int k=0;k<objOrder.getListOfProducts().size();k++) {
+				pw.println(objOrder.getListOfProducts().get(k).getName()+SEPARATOR+objOrder.getListOfProducts().get(k).getNumTimesAddedOrders()+SEPARATOR+objOrder.getListOfProducts().get(k).getTotalPriceAddedOrders());
+			}
+		}
+		pw.close();
+		for(int j=0;j<ordersS.size();j++) {
+			Order ord = ordersS.get(j);
+			for(int k=0;k<ord.getListOfProducts().size();k++) {
+				Product p = ord.getListOfProducts().get(k);
+				p.setNumTimesAddedOrders(0);
+				p.setTotalPriceAddedOrders(0);
+			}
+		}
+	}
 
 	public boolean createEmployee(String id, String name, String lastName, String creatorId) throws IOException {
 

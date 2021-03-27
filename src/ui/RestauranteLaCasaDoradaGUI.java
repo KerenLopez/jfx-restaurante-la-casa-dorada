@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -88,9 +87,12 @@ public class RestauranteLaCasaDoradaGUI {
 	
 	@FXML
     private Label lbObjectId;
-	
+
 	@FXML
 	private Label lbUserId;
+
+	@FXML
+	private Label lbExportTitle;
 
 	@FXML
 	private ComboBox<TypeOfProduct> cmbxTypeOfProduct;
@@ -569,7 +571,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    public void addIngredientToAProduct(ActionEvent event) {
+    public void addIngredientToAProduct(ActionEvent event) throws IOException {
     	Product p =  tvOfProducts.getSelectionModel().getSelectedItem();
     	Ingredient selectedIngredient= tvOfAddedIngredients.getSelectionModel().getSelectedItem();
     	String userId = lbUserId.getText();
@@ -594,7 +596,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    public void deleteAnIngredientOfAProduct(ActionEvent event) {
+    public void deleteAnIngredientOfAProduct(ActionEvent event) throws IOException {
     	Product p =  tvOfProducts.getSelectionModel().getSelectedItem();
     	Ingredient selectedIngredient= tvOfIngredientsInAProduct.getSelectionModel().getSelectedItem();
     	String userId = lbUserId.getText();
@@ -612,6 +614,7 @@ public class RestauranteLaCasaDoradaGUI {
     		alert2.showAndWait();
     	}
     	txtIngredientName.clear();
+    	tvOfIngredientsInAProduct.getItems().clear();
     	initializeTableViewOfIngredientsInAProduct();
     }
     
@@ -647,7 +650,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    public void addSizeOfAProduct(ActionEvent event) {
+    public void addSizeOfAProduct(ActionEvent event) throws IOException {
     	Product p =  tvOfProducts.getSelectionModel().getSelectedItem();
     	String userId = lbUserId.getText();
     	if(!txtSizeName.getText().equals("") && !txtSizePrice.getText().equals("")) {
@@ -676,7 +679,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
    
     @FXML
-    public void deleteSizeOfAProduct(ActionEvent event) {
+    public void deleteSizeOfAProduct(ActionEvent event) throws IOException {
     	Product p =  tvOfProducts.getSelectionModel().getSelectedItem();
     	Size selectedSize= tvOfSizes.getSelectionModel().getSelectedItem();
     	Alert alert1 = new Alert(AlertType.CONFIRMATION);
@@ -698,7 +701,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    public void updateSizeOfAProduct(ActionEvent event) {
+    public void updateSizeOfAProduct(ActionEvent event) throws IOException {
     	Product p =  tvOfProducts.getSelectionModel().getSelectedItem();
     	Size selectedSize= tvOfSizes.getSelectionModel().getSelectedItem();
     	String userId = lbUserId.getText();
@@ -1334,7 +1337,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    public void deleteProductOfAnOrder(ActionEvent event) {
+    public void deleteProductOfAnOrder(ActionEvent event) throws IOException {
     	Order selectedOrder = tvOfOrders.getSelectionModel().getSelectedItem();
     	Product selectedProduct = tvOfOrderProductsN.getSelectionModel().getSelectedItem();
     	String userId = lbUserId.getText();
@@ -1512,8 +1515,8 @@ public class RestauranteLaCasaDoradaGUI {
 	}
     
     @FXML
-    public void exportOrderReport(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportReport.fxml"));
+    public void exportOrdersReport(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportOrdersReport.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
 		mainPanel.getChildren().clear();
@@ -1528,7 +1531,39 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    public void generateReport(ActionEvent event) {
+    public void exportEmployeesReport(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportEmployeesReport.fxml"));
+		fxmlLoader.setController(this);
+		Parent menuPane = fxmlLoader.load();
+		mainPanel.getChildren().clear();
+		mainPanel.setCenter(menuPane);
+		mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+		initializeComboBoxOfHours();
+		initializeComboBoxOfMinutes();
+		dtPickerInitialDate.setValue(LocalDate.now());
+		dtPickerFinalDate.setValue(LocalDate.now());
+		lbUserName.setText(lbUserNameMenu.getText());
+    	lbUserId.setText(lbUserIdMenu.getText()); 
+    }
+    
+    @FXML
+    public void exportProductsReport(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportProductsReport.fxml"));
+		fxmlLoader.setController(this);
+		Parent menuPane = fxmlLoader.load();
+		mainPanel.getChildren().clear();
+		mainPanel.setCenter(menuPane);
+		mainPanel.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+		initializeComboBoxOfHours();
+		initializeComboBoxOfMinutes();
+		dtPickerInitialDate.setValue(LocalDate.now());
+		dtPickerFinalDate.setValue(LocalDate.now());
+		lbUserName.setText(lbUserNameMenu.getText());
+    	lbUserId.setText(lbUserIdMenu.getText()); 
+    }
+    
+    @FXML
+    public void generateOrdersReport(ActionEvent event) {
     	if(dtPickerInitialDate.getValue()!=null && dtPickerFinalDate.getValue()!=null && cmbxInitialHour.getValue()!=null && cmbxInitialMinute.getValue()!=null && cmbxFinalHour.getValue()!=null && cmbxFinalMinute.getValue()!=null && !txtSeparator.getText().equals("")) {
     		LocalDate initialDate = dtPickerInitialDate.getValue();
     		LocalDate finalDate = dtPickerFinalDate.getValue();
@@ -1559,6 +1594,68 @@ public class RestauranteLaCasaDoradaGUI {
     	}
     }
     
+    @FXML
+    public void generateEmployeesReport(ActionEvent event) {
+    	if(dtPickerInitialDate.getValue()!=null && dtPickerFinalDate.getValue()!=null && cmbxInitialHour.getValue()!=null && cmbxInitialMinute.getValue()!=null && cmbxFinalHour.getValue()!=null && cmbxFinalMinute.getValue()!=null) {
+    		LocalDate initialDate = dtPickerInitialDate.getValue();
+    		LocalDate finalDate = dtPickerFinalDate.getValue();
+    		String iniDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(initialDate).toString();
+    		String finDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(finalDate).toString();
+    		String initialTime = iniDate+" "+cmbxInitialHour.getValue().toString()+":"+cmbxInitialMinute.getValue().toString();
+    		String finalTime = finDate+" "+cmbxFinalHour.getValue().toString()+":"+cmbxFinalMinute.getValue().toString();
+    		FileChooser fileChooser = new FileChooser();
+        	fileChooser.setTitle("Elija el archivo en donde se va a guardar el reporte");
+        	File fExp= fileChooser.showSaveDialog(mainPanel.getScene().getWindow());
+        	if(fExp!=null) {
+        		Alert alert = new Alert(AlertType.INFORMATION);
+    		    alert.setTitle("Exportar reporte sobre empleados");
+    		    try {
+    				restauranteLaCasaDorada.exportEmployeesReport(fExp.getAbsolutePath(),initialTime,finalTime);
+    			    alert.setHeaderText(null);
+    			    alert.setContentText("El reporte de empleados ha sido exportado exitosamente");
+    			    alert.showAndWait();
+    			} catch (IOException e) {
+    				alert.setHeaderText(null);
+    			    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso");
+    				e.printStackTrace();
+    			}
+        	}
+    	}else {
+    		showValidationErrorAlert();
+    	}
+    }
+    
+
+    @FXML
+    public void generateProductsReport(ActionEvent event) {
+    	if(dtPickerInitialDate.getValue()!=null && dtPickerFinalDate.getValue()!=null && cmbxInitialHour.getValue()!=null && cmbxInitialMinute.getValue()!=null && cmbxFinalHour.getValue()!=null && cmbxFinalMinute.getValue()!=null) {
+    		LocalDate initialDate = dtPickerInitialDate.getValue();
+    		LocalDate finalDate = dtPickerFinalDate.getValue();
+    		String iniDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(initialDate).toString();
+    		String finDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(finalDate).toString();
+    		String initialTime = iniDate+" "+cmbxInitialHour.getValue().toString()+":"+cmbxInitialMinute.getValue().toString();
+    		String finalTime = finDate+" "+cmbxFinalHour.getValue().toString()+":"+cmbxFinalMinute.getValue().toString();
+    		FileChooser fileChooser = new FileChooser();
+        	fileChooser.setTitle("Elija el archivo en donde se va a guardar el reporte");
+        	File fExp= fileChooser.showSaveDialog(mainPanel.getScene().getWindow());
+        	if(fExp!=null) {
+        		Alert alert = new Alert(AlertType.INFORMATION);
+    		    alert.setTitle("Exportar reporte sobre productos");
+    		    try {
+    				restauranteLaCasaDorada.exportProductsReport(fExp.getAbsolutePath(),initialTime,finalTime);
+    			    alert.setHeaderText(null);
+    			    alert.setContentText("El reporte de productos ha sido exportado exitosamente");
+    			    alert.showAndWait();
+    			} catch (IOException e) {
+    				alert.setHeaderText(null);
+    			    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso");
+    				e.printStackTrace();
+    			}
+        	}
+    	}else {
+    		showValidationErrorAlert();
+    	}
+    }
     
     @FXML
     void importClientsData(ActionEvent event) {

@@ -9,6 +9,8 @@ public class Product implements Serializable{
 	private static final long serialVersionUID = 1;
 	private int id;
 	private String name;
+	private int numTimesAddedOrders;
+	private double totalPriceAddedOrders;
 	private boolean enabled;
 	private ArrayList<Size> sizes;
 	private User creator;
@@ -25,6 +27,8 @@ public class Product implements Serializable{
 		this.id = id;
 		listOfIngredients = new ArrayList<Ingredient>();
 		sizes= new ArrayList<Size>();
+		numTimesAddedOrders = 0;
+		totalPriceAddedOrders = 0;
 	}
 	
 	public String getName() {
@@ -183,5 +187,21 @@ public class Product implements Serializable{
 			name = modifier.getUserName();
 		}
 		return name;
+	}
+
+	public int getNumTimesAddedOrders() {
+		return numTimesAddedOrders;
+	}
+
+	public void setNumTimesAddedOrders(int numTimesAddedOrders) {
+		this.numTimesAddedOrders = numTimesAddedOrders;
+	}
+
+	public double getTotalPriceAddedOrders() {
+		return totalPriceAddedOrders;
+	}
+
+	public void setTotalPriceAddedOrders(double totalPriceAddedOrders) {
+		this.totalPriceAddedOrders = totalPriceAddedOrders;
 	}
 }
