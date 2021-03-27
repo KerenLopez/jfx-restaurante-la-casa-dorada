@@ -216,6 +216,9 @@ public class RestauranteLaCasaDoradaGUI {
 
     @FXML
     private TableColumn<Order, String> colQuantityOrderProduct;
+    
+    @FXML
+    private TableColumn<Order, String> colProductsInOrder;
 
 	@FXML
 	private CheckBox ckbxDisable;
@@ -1107,6 +1110,8 @@ public class RestauranteLaCasaDoradaGUI {
     	colCreatorOrder.setCellValueFactory(new PropertyValueFactory<Order, String>("CreatorName"));
     	colModifierOrder.setCellValueFactory(new PropertyValueFactory<Order, String>("ModifierName"));
     	colObservationsOrder.setCellValueFactory(new PropertyValueFactory<Order, String>("Observations"));
+    	colProductsInOrder.setCellValueFactory(new PropertyValueFactory<Order, String>("AllProducts"));
+
     	tvOfOrders.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     	tvOfOrders.setVisible(true);
 	}

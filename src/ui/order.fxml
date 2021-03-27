@@ -210,7 +210,7 @@
               <content>
                 <AnchorPane>
                      <children>
-                        <TableView fx:id="tvOfOrders" onMouseClicked="#clickOnTableViewOfOrders" prefHeight="476.0" prefWidth="1500.0">
+                        <TableView fx:id="tvOfOrders" onMouseClicked="#clickOnTableViewOfOrders" prefHeight="476.0" prefWidth="1500.0" visible="false">
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
@@ -220,6 +220,7 @@
                               <TableColumn fx:id="colDateandTimeOrder" prefWidth="200.0" text="Fecha y hora" />
                               <TableColumn fx:id="colClientOrder" prefWidth="200.0" text="Cliente" />
                               <TableColumn fx:id="colEmployeeOrder" prefWidth="200.0" text="Empleado encargado" />
+                              <TableColumn fx:id="colProductsInOrder" prefWidth="75.0" text="Productos" />
                               <TableColumn fx:id="colObservationsOrder" prefWidth="200.0" text="Observaciones" />
                               <TableColumn fx:id="colCreatorOrder" prefWidth="75.0" text="Creada por" />
                               <TableColumn fx:id="colModifierOrder" prefWidth="75.0" text="Modificada por" />
