@@ -863,6 +863,8 @@ public class RestauranteLaCasaDorada {
 	}
 	
 	public void exportEmployeesReport(String fn, String initialTime, String finalTime) throws FileNotFoundException {
+		int totalOrders=0;
+		int totalMoney=0;
 		ArrayList<Order> ordersS = selectedOrders(initialTime,finalTime);
 		PrintWriter pw = new PrintWriter(fn);
 		String nameColumns = "Empleado"+SEPARATOR+"Identificacion"+SEPARATOR+"Número de ordenes entregadas"+SEPARATOR+"Precio total de las ordenes entregadas";
@@ -872,8 +874,12 @@ public class RestauranteLaCasaDorada {
 			objOrder.getDeliverer().setCont((objOrder.getDeliverer().getCont())+1);
 			if(objOrder.getDeliverer().getCont()==1) {
 				pw.println(objOrder.getDeliverer().getName()+SEPARATOR+objOrder.getDeliverer().getId()+SEPARATOR+objOrder.getDeliverer().getNumberOrders()+SEPARATOR+objOrder.getDeliverer().getSumTotalOrders());
+				totalOrders+=objOrder.getDeliverer().getNumberOrders();
+				totalMoney+=objOrder.getDeliverer().getSumTotalOrders();
 			}
 		}
+		pw.println(SEPARATOR+"Total"+SEPARATOR+totalOrders+SEPARATOR+totalMoney);
+
 		pw.close();
 		
 		for(int k=0;k<employees.size();k++) {
@@ -882,6 +888,8 @@ public class RestauranteLaCasaDorada {
 	}
 	
 	public void exportProductsReport(String fn, String initialTime, String finalTime) throws FileNotFoundException {
+		int totalOrders=0;
+		int totalMoney=0;
 		ArrayList<Order> ordersS = selectDeliveredOrders(initialTime,finalTime);
 		PrintWriter pw = new PrintWriter(fn);
 		String nameColumns = "Nombre del producto"+SEPARATOR+"Numero total de veces que fue pedido"+SEPARATOR+"Cantidad de total de dinero recaudado";
@@ -893,9 +901,13 @@ public class RestauranteLaCasaDorada {
 				pd.setCont((pd.getCont())+1);
 				if(pd.getCont()==1) {
 					pw.println(pd.getName()+SEPARATOR+pd.getNumTimesAddedOrders()+SEPARATOR+pd.getTotalPriceAddedOrders());
+					totalOrders+=pd.getNumTimesAddedOrders();
+					totalMoney+=pd.getTotalPriceAddedOrders();
 				}
 			}
 		}
+		pw.println("Total"+SEPARATOR+totalOrders+SEPARATOR+totalMoney);
+
 		pw.close();
 		for(int j=0;j<ordersS.size();j++) {
 			Order ord = ordersS.get(j);
