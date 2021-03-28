@@ -203,12 +203,12 @@
                               </TextField>
                            </children>
                         </VBox>
-                        <Button mnemonicParsing="false" onAction="#searchClientByName" prefHeight="42.0" prefWidth="124.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Buscar cliente" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="5">
+                        <Button mnemonicParsing="false" onAction="#searchClientByName" prefHeight="50.0" prefWidth="58.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Buscar cliente" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="5">
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets left="70.0" />
                            </GridPane.margin>
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
                      </children>

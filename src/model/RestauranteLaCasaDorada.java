@@ -472,7 +472,7 @@ public class RestauranteLaCasaDorada {
     	ArrayList<Product> copyOfProducts = new ArrayList<Product>(products);
     	for(int i=1;i<copyOfProducts.size();i++) {
 			for(int j=0;j<copyOfProducts.size()-i;j++) {
-				if(copyOfProducts.get(j).getSizes().get(0).getPrice()>copyOfProducts.get(j+1).getSizes().get(0).getPrice()) {
+				if(!copyOfProducts.get(j).getSizes().isEmpty() && !copyOfProducts.get(j+1).getSizes().isEmpty()&& copyOfProducts.get(j).getSizes().get(0).getPrice()>copyOfProducts.get(j+1).getSizes().get(0).getPrice()) {
 					Product temp = copyOfProducts.get(j);
 					copyOfProducts.set(j, copyOfProducts.get(j+1));
 					copyOfProducts.set(j+1, temp);

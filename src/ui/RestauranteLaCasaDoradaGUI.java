@@ -574,6 +574,8 @@ public class RestauranteLaCasaDoradaGUI {
     	ingredientForm.setVisible(true);
     	initializeTableViewOfAddedIngredients();
     	initializeTableViewOfIngredientsInAProduct();
+    	btSortProductPrices.setVisible(false);
+
     }
     
     @FXML
@@ -653,32 +655,39 @@ public class RestauranteLaCasaDoradaGUI {
     	lbManageProduct.setText("Lista de tamaños agregados");
     	tvOfProducts.setVisible(false);
     	initializeTableViewOfSizes();
+    	btSortProductPrices.setVisible(false);
     }
     
     @FXML
     public void addSizeOfAProduct(ActionEvent event) throws IOException {
     	Product p =  tvOfProducts.getSelectionModel().getSelectedItem();
     	String userId = lbUserId.getText();
+    	Alert alert1 = new Alert(AlertType.ERROR);
+		alert1.setTitle("Error de validacion");
+		alert1.setHeaderText(null);
     	if(!txtSizeName.getText().equals("") && !txtSizePrice.getText().equals("")) {
-    		String name = txtSizeName.getText();
-    		double price = Double.parseDouble(txtSizePrice.getText());
-    		boolean added = restauranteLaCasaDorada.addSizeOfAProduct(p, name, price, userId);
-    		if(added==false) {
-    			Alert alert1 = new Alert(AlertType.ERROR);
-    			alert1.setTitle("Error de validacion");
-    			alert1.setHeaderText(null);
-    			alert1.setContentText("El tamaño ya se encuentra agregado en la lista de tamaños del producto, intentelo nuevamente");
-    			alert1.showAndWait();
-    		}else {
-    			Alert alert2 = new Alert(AlertType.INFORMATION);
-        		alert2.setTitle("Informacion");
-        		alert2.setHeaderText(null);
-        		alert2.setContentText("El tamaño ha sido agregado exitosamente a la lista de tamaños del producto");
-        		alert2.showAndWait();
+    		try {
+    			String name = txtSizeName.getText();
+    			double price = Double.parseDouble(txtSizePrice.getText());
+    			boolean added = restauranteLaCasaDorada.addSizeOfAProduct(p, name, price, userId);
+    			if(added==false) {
+
+    				alert1.setContentText("El tamaño ya se encuentra agregado en la lista de tamaños del producto, intentelo nuevamente");
+    				alert1.showAndWait();
+    			}else {
+    				Alert alert2 = new Alert(AlertType.INFORMATION);
+    				alert2.setTitle("Informacion");
+    				alert2.setHeaderText(null);
+    				alert2.setContentText("El tamaño ha sido agregado exitosamente a la lista de tamaños del producto");
+    				alert2.showAndWait();
+    			}
+    			txtSizeName.clear();
+    			txtSizePrice.clear();
+    			initializeTableViewOfSizes();
+    		}catch(NumberFormatException nfe) {
+    			alert1.setContentText("El precio debe darse en formato numérico");
+				alert1.showAndWait();
     		}
-    		txtSizeName.clear();
-    		txtSizePrice.clear();
-    		initializeTableViewOfSizes();
     	}else {
     		showValidationErrorAlert();
     	}
@@ -1271,6 +1280,13 @@ public class RestauranteLaCasaDoradaGUI {
     		cmbxClients.setValue(selectedOrder.getBuyer());
     		cbEmployee.setValue(selectedOrder.getDeliverer());
     		txtAreaObservations.setText(selectedOrder.getObservations());
+    	}else {
+    		btUpdate.setDisable(true);
+    		btAddProductsOrder.setDisable(true);
+			btChangeState.setDisable(true);
+
+
+
     	}
     }
 
@@ -1303,41 +1319,46 @@ public class RestauranteLaCasaDoradaGUI {
     	Order selectedOrder = tvOfOrders.getSelectionModel().getSelectedItem();
     	Product selectedProduct = tvOfAddedProducts.getSelectionModel().getSelectedItem();
     	String userId = lbUserId.getText();
+    	Alert alert1 = new Alert(AlertType.ERROR);
+		alert1.setTitle("Error de validacion");
+		alert1.setHeaderText(null);
     	if (selectedProduct!= null) {
     		if (!txtProductQuantity.getText().equals("") && cmbxProductSizes.getValue()!=null) {
-    			Size selectedSize = cmbxProductSizes.getValue();
-        		int quantity = Integer.parseInt(txtProductQuantity.getText());
-        		if(quantity>0) {
-        			boolean added = restauranteLaCasaDorada.addProductsToAnOrder(selectedOrder,selectedProduct,selectedSize,quantity, userId);
-            		if(added==false) {
-            			Alert alert1 = new Alert(AlertType.ERROR);
-            			alert1.setTitle("Error de validacion");
-            			alert1.setHeaderText(null);
-            			alert1.setContentText("El producto ya se encuentra agregado en la lista de productos de la orden, intentelo nuevamente");
-            			alert1.showAndWait();
-            		}else {
-            			Alert alert2 = new Alert(AlertType.INFORMATION);
-                		alert2.setTitle("Informacion");
-                		alert2.setHeaderText(null);
-                		alert2.setContentText("El producto ha sido agregado exitosamente a la lista de productos de la orden");
-                		alert2.showAndWait();
-            		}
-            		txtNameProductOrder.clear();
-            		txtProductQuantity.clear();
-            		cmbxProductSizes.getItems().clear();
-            		tvOfOrderProductsN.getItems().clear();
-            		tvOfOrderProductsS.getItems().clear();
-            		tvOfOrderProductsQ.getItems().clear();
-            		initializeTableViewOfOrderProductsN();
-            		initializeTableViewOfOrderProductsS();
-            		initializeTableViewOfOrderProductsQ();
-        		}else {
-        			Alert alert1 = new Alert(AlertType.ERROR);
-        			alert1.setTitle("Error de validacion");
-        			alert1.setHeaderText(null);
-        			alert1.setContentText("La cantidad del producto no puede ser cero o un número negativo, intentelo nuevamente");
-        			alert1.showAndWait();
-        		}
+    			try {
+    				Size selectedSize = cmbxProductSizes.getValue();
+    				int quantity = Integer.parseInt(txtProductQuantity.getText());
+    				if(quantity>0) {
+    					boolean added = restauranteLaCasaDorada.addProductsToAnOrder(selectedOrder,selectedProduct,selectedSize,quantity, userId);
+    					if(added==false) {
+    						
+    						alert1.setContentText("El producto ya se encuentra agregado en la lista de productos de la orden, intentelo nuevamente");
+    						alert1.showAndWait();
+    					}else {
+    						Alert alert2 = new Alert(AlertType.INFORMATION);
+    						alert2.setTitle("Informacion");
+    						alert2.setHeaderText(null);
+    						alert2.setContentText("El producto ha sido agregado exitosamente a la lista de productos de la orden");
+    						alert2.showAndWait();
+    					}
+    					txtNameProductOrder.clear();
+    					txtProductQuantity.clear();
+    					cmbxProductSizes.getItems().clear();
+    					tvOfOrderProductsN.getItems().clear();
+    					tvOfOrderProductsS.getItems().clear();
+    					tvOfOrderProductsQ.getItems().clear();
+    					initializeTableViewOfOrderProductsN();
+    					initializeTableViewOfOrderProductsS();
+    					initializeTableViewOfOrderProductsQ();
+    				}else {
+    					
+    					alert1.setContentText("La cantidad del producto no puede ser cero o un número negativo, intentelo nuevamente");
+    					alert1.showAndWait();
+    				}
+    			}catch(NumberFormatException nfe){
+    				
+					alert1.setContentText("La cantidad del producto debe darse en formato numérico");
+					alert1.showAndWait();
+    			}
     		}else {
     		    showValidationErrorAlert();
     		}
