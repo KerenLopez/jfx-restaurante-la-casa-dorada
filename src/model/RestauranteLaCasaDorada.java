@@ -1406,7 +1406,7 @@ public class RestauranteLaCasaDorada {
 		while(line!=null){
 			String[] parts = line.split(SEPARATOR);
 			if(!parts[0].equals("employeeId")) {
-				int pos = ThreadLocalRandom.current().nextInt(0, clients.size());
+				int pos = ThreadLocalRandom.current().nextInt(0, 1000);
 
 				Client buyer=clients.get(pos);
 				Employee deliverer=searchEmployee(parts[0]);

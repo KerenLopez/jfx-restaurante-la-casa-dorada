@@ -1264,17 +1264,19 @@ public class RestauranteLaCasaDoradaGUI {
     public void clickOnTableViewOfOrders(MouseEvent event) {
     	if ((tvOfOrders.getSelectionModel().getSelectedItem() != null) && (!tvOfOrders.getSelectionModel().getSelectedItem().getStateOfOrder().name().equals("CANCELADO")&& (!tvOfOrders.getSelectionModel().getSelectedItem().getStateOfOrder().name().equals("ENTREGADO")))) {
     		String state = tvOfOrders.getSelectionModel().getSelectedItem().getStateOfOrder().name();
-    		if((!state.equals("ENTREGADO"))&&(!state.equals("CANCELADO"))){
-    			btChangeState.setDisable(false);
-    		}
-    		if(!state.equals("ENVIADO")&& !state.equals("CANCELADO")&& !state.equals("ENTREGADO")) {
-    			btAddProductsOrder.setDisable(false);
-    		}else {
-    			btAddProductsOrder.setDisable(true);
-    		}
+    		
+    		btChangeState.setDisable(false);	
     		btUpdate.setDisable(false);
     		btAdd.setDisable(true);
-    		btAddProductsOrder.setDisable(false);
+    		if(state.equals("ENVIADO")) {
+    			btAddProductsOrder.setDisable(true);
+    			cmbxClients.setDisable(true);
+    			txtAreaObservations.setDisable(true);
+    			
+    		}else {
+        		btAddProductsOrder.setDisable(false);
+
+    		}
     		Order selectedOrder = tvOfOrders.getSelectionModel().getSelectedItem();
     		lbObjectId.setText(""+selectedOrder.getCode());
     		cmbxClients.setValue(selectedOrder.getBuyer());
@@ -1284,9 +1286,11 @@ public class RestauranteLaCasaDoradaGUI {
     		btUpdate.setDisable(true);
     		btAddProductsOrder.setDisable(true);
 			btChangeState.setDisable(true);
-
-
-
+			cmbxClients.setDisable(true);
+			cbEmployee.setDisable(true);
+			txtAreaObservations.setDisable(true);
+    		btAdd.setDisable(true);
+    		
     	}
     }
 
@@ -1758,6 +1762,9 @@ public class RestauranteLaCasaDoradaGUI {
         		alert.showAndWait();
     		}catch(IOException e){
         		alert.setContentText("Los pedidos no se importaron. Ocurrió un error");
+        		alert.showAndWait();
+    		}catch(IndexOutOfBoundsException ioobe) {
+    			alert.setContentText("Por favor, importe primero los productos y clientes.");
         		alert.showAndWait();
     		}
     	}

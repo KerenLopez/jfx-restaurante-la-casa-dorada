@@ -176,7 +176,7 @@
                               <Insets right="20.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Label prefHeight="34.0" prefWidth="96.0" text="Número de identificación: " textFill="WHITE" wrapText="true" GridPane.rowIndex="2">
+                        <Label prefHeight="45.0" prefWidth="103.0" text="Número de identificación: " textFill="WHITE" wrapText="true" GridPane.rowIndex="2">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
