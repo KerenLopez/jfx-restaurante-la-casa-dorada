@@ -1103,7 +1103,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    void sortListIngredients(ActionEvent event) {
+    public void sortListIngredients(ActionEvent event) {
     	ObservableList<Ingredient> observableList;
     	observableList = FXCollections.observableArrayList(restauranteLaCasaDorada.insertionSortIngredients());
     	tvOfIngredients.setItems(observableList);
@@ -1447,7 +1447,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    void searchClientByName(ActionEvent event) {
+    public void searchClientByName(ActionEvent event) {
     	Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
 		alert.setHeaderText(null);
@@ -1687,7 +1687,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    void importClientsData(ActionEvent event) {
+    public void importClientsData(ActionEvent event) {
     	Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText(null);
 		alert.setTitle("Importante");
@@ -1714,7 +1714,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    void importProductsData(ActionEvent event) {
+    public void importProductsData(ActionEvent event) {
     	Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText(null);
 		alert.setTitle("Importante");
@@ -1740,7 +1740,7 @@ public class RestauranteLaCasaDoradaGUI {
     }
     
     @FXML
-    void importOrdersData(ActionEvent event) {
+    public void importOrdersData(ActionEvent event) {
     	Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText(null);
 		alert.setTitle("Importante");
@@ -1750,10 +1750,7 @@ public class RestauranteLaCasaDoradaGUI {
     	fileChooser.setTitle("Abrir el archivo");
     	File f=fileChooser.showOpenDialog(mainPanel.getScene().getWindow());
     	if(f!=null) {
-    		
-
 			alert.setTitle("Importar pedidos");
-    		
     		try {
     			
     			restauranteLaCasaDorada.importOrdersData(f.getAbsolutePath());
@@ -1766,74 +1763,6 @@ public class RestauranteLaCasaDoradaGUI {
     	}
     }
 
-
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     public void enableButtons() {
     	btDelete.setDisable(false);
 		btUpdate.setDisable(false);
@@ -1995,10 +1924,6 @@ public class RestauranteLaCasaDoradaGUI {
 
     } 
 
-    	
-    
-
-
 
     @FXML
     public void updateUser(ActionEvent event) throws IOException {
@@ -2157,10 +2082,6 @@ public class RestauranteLaCasaDoradaGUI {
     	tvListEmployees.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
     }
-    
-
-   
-   
 
     @FXML
     public void createEmployee(ActionEvent event) throws IOException {
@@ -2224,15 +2145,11 @@ public class RestauranteLaCasaDoradaGUI {
             	
             	initializeTableViewEmployees();
             	
-            	
-
-            	
         	}else {
         		alert2.setContentText("El empleado no se pudo eliminar");
 
         	}
         	alert2.showAndWait();
-        	
         	
     	}
     	
@@ -2457,12 +2374,5 @@ public class RestauranteLaCasaDoradaGUI {
     	}
     	
     }
-    
-
-      
-    
-    
-    
-    
 
 }

@@ -1044,7 +1044,6 @@ public class RestauranteLaCasaDorada {
 	}
 	
 	public void addSortedClient(Client client) {
-		//AGREGAR DE FORMA ORDENADA ALFABETICAMENTE DESCENDENTE APELLIDOS Y NOMBRES 
 		Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
 		
 		if(clients.isEmpty()) {
@@ -1432,8 +1431,45 @@ public class RestauranteLaCasaDorada {
 		}
 	    br.close();
 	}
-	
-	
 
+
+	public int getIdIngredient() {
+		return idIngredient;
+	}
+
+
+	public void setIdIngredient(int idIngredient) {
+		this.idIngredient = idIngredient;
+	}
+
+
+	public int getIdProduct() {
+		return idProduct;
+	}
+
+
+	public void setIdProduct(int idProduct) {
+		this.idProduct = idProduct;
+	}
+
+
+	public int getIdTypeOfProduct() {
+		return idTypeOfProduct;
+	}
+
+
+	public void setIdTypeOfProduct(int idTypeOfProduct) {
+		this.idTypeOfProduct = idTypeOfProduct;
+	}
+
+
+	public int getIdSize() {
+		return idSize;
+	}
+
+
+	public void setIdSize(int idSize) {
+		this.idSize = idSize;
+	}
 
 }
