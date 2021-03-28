@@ -1667,11 +1667,17 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     void importClientsData(ActionEvent event) {
+    	Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText(null);
+		alert.setTitle("Importante");
+		alert.setContentText("Esta accion puede tomar unos minutos...");
+		alert.showAndWait();
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle("Abrir el archivo");
     	File f=fileChooser.showOpenDialog(mainPanel.getScene().getWindow());
     	if(f!=null) {
-    		Alert alert = new Alert(AlertType.INFORMATION);
+    		
+
 			alert.setTitle("Importar clientes");
     		
     		try {
@@ -1688,11 +1694,16 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     void importProductsData(ActionEvent event) {
+    	Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText(null);
+		alert.setTitle("Importante");
+		alert.setContentText("Esta accion puede tomar unos minutos...");
+		alert.showAndWait();
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle("Abrir el archivo");
     	File f=fileChooser.showOpenDialog(mainPanel.getScene().getWindow());
     	if(f!=null) {
-    		Alert alert = new Alert(AlertType.INFORMATION);
+    		
 			alert.setTitle("Importar productos");
     		
     		try {
@@ -1709,11 +1720,17 @@ public class RestauranteLaCasaDoradaGUI {
     
     @FXML
     void importOrdersData(ActionEvent event) {
+    	Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText(null);
+		alert.setTitle("Importante");
+		alert.setContentText("Esta accion puede tomar unos minutos...");
+		alert.showAndWait();
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle("Abrir el archivo");
     	File f=fileChooser.showOpenDialog(mainPanel.getScene().getWindow());
     	if(f!=null) {
-    		Alert alert = new Alert(AlertType.INFORMATION);
+    		
+
 			alert.setTitle("Importar pedidos");
     		
     		try {
