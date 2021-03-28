@@ -51,7 +51,7 @@
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#manageAnOrder" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="7. Gestionar un pedido" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#manageAnOrder" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="7. Gestionar una orden" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
@@ -76,7 +76,7 @@
                           <items>
                             <MenuItem mnemonicParsing="false" onAction="#importClientsData" text="Clientes" />
                               <MenuItem mnemonicParsing="false" onAction="#importProductsData" text="Productos" />
-                              <MenuItem mnemonicParsing="false" onAction="#importOrdersData" text="Pedidos" />
+                              <MenuItem mnemonicParsing="false" onAction="#importOrdersData" text="Ordenes" />
                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Exportar">
