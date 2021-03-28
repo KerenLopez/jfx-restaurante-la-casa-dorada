@@ -34,26 +34,41 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Fecha inicial del reporte:" textFill="WHITE" />
-                  <Label text="Hora inicial del reporte:" textFill="WHITE" GridPane.rowIndex="1" />
-                  <Label text="Fecha final del reporte:" textFill="WHITE" GridPane.rowIndex="2" />
-                  <Label text="Hora final del reporte:" textFill="WHITE" GridPane.rowIndex="3" />
-                  <Label text="Separador a implementar:" textFill="WHITE" GridPane.rowIndex="4" />
-                  <DatePicker fx:id="dtPickerInitialDate" editable="false" GridPane.columnIndex="1" />
-                  <DatePicker fx:id="dtPickerFinalDate" editable="false" layoutX="231.0" layoutY="14.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Fecha inicial del reporte:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Label>
+                  <Label text="Hora inicial del reporte:" textFill="WHITE" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Label>
+                  <Label text="Fecha final del reporte:" textFill="WHITE" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Label>
+                  <Label text="Hora final del reporte:" textFill="WHITE" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Label>
+                  <Label text="Separador a implementar:" textFill="WHITE" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Label>
+                  <DatePicker fx:id="dtPickerInitialDate" editable="false" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" GridPane.columnIndex="1" />
+                  <DatePicker fx:id="dtPickerFinalDate" editable="false" layoutX="231.0" layoutY="14.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <ComboBox fx:id="cmbxInitialHour" prefHeight="25.0" prefWidth="69.0">
+                        <ComboBox fx:id="cmbxInitialHour" prefHeight="25.0" prefWidth="69.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;">
                            <HBox.margin>
                               <Insets left="18.0" />
                            </HBox.margin>
                         </ComboBox>
-                        <Label prefHeight="25.0" text="     :     ">
+                        <Label prefHeight="25.0" text="     :     " textFill="WHITE">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="cmbxInitialMinute" layoutX="28.0" layoutY="10.0" prefHeight="25.0" prefWidth="66.0" />
+                        <ComboBox fx:id="cmbxInitialMinute" layoutX="28.0" layoutY="10.0" prefHeight="25.0" prefWidth="66.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" />
                      </children>
                      <GridPane.margin>
                         <Insets top="10.0" />
@@ -61,23 +76,23 @@
                   </HBox>
                   <HBox layoutX="215.0" layoutY="42.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <ComboBox fx:id="cmbxFinalHour" prefHeight="25.0" prefWidth="69.0">
+                        <ComboBox fx:id="cmbxFinalHour" prefHeight="25.0" prefWidth="69.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;">
                            <HBox.margin>
                               <Insets left="18.0" />
                            </HBox.margin>
                         </ComboBox>
-                        <Label prefHeight="25.0" text="     :     ">
+                        <Label prefHeight="25.0" text="     :     " textFill="WHITE">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="cmbxFinalMinute" layoutX="28.0" layoutY="10.0" prefHeight="25.0" prefWidth="66.0" />
+                        <ComboBox fx:id="cmbxFinalMinute" layoutX="28.0" layoutY="10.0" prefHeight="25.0" prefWidth="66.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" />
                      </children>
                      <GridPane.margin>
                         <Insets top="10.0" />
                      </GridPane.margin>
                   </HBox>
-                  <TextField fx:id="txtSeparator" prefHeight="25.0" prefWidth="150.0" text=";" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <TextField fx:id="txtSeparator" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text=";" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="20.0" right="20.0" />
                      </GridPane.margin>
@@ -86,11 +101,17 @@
             </GridPane>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#generateOrdersReport" text="Generar reporte" />
-                  <Button mnemonicParsing="false" onAction="#returnToMenu" text="Atrás">
+                  <Button mnemonicParsing="false" onAction="#generateOrdersReport" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Generar reporte">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atrás">
                      <HBox.margin>
                         <Insets left="40.0" />
                      </HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
                   </Button>
                </children>
             </HBox>
@@ -124,15 +145,15 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </HBox>
-            <Label fx:id="lbExportTitle" alignment="CENTER" contentDisplay="CENTER" text="Exportar reporte de pedidos" textFill="WHITE">
+            <Label fx:id="lbExportTitle" alignment="CENTER" contentDisplay="CENTER" text="Exportar reporte de ordenes" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="16.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets top="120.0" />
+                  <Insets bottom="20.0" top="100.0" />
                </VBox.margin>
             </Label>
          </children>

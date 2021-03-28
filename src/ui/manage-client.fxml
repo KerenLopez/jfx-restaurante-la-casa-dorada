@@ -26,7 +26,7 @@
                <children>
                   <Label text="Usuario: " textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0" />
+                        <Font name="System Bold" size="16.0" />
                      </font>
                      <HBox.margin>
                         <Insets right="5.0" />
@@ -34,7 +34,7 @@
                   </Label>
                   <Label fx:id="lbUserName" text="-" textFill="WHITE">
                      <font>
-                        <Font size="15.0" />
+                        <Font size="16.0" />
                      </font></Label>
                   <Label fx:id="lbUserId" text="id" visible="false">
                      <HBox.margin>
@@ -50,18 +50,18 @@
                <children>
                   <Label text="Gestionar un cliente" textAlignment="CENTER" textFill="WHITE">
                      <padding>
-                        <Insets left="100.0" top="20.0" />
+                        <Insets left="120.0" top="10.0" />
                      </padding>
                      <font>
-                        <Font name="System Bold" size="16.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                   <Label text="Lista de clientes" textFill="WHITE">
                      <padding>
-                        <Insets left="400.0" top="20.0" />
+                        <Insets bottom="5.0" left="350.0" top="10.0" />
                      </padding>
                      <font>
-                        <Font name="System Bold" size="16.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                </children>
@@ -86,10 +86,13 @@
                <children>
                   <Label text="*Para actualizar o eliminar un cliente determinado, seleccionelo de la lista" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <VBox.margin>
-                        <Insets bottom="20.0" left="10.0" top="10.0" />
+                        <Insets bottom="10.0" left="10.0" top="30.0" />
                      </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                   </Label>
-                  <GridPane alignment="CENTER" maxHeight="363.0" minHeight="200.0" prefHeight="363.0" prefWidth="379.0">
+                  <GridPane alignment="CENTER" maxHeight="363.0" minHeight="380.0" prefHeight="363.0" prefWidth="379.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="135.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="165.0" />
@@ -101,8 +104,8 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="31.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="29.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
@@ -111,7 +114,7 @@
                               <Insets left="30.0" right="5.0" />
                            </GridPane.margin>
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
                         <TextField fx:id="txtName" prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="1">
@@ -119,29 +122,53 @@
                               <Insets right="20.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateClient" text="Actualizar" GridPane.rowIndex="7">
+                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateClient" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Actualizar" GridPane.rowIndex="7">
                            <GridPane.margin>
-                              <Insets left="40.0" />
+                              <Insets left="45.0" top="30.0" />
                            </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
                         </Button>
-                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets top="10.0" />
+                           </GridPane.margin></CheckBox>
                         <HBox maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <children>
-                              <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteClient" text="Eliminar" />
-                              <Button fx:id="btAdd" mnemonicParsing="false" onAction="#createClient" text="Agregar">
+                              <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteClient" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Eliminar">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
                                  <HBox.margin>
-                                    <Insets left="15.0" />
+                                    <Insets top="10.0" />
+                                 </HBox.margin></Button>
+                              <Button fx:id="btAdd" mnemonicParsing="false" onAction="#createClient" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Agregar">
+                                 <HBox.margin>
+                                    <Insets left="15.0" top="10.0" />
                                  </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
                               </Button>
                            </children>
                         </HBox>
-                        <Button fx:id="btReturnToMenu" mnemonicParsing="false" onAction="#returnToMenu" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <Button fx:id="btReturnToMenu" mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets top="50.0" />
+                           </GridPane.margin></Button>
                         <Label text="Apellidos: " textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="30.0" />
                            </GridPane.margin>
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
                         <TextField fx:id="txtLastName" prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -151,7 +178,7 @@
                         </TextField>
                         <Label prefHeight="34.0" prefWidth="96.0" text="Número de identificación: " textFill="WHITE" wrapText="true" GridPane.rowIndex="2">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                            <GridPane.margin>
                               <Insets left="30.0" />
@@ -165,7 +192,7 @@
                         <Label fx:id="lbObjectId" text="objectId" visible="false" GridPane.rowIndex="8" />
                         <Label layoutX="40.0" layoutY="81.0" text="Dirección: " textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                            <GridPane.margin>
                               <Insets left="30.0" />
@@ -173,7 +200,7 @@
                         </Label>
                         <Label text="Teléfono: " textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="4">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                            <padding>
                               <Insets left="30.0" />
@@ -181,7 +208,7 @@
                         </Label>
                         <Label text="Observaciones: " textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="5">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                            <GridPane.margin>
                               <Insets left="30.0" />

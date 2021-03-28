@@ -1842,7 +1842,7 @@ public class RestauranteLaCasaDoradaGUI {
     		lbObjectId.setText(selectedUser.getId());
     		txtUserName.setText(selectedUser.getUserName());
     		passwordField.setText(selectedUser.getPassword());
-    		txtId.setText(selectedUser.getId());
+    		lbUserId.setText(selectedUser.getId());
     		cbEmployee.setValue(selectedUser.getEmployee());
 
     		

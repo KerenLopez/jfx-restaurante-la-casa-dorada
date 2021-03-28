@@ -15,10 +15,10 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1019.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <GridPane alignment="CENTER" maxHeight="160.0" maxWidth="416.0" minHeight="160.0" minWidth="416.0" prefHeight="160.0" prefWidth="416.0" BorderPane.alignment="CENTER">
+      <GridPane alignment="CENTER" maxHeight="170.0" maxWidth="450.0" minHeight="170.0" minWidth="416.0" prefHeight="170.0" prefWidth="450.0" BorderPane.alignment="CENTER">
         <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="193.0" />
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="207.0" minWidth="0.0" prefWidth="207.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="243.0" minWidth="10.0" prefWidth="243.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="207.0" minWidth="0.0" prefWidth="194.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -27,14 +27,38 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#manageAnIngredient" text="1. Gestionar un ingrediente" />
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#manageATypeOfProduct" text="2. Gestionar un tipo de producto" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" onAction="#manageAProduct" text="3. Gestionar un producto" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" onAction="#manageAnEmployee" text="4. Gestionar un empleado " GridPane.rowIndex="3" />
-            <Button mnemonicParsing="false" onAction="#manageAClient" text="5. Gestionar un cliente" GridPane.columnIndex="1" />
-            <Button mnemonicParsing="false" onAction="#manageAUser" text="6. Gestionar un usuario" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#manageAnOrder" text="7. Gestionar un pedido" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" onAction="#signOutOfSystem" text="Cerrar sesión" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#manageAnIngredient" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="1. Gestionar un ingrediente">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#manageATypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="2. Gestionar un tipo de producto" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#manageAProduct" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="3. Gestionar un producto" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#manageAnEmployee" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="4. Gestionar un empleado " GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#manageAClient" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="5. Gestionar un cliente" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#manageAUser" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="6. Gestionar un usuario" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#manageAnOrder" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="7. Gestionar un pedido" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#signOutOfSystem" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Cerrar sesión" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
          </children>
          <BorderPane.margin>
             <Insets bottom="80.0" />
@@ -57,7 +81,7 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Exportar">
                            <items>
-                              <MenuItem mnemonicParsing="false" onAction="#exportOrdersReport" text="Reporte de pedidos" />
+                              <MenuItem mnemonicParsing="false" onAction="#exportOrdersReport" text="Reporte de ordenes" />
                               <MenuItem mnemonicParsing="false" onAction="#exportEmployeesReport" text="Reporte de Empleados" />
                               <MenuItem mnemonicParsing="false" onAction="#exportProductsReport" text="Reporte de Productos" />
                            </items>
@@ -74,18 +98,18 @@
             <Label fx:id="lbUserIdMenu" text="userid" visible="false" />
             <Label alignment="CENTER" contentDisplay="CENTER" text="¡Bienvenido!" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="16.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets top="120.0" />
+                  <Insets top="140.0" />
                </VBox.margin>
             </Label>
             <Label text="Seleccione una opción para continuar: " textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
                <VBox.margin>
                   <Insets top="10.0" />
