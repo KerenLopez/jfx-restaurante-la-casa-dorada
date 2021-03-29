@@ -460,7 +460,7 @@ public class RestauranteLaCasaDorada {
 		boolean found=false;
 		Product p=null;
 		for(int i=0; i<products.size() && !found;i++ ) {
-			if(products.get(i).getName().equals(pName)) {
+			if(products.get(i).getName().equalsIgnoreCase(pName)) {
 				p=products.get(i);
 				found=true;						
 			}
@@ -468,6 +468,7 @@ public class RestauranteLaCasaDorada {
 		return p;
 	}
 	
+	//Bubble sorting
 	public ArrayList<Product> sortingPricesOfProducts() {
     	ArrayList<Product> copyOfProducts = new ArrayList<Product>(products);
     	for(int i=1;i<copyOfProducts.size();i++) {
@@ -695,9 +696,10 @@ public class RestauranteLaCasaDorada {
 		User u=null;
 		boolean found=false;
 		for(int i=0; i<users.size() && !found;i++) {
-			if(users.get(i).getEmployee()==empl) {
-				found=true;
+			if(users.get(i).getEmployee().getId().equals(empl.getId())) {
+				
 				u=users.get(i);
+				found=true;
 			}
 
 		}
@@ -804,7 +806,7 @@ public class RestauranteLaCasaDorada {
 				Order ord = sortingOrders.get(k);
 				for(int j=0;j<ord.getListOfProducts().size();j++) {
 					Product p = ord.getListOfProducts().get(j);
-					p.setNumTimesAddedOrders((p.getNumTimesAddedOrders())+ord.getListOfQuantity().get(j));
+					p.setNumTimesAddedOrders((p.getNumTimesAddedOrders())+(ord.getListOfQuantity().get(j)));
 					p.setTotalPriceAddedOrders((p.getTotalPriceAddedOrders())+(ord.getListOfQuantity().get(j)*ord.getListOfSizes().get(j).getPrice()));
 				}
 				selectedOrders.add(ord);
@@ -865,13 +867,19 @@ public class RestauranteLaCasaDorada {
 	public void exportEmployeesReport(String fn, String initialTime, String finalTime) throws FileNotFoundException {
 		int totalOrders=0;
 		int totalMoney=0;
-		ArrayList<Order> ordersS = selectedOrders(initialTime,finalTime);
+		ArrayList<Order> ordersS = selectDeliveredOrders(initialTime,finalTime);
+		
 		PrintWriter pw = new PrintWriter(fn);
 		String nameColumns = "Empleado"+SEPARATOR+"Identificacion"+SEPARATOR+"Número de ordenes entregadas"+SEPARATOR+"Precio total de las ordenes entregadas";
 		pw.println(nameColumns);
+		
+		for(int k=0;k<ordersS.size();k++) {
+			ordersS.get(k).getDeliverer().setCont(0);
+		}
 		for(int i=0;i<ordersS.size();i++){
 			Order objOrder = ordersS.get(i);
 			objOrder.getDeliverer().setCont((objOrder.getDeliverer().getCont())+1);
+
 			if(objOrder.getDeliverer().getCont()==1) {
 				pw.println(objOrder.getDeliverer().getName()+SEPARATOR+objOrder.getDeliverer().getId()+SEPARATOR+objOrder.getDeliverer().getNumberOrders()+SEPARATOR+objOrder.getDeliverer().getSumTotalOrders());
 				totalOrders+=objOrder.getDeliverer().getNumberOrders();
@@ -882,9 +890,7 @@ public class RestauranteLaCasaDorada {
 
 		pw.close();
 		
-		for(int k=0;k<employees.size();k++) {
-			employees.get(k).setCont(0);
-		}
+		
 	}
 	
 	public void exportProductsReport(String fn, String initialTime, String finalTime) throws FileNotFoundException {
@@ -948,11 +954,14 @@ public class RestauranteLaCasaDorada {
 	public boolean deleteEmployee(String emplId) throws IOException {
 		boolean deleted=false;
 		Employee employee=searchEmployee(emplId);
-		if(searchEmployeeInUsers(employee)==null && searchEmployeeInOrder(employee)==null) {
+		User userEmpl=searchEmployeeInUsers(employee);
+		Order orderEmpl=searchEmployeeInOrder(employee);
+		if(userEmpl==null && orderEmpl==null) {
 			int i=employees.indexOf(employee);
 			employees.remove(i);
 			deleted=true;
 			saveDataEmployees();
+			
 
 		}
 		
@@ -963,9 +972,10 @@ public class RestauranteLaCasaDorada {
 		Order order=null;
 		boolean found=false;
 		for(int i=0; i<orders.size() && !found;i++) {
-			if(orders.get(i).getDeliverer()==empl) {
-				found=true;
+			if(orders.get(i).getDeliverer().getId().equals(empl.getId())) {
+								
 				order=orders.get(i);
+				found=true;
 			}
 
 		}
@@ -1091,7 +1101,7 @@ public class RestauranteLaCasaDorada {
 		Order order=null;
 		boolean found=false;
 		for(int i=0; i<orders.size() && !found;i++) {
-			if(orders.get(i).getBuyer()==client) {
+			if(orders.get(i).getBuyer().getId().equals(client.getId())) {
 				found=true;
 				order=orders.get(i);
 			}

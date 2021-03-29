@@ -11,7 +11,7 @@ public class Employee extends Person{
 		super(name, lastName, id, creator);
 		setNumberOrders(0);
 		setSumTotalOrders(0);
-		setCont(0);
+		cont=0;
 	}
 
 	public int getNumberOrders() {

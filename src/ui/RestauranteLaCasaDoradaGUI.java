@@ -624,6 +624,8 @@ public class RestauranteLaCasaDoradaGUI {
     	txtIngredientName.clear();
     	tvOfIngredientsInAProduct.getItems().clear();
     	initializeTableViewOfIngredientsInAProduct();
+    	btDeleteIngredient.setDisable(true);
+		btAddIngredient.setDisable(false);
     }
     
     private void initializeTableViewOfSizes() {
@@ -741,6 +743,9 @@ public class RestauranteLaCasaDoradaGUI {
     		txtSizePrice.clear();
     		tvOfSizes.getItems().clear();
     		initializeTableViewOfSizes();
+    		btDeleteSize.setDisable(true);
+    		btAddSize.setDisable(false);
+    		btUpdateSize.setDisable(true);
     	}else {
     		showValidationErrorAlert();
     	}
@@ -802,6 +807,7 @@ public class RestauranteLaCasaDoradaGUI {
         	ckbxDisable.setSelected(false);
         	tvOfProducts.getItems().clear();
         	initializeTableViewOfProducts(); 
+        	disableButtons();
     	} 
     }
 
@@ -944,6 +950,7 @@ public class RestauranteLaCasaDoradaGUI {
     		ckbxDisable.setSelected(false);
     		tvOfTypeOfProducts.getItems().clear();
         	initializeTableViewOfTypesOfProducts();
+        	disableButtons();
     	} 
     }
 
@@ -1066,6 +1073,7 @@ public class RestauranteLaCasaDoradaGUI {
     		ckbxDisable.setSelected(false);
     		tvOfIngredients.getItems().clear();
         	initializeTableViewOfIngredients();
+        	disableButtons();
     	} 
     }
 
@@ -1275,6 +1283,9 @@ public class RestauranteLaCasaDoradaGUI {
     			
     		}else {
         		btAddProductsOrder.setDisable(false);
+        		cmbxClients.setDisable(false);
+    			cbEmployee.setDisable(false);
+    			txtAreaObservations.setDisable(false);
 
     		}
     		Order selectedOrder = tvOfOrders.getSelectionModel().getSelectedItem();
@@ -1283,14 +1294,16 @@ public class RestauranteLaCasaDoradaGUI {
     		cbEmployee.setValue(selectedOrder.getDeliverer());
     		txtAreaObservations.setText(selectedOrder.getObservations());
     	}else {
-    		btUpdate.setDisable(true);
-    		btAddProductsOrder.setDisable(true);
-			btChangeState.setDisable(true);
-			cmbxClients.setDisable(true);
-			cbEmployee.setDisable(true);
-			txtAreaObservations.setDisable(true);
-    		btAdd.setDisable(true);
-    		
+    		if((tvOfOrders.getSelectionModel().getSelectedItem() != null)) {
+    			btUpdate.setDisable(true);
+    			btAddProductsOrder.setDisable(true);
+    			btChangeState.setDisable(true);
+    			cmbxClients.setDisable(true);
+    			cbEmployee.setDisable(true);
+    			txtAreaObservations.setDisable(true);
+    			btAdd.setDisable(true);
+    		}
+	
     	}
     }
 
@@ -1816,7 +1829,6 @@ public class RestauranteLaCasaDoradaGUI {
     		lbObjectId.setText(selectedUser.getId());
     		txtUserName.setText(selectedUser.getUserName());
     		passwordField.setText(selectedUser.getPassword());
-    		lbUserId.setText(selectedUser.getId());
     		cbEmployee.setValue(selectedUser.getEmployee());
 
     		
@@ -1913,19 +1925,20 @@ public class RestauranteLaCasaDoradaGUI {
 
     			initializeTableViewUsers();
 
-    			lbObjectId.setText("");
-    			txtUserName.clear();
-    			passwordField.clear();
-    			cbEmployee.setValue(null);
-            	cbEmployee.setPromptText("Elija un empleado");
-            	disableButtons();
-
+    			
     		}else {
     			alert2.setContentText("El usuario no se pudo eliminar");
 
     		}
 
     		alert2.showAndWait();
+    		lbObjectId.setText("");
+			txtUserName.clear();
+			passwordField.clear();
+			cbEmployee.setValue(null);
+        	cbEmployee.setPromptText("Elija un empleado");
+        	disableButtons();
+
     	}
 
 
@@ -2143,20 +2156,20 @@ public class RestauranteLaCasaDoradaGUI {
         	
         	if(deleted) {
         		alert2.setContentText("El empleado ha sido eliminado exitosamente");
-        		lbObjectId.setText("");
-        		txtName.clear();
-        		txtLastName.clear();
-            	txtId.clear();
-            	disableButtons();
-
-            	
+        		
+            	           	
             	initializeTableViewEmployees();
             	
         	}else {
         		alert2.setContentText("El empleado no se pudo eliminar");
-
+        		
         	}
         	alert2.showAndWait();
+        	lbObjectId.setText("");
+    		txtName.clear();
+    		txtLastName.clear();
+        	txtId.clear();
+        	disableButtons();
         	
     	}
     	
@@ -2334,7 +2347,7 @@ public class RestauranteLaCasaDoradaGUI {
         	}
         	alert2.showAndWait();
         	
-        	
+        	disableButtons();
     	}
     	
     }
