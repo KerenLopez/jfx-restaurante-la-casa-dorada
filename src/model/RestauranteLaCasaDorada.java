@@ -1440,25 +1440,19 @@ public class RestauranteLaCasaDorada {
 				addSizeOfAProduct( prod,  parts[13],  price,creator); 
 				int quantity=Integer.parseInt(parts[15]);
 				addProductsToAnOrder(order, prod, prod.getSizes().get(0), quantity, creator);
-				saveAll();
+				saveDataOrders();
+				saveDataIngredients();
+				saveDataProducts();
+				saveDataTypesOfProducts();
+				saveDataEmployees();
+				saveDataClients();
+
 			}
 			line = br.readLine();
 		}
 	    br.close();
 	}
 
-	public void saveAll() throws IOException {
-		saveDataOrders();
-		saveDataIngredients();
-		saveDataProducts();
-		saveDataTypesOfProducts();
-		saveDataUsers();
-		saveDataEmployees();
-		saveDataClients();
-
-
-
-	}
 	public int getIdIngredient() {
 		return idIngredient;
 	}
@@ -1499,3 +1493,4 @@ public class RestauranteLaCasaDorada {
 	}
 
 }
+
