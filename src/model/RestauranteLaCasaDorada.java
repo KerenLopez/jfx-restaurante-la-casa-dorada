@@ -32,13 +32,13 @@ public class RestauranteLaCasaDorada {
 
 
 	public final static String SEPARATOR = ";";
-	private ArrayList<Order> orders;
-	private ArrayList<Product> products;
-	private ArrayList<Ingredient> ingredients;
-	private ArrayList<TypeOfProduct> typesOfProducts;
-	private ArrayList<Employee> employees;
-	private ArrayList<Client> clients;
-	private ArrayList<User> users;
+	private List<Order> orders;
+	private List<Product> products;
+	private List<Ingredient> ingredients;
+	private List<TypeOfProduct> typesOfProducts;
+	private List<Employee> employees;
+	private List<Client> clients;
+	private List<User> users;
 	private int idIngredient;
 	private int idProduct;
 	private int idTypeOfProduct;
@@ -58,73 +58,59 @@ public class RestauranteLaCasaDorada {
 		idSize = 1;
 	}
 
-
-	public ArrayList<Order> getOrders() {
+	public List<Order> getOrders() {
 		return orders;
 	}
 
-
-	public void setOrders(ArrayList<Order> orders) {
+	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
 
-
-	public ArrayList<Product> getProducts() {
+	public List<Product> getProducts() {
 		return products;
 	}
 
-
-	public void setProducts(ArrayList<Product> products) {
+	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
 
-
-	public ArrayList<Ingredient> getIngredients() {
+	public List<Ingredient> getIngredients() {
 		return ingredients;
 	}
 
-
-	public void setIngredients(ArrayList<Ingredient> ingredients) {
+	public void setIngredients(List<Ingredient> ingredients) {
 		this.ingredients = ingredients;
 	}
 
-
-	public ArrayList<TypeOfProduct> getTypesOfProducts() {
+	public List<TypeOfProduct> getTypesOfProducts() {
 		return typesOfProducts;
 	}
 
-
-	public void setTypesOfProducts(ArrayList<TypeOfProduct> typesOfProducts) {
+	public void setTypesOfProducts(List<TypeOfProduct> typesOfProducts) {
 		this.typesOfProducts = typesOfProducts;
 	}
 
-
-	public ArrayList<Employee> getEmployees() {
+	public List<Employee> getEmployees() {
 		return employees;
 	}
 
-
-	public void setEmployees(ArrayList<Employee> employees) {
+	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
 	}
 
-
-	public ArrayList<Client> getClients() {
+	public List<Client> getClients() {
 		return clients;
 	}
 
-
-	public void setClients(ArrayList<Client> clients) {
+	public void setClients(List<Client> clients) {
 		this.clients = clients;
 	}
 
-
-	public ArrayList<User> getUsers() {
+	public List<User> getUsers() {
 		return users;
 	}
 
-
-	public void setUsers(ArrayList<User> users) {
+	public void setUsers(List<User> users) {
 		this.users = users;
 	}
 
@@ -216,8 +202,8 @@ public class RestauranteLaCasaDorada {
 		return found;
 	}
 	
-	public ArrayList<TypeOfProduct> returnEnabledTypesOfProducts(){
-		ArrayList<TypeOfProduct> list = new ArrayList<TypeOfProduct>();
+	public List<TypeOfProduct> returnEnabledTypesOfProducts(){
+		List<TypeOfProduct> list = new ArrayList<TypeOfProduct>();
 		for(int k=0; k<typesOfProducts.size();k++) {
 			if(typesOfProducts.get(k).isEnabled()) {
 				list.add(typesOfProducts.get(k));
@@ -314,8 +300,8 @@ public class RestauranteLaCasaDorada {
 		return found;
 	}
 	
-	public ArrayList<Ingredient> returnEnabledIngredients(){
-		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+	public List<Ingredient> returnEnabledIngredients(){
+		List<Ingredient> list = new ArrayList<Ingredient>();
 		for(int k=0; k<ingredients.size();k++) {
 			if(ingredients.get(k).isEnabled()) {
 				list.add(ingredients.get(k));
@@ -323,8 +309,8 @@ public class RestauranteLaCasaDorada {
 		}
 		return list;
 	}
-	public ArrayList<Product> returnEnabledProducts(){
-		ArrayList<Product> list = new ArrayList<Product>();
+	public List<Product> returnEnabledProducts(){
+		List<Product> list = new ArrayList<Product>();
 		for(int k=0; k<products.size();k++) {
 			if(products.get(k).isEnabled()) {
 				list.add(products.get(k));
@@ -349,7 +335,7 @@ public class RestauranteLaCasaDorada {
 	}
 	
 	public boolean addIngredientToAProduct(Product p, Ingredient ing, String userId) throws IOException{
-		ArrayList<Ingredient> list = p.getListOfIngredients();
+		List<Ingredient> list = p.getListOfIngredients();
 		User modifier = searchUser(userId);
 		boolean find = p.findIngredient(ing.getId());
 		boolean added = false;
@@ -364,14 +350,14 @@ public class RestauranteLaCasaDorada {
 	
 	public void deleteAnIngredientOfAProduct(Product p, Ingredient ing, String userId) throws IOException {
 		User modifier = searchUser(userId);
-		ArrayList<Ingredient> list = p.getListOfIngredients();
+		List<Ingredient> list = p.getListOfIngredients();
 		list.remove(list.indexOf(ing));
 		p.setModifier(modifier);
 		saveDataProducts();
 	}
 	
 	public boolean addSizeOfAProduct(Product p, String name, double price, String userId) throws IOException {
-		ArrayList<Size> list = p.getSizes();
+		List<Size> list = p.getSizes();
 		User modifier = searchUser(userId);
 		Size find = p.findSize(name);
 		boolean added = false;
@@ -388,7 +374,7 @@ public class RestauranteLaCasaDorada {
 	}
 	
 	public void deleteSizeOfAProduct(Product p, Size s) throws IOException {
-		ArrayList<Size> list = p.getSizes();
+		List<Size> list = p.getSizes();
 		list.remove(list.indexOf(s));
 		saveDataProducts();
 	}
@@ -469,8 +455,8 @@ public class RestauranteLaCasaDorada {
 	}
 	
 	//Bubble sorting
-	public ArrayList<Product> sortingPricesOfProducts() {
-    	ArrayList<Product> copyOfProducts = new ArrayList<Product>(products);
+	public List<Product> sortingPricesOfProducts() {
+    	List<Product> copyOfProducts = new ArrayList<Product>(products);
     	for(int i=1;i<copyOfProducts.size();i++) {
 			for(int j=0;j<copyOfProducts.size()-i;j++) {
 				if(!copyOfProducts.get(j).getSizes().isEmpty() && !copyOfProducts.get(j+1).getSizes().isEmpty()&& copyOfProducts.get(j).getSizes().get(0).getPrice()>copyOfProducts.get(j+1).getSizes().get(0).getPrice()) {
@@ -722,8 +708,8 @@ public class RestauranteLaCasaDorada {
 	}
 
 		
-	public ArrayList<Client>  returnEnabledClients() {
-		ArrayList<Client> clString= new ArrayList<Client>();
+	public List<Client>  returnEnabledClients() {
+		List<Client> clString= new ArrayList<Client>();
 		for(int i=0; i<clients.size(); i++) {
 			if(clients.get(i).isEnabled()) {
 				clString.add(clients.get(i));
@@ -732,8 +718,8 @@ public class RestauranteLaCasaDorada {
 		return clString;
 	}
 	
-	public ArrayList<Employee>  enabledEmployees() {
-		ArrayList<Employee> empls= new ArrayList<Employee>();
+	public List<Employee>  enabledEmployees() {
+		List<Employee> empls= new ArrayList<Employee>();
 		for(int i=0; i<employees.size(); i++) {
 			if(employees.get(i).isEnabled()) {
 				empls.add(employees.get(i));
@@ -777,16 +763,16 @@ public class RestauranteLaCasaDorada {
 		return allMinutes;
 	}
 	
-	public ArrayList<Order> sortByDateAndTime() {
-		ArrayList<Order> copyOfOrders = new ArrayList<Order>(orders);
+	public List<Order> sortByDateAndTime() {
+		List<Order> copyOfOrders = new ArrayList<Order>(orders);
 		Collections.sort(copyOfOrders);
 		return copyOfOrders;
 	}
 	
-	public ArrayList<Order> selectedOrders(String initialTime, String finalTime){
+	public List<Order> selectedOrders(String initialTime, String finalTime){
 		boolean correct = false;
-		ArrayList<Order> selectedOrders = new ArrayList<Order>();
-		ArrayList<Order> sortingOrders = sortByDateAndTime();
+		List<Order> selectedOrders = new ArrayList<Order>();
+		List<Order> sortingOrders = sortByDateAndTime();
 		for(int k=0; k<sortingOrders.size();k++) {
 			correct = compareWithInitialAndFinalDate(sortingOrders.get(k),initialTime,finalTime);
 			if(correct==true){
@@ -796,10 +782,10 @@ public class RestauranteLaCasaDorada {
 		return selectedOrders;
 	}
 	
-	public ArrayList<Order> selectDeliveredOrders(String initialTime, String finalTime){
+	public List<Order> selectDeliveredOrders(String initialTime, String finalTime){
 		boolean correct = false;
-		ArrayList<Order> selectedOrders = new ArrayList<Order>();
-		ArrayList<Order> sortingOrders = sortByDateAndTime();
+		List<Order> selectedOrders = new ArrayList<Order>();
+		List<Order> sortingOrders = sortByDateAndTime();
 		for(int k=0; k<sortingOrders.size();k++) {
 			correct = compareWithInitialAndFinalDate(sortingOrders.get(k),initialTime,finalTime);
 			if(correct==true && sortingOrders.get(k).getStateOfOrder().name().equals("ENTREGADO")){
@@ -838,7 +824,7 @@ public class RestauranteLaCasaDorada {
 	}
 	
 	public void exportOrdersReport(String fn, String initialTime, String finalTime, String separator) throws FileNotFoundException {
-		ArrayList<Order> ordersS = selectedOrders(initialTime,finalTime);
+		List<Order> ordersS = selectedOrders(initialTime,finalTime);
 		PrintWriter pw = new PrintWriter(fn);
 		String info ="";
 		String nameColumns = "Código"+separator+"Estado"+separator+"Fecha y hora"+separator+"Observaciones"+separator+"Nombre del cliente"+separator+"Direccion del cliente"+separator+"Telefono del cliente"+separator+"Empleado"+separator+"Producto(s): Nombre, cantidad, tamanio y valor";
@@ -867,7 +853,7 @@ public class RestauranteLaCasaDorada {
 	public void exportEmployeesReport(String fn, String initialTime, String finalTime) throws FileNotFoundException {
 		int totalOrders=0;
 		int totalMoney=0;
-		ArrayList<Order> ordersS = selectDeliveredOrders(initialTime,finalTime);
+		List<Order> ordersS = selectDeliveredOrders(initialTime,finalTime);
 		
 		PrintWriter pw = new PrintWriter(fn);
 		String nameColumns = "Empleado"+SEPARATOR+"Identificacion"+SEPARATOR+"Número de ordenes entregadas"+SEPARATOR+"Precio total de las ordenes entregadas";
@@ -896,7 +882,7 @@ public class RestauranteLaCasaDorada {
 	public void exportProductsReport(String fn, String initialTime, String finalTime) throws FileNotFoundException {
 		int totalOrders=0;
 		int totalMoney=0;
-		ArrayList<Order> ordersS = selectDeliveredOrders(initialTime,finalTime);
+		List<Order> ordersS = selectDeliveredOrders(initialTime,finalTime);
 		PrintWriter pw = new PrintWriter(fn);
 		String nameColumns = "Nombre del producto"+SEPARATOR+"Numero total de veces que fue pedido"+SEPARATOR+"Cantidad de total de dinero recaudado";
 		pw.println(nameColumns);
@@ -1179,9 +1165,9 @@ public class RestauranteLaCasaDorada {
 		return pos;
 	}
 	
-	public ArrayList<Client> searchClientByName(String clientNames, String clientLastNames){
+	public List<Client> searchClientByName(String clientNames, String clientLastNames){
 		Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
-		ArrayList<Client> clientsByName=new ArrayList<Client>();
+		List<Client> clientsByName=new ArrayList<Client>();
 		int pos;
 
 		pos=binarySearchClient(clientNames,clientLastNames);
@@ -1217,8 +1203,8 @@ public class RestauranteLaCasaDorada {
 		return clientsByName;
 	}
 	
-	public ArrayList<Ingredient> insertionSortIngredients() {
-		ArrayList<Ingredient> listSorted=new ArrayList<Ingredient>(ingredients);
+	public List<Ingredient> insertionSortIngredients() {
+		List<Ingredient> listSorted=new ArrayList<Ingredient>(ingredients);
 		
 		for(int i=1;i<listSorted.size();i++) {
 			for(int j=i;j>0 && listSorted.get(j-1).getName().compareTo(listSorted.get(j).getName())<0;j--) {
@@ -1279,7 +1265,7 @@ public class RestauranteLaCasaDorada {
 		boolean loaded = false;
 		if(f.exists()){
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			users = (ArrayList<User>)ois.readObject();
+			users = (List<User>)ois.readObject();
 			ois.close();
 			loaded = true;
 		}
@@ -1292,7 +1278,7 @@ public class RestauranteLaCasaDorada {
 		boolean loaded = false;
 		if(f.exists()){
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			employees = (ArrayList<Employee>)ois.readObject();
+			employees = (List<Employee>)ois.readObject();
 			ois.close();
 			loaded = true;
 		}
@@ -1305,7 +1291,7 @@ public class RestauranteLaCasaDorada {
 		boolean loaded = false;
 		if(f.exists()){
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			clients = (ArrayList<Client>)ois.readObject();
+			clients = (List<Client>)ois.readObject();
 			ois.close();
 			loaded = true;
 		}
@@ -1318,7 +1304,7 @@ public class RestauranteLaCasaDorada {
 		boolean loaded = false;
 		if(f.exists()){
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			products = (ArrayList<Product>)ois.readObject();
+			products = (List<Product>)ois.readObject();
 			ois.close();
 			loaded = true;
 		}
@@ -1331,7 +1317,7 @@ public class RestauranteLaCasaDorada {
 		boolean loaded = false;
 		if(f.exists()){
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			ingredients = (ArrayList<Ingredient>)ois.readObject();
+			ingredients = (List<Ingredient>)ois.readObject();
 			ois.close();
 			loaded = true;
 		}
@@ -1344,7 +1330,7 @@ public class RestauranteLaCasaDorada {
 		boolean loaded = false;
 		if(f.exists()){
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			typesOfProducts = (ArrayList<TypeOfProduct>)ois.readObject();
+			typesOfProducts = (List<TypeOfProduct>)ois.readObject();
 			ois.close();
 			loaded = true;
 		}
@@ -1357,7 +1343,7 @@ public class RestauranteLaCasaDorada {
 		boolean loaded = false;
 		if(f.exists()){
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			orders = (ArrayList<Order>)ois.readObject();
+			orders = (List<Order>)ois.readObject();
 			ois.close();
 			loaded = true;
 		}
