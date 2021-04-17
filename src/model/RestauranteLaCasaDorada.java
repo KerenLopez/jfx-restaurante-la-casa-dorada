@@ -1389,13 +1389,16 @@ public class RestauranteLaCasaDorada {
 			if(!parts[0].equals("productName")) {
 				addTypeOfProduct(parts[1],creator);
 				TypeOfProduct top=searchTypeOfProductByName(parts[1]);
-				addProduct( parts[0],  top.getId(), creator);
+				Product prod=new Product(parts[0], null, top, idProduct);
+				this.products.add(prod);
+				idProduct++;
 				String[] ingredients=parts[2].split("-");
-				Product prod=searchProductByName( parts[0]);
 
 				for(int i=0; i<ingredients.length;i++) {
-					addIngredient( ingredients[i],  creator);
-					Ingredient ing=searchIngredientByName(ingredients[i]);
+					Ingredient ing= new Ingredient(ingredients[i], null, idIngredient);
+					this.ingredients.add(ing);
+					idIngredient++;
+					
 					addIngredientToAProduct( prod,  ing,  creator);
 
 				}
@@ -1407,6 +1410,8 @@ public class RestauranteLaCasaDorada {
 			line = br.readLine();
 		}
 	    br.close();
+	    saveDataIngredients();
+
 	}
 
 	public void importOrdersData(String fileName) throws IOException{
@@ -1415,34 +1420,59 @@ public class RestauranteLaCasaDorada {
 		String creator="";
 		while(line!=null){
 			String[] parts = line.split(SEPARATOR);
-			if(!parts[0].equals("employeeId")) {
-				int pos = ThreadLocalRandom.current().nextInt(0, 1000);
-
-				Client buyer=clients.get(pos);
-				Employee deliverer=searchEmployee(parts[0]);
-				if(deliverer==null) {
-					createEmployee( parts[0],  parts[1].toUpperCase(),  parts[2].toUpperCase(),  creator);
-					deliverer=searchEmployee(parts[0]);
-
-				}
-				createOrder( buyer,  deliverer,  parts[3],  creator);
-				Order order=orders.get(orders.size()-1);
-				String[] prods=parts[4].split("_");
-				String[] quantities=parts[5].split("_");
+			if(!parts[0].equals("clientId")) {
 				
-				for(int i=0;i<prods.length;i++) {
-					int prod=Integer.parseInt(prods[i])-1;
-					Product p=products.get(prod);
-					int quantity=Integer.parseInt(quantities[i]);
-					addProductsToAnOrder(order, p, p.getSizes().get(0), quantity, creator);
+				Client buyer=new Client(parts[1].toUpperCase(), parts[2].toUpperCase(), parts[0], parts[3], parts[4], parts[5], null);
+				clients.add(buyer);
+				Employee deliverer=searchEmployee(parts[6]);
+				if(deliverer==null) {
+					createEmployee( parts[6],  parts[7].toUpperCase(),  parts[8].toUpperCase(),  creator);
+					deliverer=searchEmployee(parts[6]);
+
 				}
+				
+				Order order=new Order(buyer, deliverer, parts[9], null);
+				orders.add(order);
+				int codeNum = ThreadLocalRandom.current().nextInt(1000, 10000);
+				String code = codeNum+"-"+orders.size();
+				order.setCode(code);
+
+				addTypeOfProduct(parts[11],creator);
+				TypeOfProduct top=searchTypeOfProductByName(parts[11]);
+				Product prod=new Product(parts[10], null, top, idProduct);
+				products.add(prod);
+				idProduct++;
+
+				Ingredient ing= new Ingredient(parts[12], null, idIngredient);
+				ingredients.add(ing);
+				idIngredient++;
+
+				addIngredientToAProduct( prod,  ing,  creator);
+
+				double price= Double.parseDouble(parts[14]);
+
+				addSizeOfAProduct( prod,  parts[13],  price,creator); 
+				int quantity=Integer.parseInt(parts[15]);
+				addProductsToAnOrder(order, prod, prod.getSizes().get(0), quantity, creator);
+				saveAll();
 			}
 			line = br.readLine();
 		}
 	    br.close();
 	}
 
+	public void saveAll() throws IOException {
+		saveDataOrders();
+		saveDataIngredients();
+		saveDataProducts();
+		saveDataTypesOfProducts();
+		saveDataUsers();
+		saveDataEmployees();
+		saveDataClients();
 
+
+
+	}
 	public int getIdIngredient() {
 		return idIngredient;
 	}
