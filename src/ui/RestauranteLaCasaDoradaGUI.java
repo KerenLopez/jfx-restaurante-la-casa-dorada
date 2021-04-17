@@ -1776,9 +1776,6 @@ public class RestauranteLaCasaDoradaGUI {
     		}catch(IOException e){
         		alert.setContentText("Los pedidos no se importaron. Ocurrió un error");
         		alert.showAndWait();
-    		}catch(IndexOutOfBoundsException ioobe) {
-    			alert.setContentText("Por favor, importe primero los productos y clientes.");
-        		alert.showAndWait();
     		}
     	}
     }

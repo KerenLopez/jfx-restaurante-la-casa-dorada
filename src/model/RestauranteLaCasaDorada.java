@@ -1409,7 +1409,7 @@ public class RestauranteLaCasaDorada {
 			if(!parts[0].equals("clientId")) {
 				
 				Client buyer=new Client(parts[1].toUpperCase(), parts[2].toUpperCase(), parts[0], parts[3], parts[4], parts[5], null);
-				clients.add(buyer);
+				addSortedClient(buyer);
 				Employee deliverer=searchEmployee(parts[6]);
 				if(deliverer==null) {
 					createEmployee( parts[6],  parts[7].toUpperCase(),  parts[8].toUpperCase(),  creator);
